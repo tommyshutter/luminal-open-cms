@@ -1,0 +1,131 @@
+/**
+ * @file SITE-ROOT/css/page.css
+ * @version 2025.08.10.1445.01 (Fixed)
+ * @description The definitive, simplified stylesheet for page components.
+ * Restores video styles and corrects two-column layout alignment.
+ */
+ 
+/* Generated articles bake `.miami-article{max-width:720px}` into their own inline
+   <style>; let them obey the site-wide fluid page width instead. Higher specificity
+   (.main-content-container .miami-article) beats the article's inline rule so this
+   applies to every existing article without regenerating them. */
+.main-content-container .miami-article,
+.content-wrapper .miami-article {
+  max-width: var(--page-max-width, 720px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Right-column affiliate grid honors the Columns setpoint (--afp-cols, set by the affiliate
+   renderer) instead of the fixed repeat(2) that generated articles bake into their inline
+   <style> (`.pm-right .afp-grid{...!important}`). Higher specificity (.pm-col.pm-right = 3
+   classes) + !important beats that baked rule, for existing AND future articles/pages.
+   Covers the /?p= route (.pm-col.pm-right) and the /blog route (.blog-aside). */
+.pm-col.pm-right .afp-grid,
+.blog-aside .afp-grid {
+  grid-template-columns: repeat(var(--afp-cols, 2), minmax(0, 1fr)) !important;
+}
+
+.content-wrapper,
+.main-content-container {
+/* border-box so the gutter lives INSIDE the width — without this the padding was
+   added ON TOP of max-width and the content overflowed the right edge (edge-grab). */
+box-sizing: border-box;
+width: 100%;
+max-width: var(--page-max-width, 1760px);
+margin-top: var(--top-content-gap, 0px);
+margin-right: auto;
+margin-bottom: 0;
+margin-left: auto;
+/* Horizontal gutter so content never glues to the viewport edges even when the
+   max-width exceeds the screen. Vertical stays tight. Overridable via --page-pad. */
+padding: 5px var(--page-pad, clamp(16px, 4vw, 56px));
+}
+/* Safety net: never let a wide child force a horizontal scrollbar / edge bleed. */
+body.ri-site { overflow-x: hidden; }
+
+/* right column: a little head padding so its content clears the top of the row */
+.pm-col.pm-right{ padding-top:14px; }
+
+ 
+/* --- Component Spacing --- */
+.video-section, .main-content-section {
+    margin-bottom: 2rem; /* Adds space between components */
+}
+
+/* --- Video Section (Restored from your original file) --- */
+.video-section.full-width {
+    width: 100%;
+}
+.video-section.contained {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.video-responsive {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+.video-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* --- Two-Column Page Layout --- */
+.pm-rendered-layout{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    padding: 2rem 15px;
+    max-width: 90;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* Push grid container down to clear the fixed header */
+    margin-top: var(--top-content-gap, 100px);
+}
+@media screen and (max-width: 900px) {
+    .page-layout-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Iframe for "As-Is" Content --- */
+.seamless-iframe {
+    width: 100%;
+    border: none;
+    display: block;
+    /* Height is set dynamically by JavaScript */
+}
+
+
+.pdf-gallery-item-frontend {
+border:1px solid #6c6100;opacity:.9;
+font-family: "Arial Narrow"; 
+font-size:.51rem!important; 
+background-color:#2b0303!important
+}
+
+span.pdf-title {font-size:.791rem!important}
+
+
+/* Hide filename captions in side panels (Left/Right) */
+.pm-col[data-col="left"]  .ri-card-title,
+.pm-col[data-col="right"] .ri-card-title { 
+  display: none !important;
+}
+
+/* OPTIONAL: flip on quickly by removing the block above, or override like this: */
+/*
+.pm-col[data-col="left"]  .ri-card-title,
+.pm-col[data-col="right"] .ri-card-title { 
+  display: block !important;
+}
+*/

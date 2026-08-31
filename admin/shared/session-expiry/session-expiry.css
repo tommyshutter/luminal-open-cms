@@ -1,0 +1,56 @@
+/**
+ * Session-expiry banner — see session-expiry.js for why this exists.
+ * Fixed to the top so it is visible no matter where the failing action was, and
+ * theme-proof (own colors + !important) so no admin theme can wash it out.
+ */
+#lum-session-expired {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 2147483000;               /* above modals/drawers — this outranks everything */
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 18px;
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 60%, #ea580c 100%) !important;
+    color: #fff !important;
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, .38);
+    animation: lse-drop .22s ease-out;
+}
+@keyframes lse-drop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+#lum-session-expired .lse-icon { font-size: 19px; line-height: 1; flex: 0 0 auto; }
+#lum-session-expired .lse-text { flex: 1 1 auto; color: #fff !important; }
+#lum-session-expired .lse-text b { color: #fff !important; font-weight: 800; }
+
+#lum-session-expired .lse-btn {
+    flex: 0 0 auto;
+    background: #fff !important;
+    color: #b91c1c !important;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 15px;
+    font: 700 13px system-ui, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+}
+#lum-session-expired .lse-btn:hover { background: #fee2e2 !important; }
+
+#lum-session-expired .lse-x {
+    flex: 0 0 auto;
+    background: transparent !important;
+    color: #fff !important;
+    border: 0;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0 4px;
+    cursor: pointer;
+    opacity: .8;
+}
+#lum-session-expired .lse-x:hover { opacity: 1; }
+
+@media (max-width: 620px) {
+    #lum-session-expired { flex-wrap: wrap; gap: 9px; padding: 11px 13px; font-size: 13px; }
+    #lum-session-expired .lse-text { flex: 1 1 100%; order: 2; }
+    #lum-session-expired .lse-btn { order: 3; }
+}

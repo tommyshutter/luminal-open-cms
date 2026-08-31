@@ -1,0 +1,642 @@
+/**
+ * Printful Manager Styles — Dark Admin Theme
+ *
+ * File: SITE_ROOT/admin/printful-mgr/assets/css/printful-manager.css
+ * Version: 2026.01.29
+ *
+ * Adapted to match admin-styles.css dark theme with cobalt/lime accents.
+ */
+
+/* Main Container */
+.printful-manager {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(20, 24, 40, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    min-height: 60vh;
+    overflow: hidden;
+}
+
+/* Header */
+.manager-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #444;
+    margin-bottom: 25px;
+}
+
+.manager-header h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #fff;
+    font-family: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .3rem;
+    background: transparent !important;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status-indicator.connected {
+    background: #2ecc71;
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
+}
+
+.status-indicator.disconnected {
+    background: #e74c3c;
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.4);
+}
+
+/* Navigation Tabs */
+.printful-manager .manager-nav {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0;
+}
+
+.printful-manager .nav-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 14px;
+    font-weight: 300;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+}
+
+.printful-manager .nav-btn:hover {
+    color: #e0e0e0;
+    background: rgba(255,255,255,0.05);
+}
+
+.printful-manager .nav-btn.active {
+    color: #d2ff06;
+    border-bottom-color: #d2ff06;
+}
+
+/* Content Sections */
+.manager-content {
+    padding: 10px 0;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.printful-manager .content-section {
+    background: transparent;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.37);
+}
+
+.printful-manager .content-section h2 {
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: #fff;
+    font-family: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    background: #2e4fd6 !important;
+    border-radius: 5px;
+    padding: 4px 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Forms — match admin-styles.css */
+.config-form {
+    max-width: 600px;
+}
+
+.printful-manager .form-group {
+    margin-bottom: 20px;
+}
+
+.printful-manager .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 300;
+    color: #ccc;
+}
+
+.printful-manager .form-group input[type="text"],
+.printful-manager .form-group input[type="password"],
+.printful-manager .form-group select {
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.printful-manager .form-group input:focus,
+.printful-manager .form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+}
+
+.printful-manager .form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-size: .85rem;
+}
+
+.printful-manager .form-group small a {
+    color: chartreuse;
+}
+
+.printful-manager .form-group.checkbox label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.printful-manager .form-group.checkbox input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+/* Buttons — match admin pill/button style */
+.printful-manager .btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 9px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.printful-manager .btn-primary {
+    background-color: #d2ff06;
+    color: #0f1a03;
+    border: 1px solid #1a9c6d;
+}
+
+.printful-manager .btn-primary:hover {
+    background-color: #1a9c6d;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(26, 156, 109, 0.3);
+}
+
+.printful-manager .btn-secondary {
+    background: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+.printful-manager .btn-secondary:hover {
+    background: #444;
+    border-color: #777;
+}
+
+.printful-manager .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.product-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* Target both .product-image class AND bare img inside cards (JS renders without class) */
+.product-image,
+.product-card img {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.product-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #e0e0e0;
+}
+
+.product-price {
+    color: #d2ff06;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.product-variants {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #999;
+}
+
+.product-shortcode-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.product-shortcode {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    color: #93c5fd;
+    background: rgba(30, 41, 59, 0.7);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.copy-shortcode-btn {
+    appearance: none;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+.copy-shortcode-btn:hover { background: rgba(59, 130, 246, 0.25); }
+.copy-shortcode-btn:active { background: rgba(59, 130, 246, 0.35); }
+
+/* Orders List */
+.orders-list {
+    margin-top: 20px;
+}
+
+.order-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.order-id {
+    font-weight: 600;
+    font-size: 16px;
+    color: #e0e0e0;
+}
+
+.order-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.order-status.pending {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.order-status.fulfilled {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.order-status.cancelled {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.order-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.order-detail {
+    font-size: 13px;
+    color: #ccc;
+}
+
+.order-detail strong {
+    display: block;
+    color: #999;
+    margin-bottom: 3px;
+}
+
+/* Sync Status */
+.printful-manager .sync-status {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.printful-manager .status-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: #ccc;
+}
+
+.printful-manager .status-item:last-child {
+    border-bottom: none;
+}
+
+.printful-manager .status-item label {
+    font-weight: 500;
+    color: #999;
+}
+
+.printful-manager .status-item span {
+    color: #e0e0e0;
+}
+
+#lastSync {
+    font-weight: 500;
+    color: chartreuse;
+}
+
+/* Loading and Messages */
+.loading-message {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 400px;
+}
+
+.message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    animation: slideIn 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+
+.message.success {
+    background: rgba(46, 204, 113, 0.2);
+    color: #d5f5e3;
+    border-left: 4px solid #2ecc71;
+}
+
+.message.error {
+    background: rgba(231, 76, 60, 0.2);
+    color: #fadbd8;
+    border-left: 4px solid #e74c3c;
+}
+
+.message.info {
+    background: rgba(52, 152, 219, 0.15);
+    color: #d6eaf8;
+    border-left: 4px solid #3498db;
+}
+
+/* Spinner */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    border-top-color: #d2ff06;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive — tablet */
+@media (max-width: 960px) {
+    .printful-manager {
+        padding: 15px 10px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}
+
+/* Responsive — mobile */
+@media (max-width: 600px) {
+    .printful-manager {
+        padding: 10px 8px;
+        border-radius: 0;
+    }
+
+    .manager-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .manager-header h1 {
+        font-size: 1.1rem;
+        letter-spacing: .15rem;
+    }
+
+    .connection-status {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .printful-manager .manager-nav {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+
+    .printful-manager .nav-btn {
+        flex: 1 1 45%;
+        min-width: 0;
+        padding: 8px 6px;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .printful-manager .content-section {
+        padding: 12px 10px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .product-card img {
+        height: 140px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .product-variants {
+        font-size: 11px;
+    }
+
+    .order-details {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .printful-manager .form-group input[type="text"],
+    .printful-manager .form-group input[type="password"],
+    .printful-manager .form-group select {
+        font-size: 14px;
+    }
+}
+
+/* Responsive — small phone */
+@media (max-width: 400px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-card img {
+        height: 180px;
+    }
+
+    .printful-manager .nav-btn {
+        flex: 1 1 100%;
+        font-size: 13px;
+    }
+}

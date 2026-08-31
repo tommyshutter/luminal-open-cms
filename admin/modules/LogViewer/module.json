@@ -1,0 +1,16 @@
+{
+  "name": "LogViewer",
+  "version": "1.0.0",
+  "description": "Site log viewer with threat detection dashboard — access logs, error logs, and security analysis",
+  "entry_point": "LogViewer.php",
+  "dependencies": [],
+  "author": "Luminal CMS",
+  "menu_entry": {
+    "title": "Log Viewer",
+    "href": "LogViewer.php",
+    "key": "LogViewer",
+    "role": "admin",
+    "order": 92,
+    "icon": "📋"
+  }
+}

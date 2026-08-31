@@ -1,0 +1,70 @@
+
+.card,dock,
+.control-panel {
+  background:#111;
+  pad ding: 2rem;
+  border-radius: 10px;color:gold
+
+}
+
+
+.row-line  {
+   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+border: 0px solid rgba(255, 255, 255, 0.15); 
+     border-radius: 5px; padding: 20px; 
+     box-shadow: -10px 8px 32px 0 rgba(0, 0, 0, 0.537); 
+font-size:1.64rem;font--weight:bold;color:;
+padding:2px;font-weight:400;
+;margin-bottom:12px;border:0px solid;background:#222;
+;text-align:!important
+color:goldenrod
+}
+
+.row-line .pill {font-size:.7rem;text-transform:uppercase;;margin-left:3px;
+text-align:left!important;
+}
+
+
+
+#page_title {max-width:80%!important;}
+
+
+.pm_page_listing_title {font-size:1.1rem!important;;text-transform:uppercase;;margin-left:3px;
+text-align:left!important;float:left;font-weight:bold;background -color:#000;padding:10px 6px 10px 1px;
+color:goldenrod
+}
+
+.pm_page_slug_folder  {text-transform:uppercase;font-size:.751rem!important;
+text-align:right!important;color:#fff;opacity:.5
+;max-width:100%;color:gold
+}
+
+dock-block 
+{font-size:.9rem;text-transform:uppercase;;margin-left:10px;
+text-align:left!important;
+}
+.row-line .pill {font-size:.7rem;text-transform:uppercase;;margin-left:3px;
+text-align:left!important;
+}
+
+.row-line span {color:goldenrod;text-align:left!important;margin-right:10px}
+
+.dock-block *:hover,
+.row-line .pill:hover {color:gold}
+
+.dock-block *{text-align:right;font-size:1rem;max-height:40vh;overflow-y:auto}
+
+.dock-block summary{font-size:1.22rem;text-transform:uppercase;text-align:left;font-weight:bold;height:30px;padding:10x}
+
+.dock-block.existing_pages summary{border:1px solid #990808;padding-left:10px;
+;background-color:#ffc30a;border-radius:10px;font-size:1.5rem;line-height:1.5rem  
+;color:#000;vertical-align:middle;min-height:2.2rem!important
+}
+
+#ri-revisions-list.list{font-size:2rem!important}
+
+
+#existing-pages {;border:1px solid #9e0808; padding:5px;border-radius:10px;
+     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+     border-radius: 5px; padding: 0px; 
+}

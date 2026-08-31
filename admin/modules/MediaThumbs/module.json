@@ -1,0 +1,25 @@
+{
+  "name": "MediaThumbs",
+  "version": "1.1.0",
+  "description": "Media thumbnail management — bulk generation, diagnostics, and health checks",
+  "author": "Luminal CMS",
+  "entry_point": "MediaThumbs.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "MediaThumbs",
+    "title": "Media Thumbs",
+    "href": "MediaThumbs.php",
+    "role": "admin",
+    "order": 56,
+    "icon": "🎞️"
+  },
+  "menu_group": "system",
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create"
+    ]
+  }
+}

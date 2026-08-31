@@ -1,0 +1,19 @@
+{
+  "name": "BlogManager",
+  "version": "1.0.0",
+  "description": "Blog article management — create, edit, publish articles. Public [[blog]] shortcode.",
+  "entry_point": "BlogManager.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "title": "Blog Manager",
+    "href": "BlogManager.php",
+    "key": "BlogManager",
+    "role": "editor",
+    "order": 55,
+    "icon": "📝"
+  },
+  "requires_data_dirs": [
+    "articles"
+  ],
+  "dependencies": []
+}

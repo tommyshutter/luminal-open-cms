@@ -1,0 +1,21 @@
+{
+  "name": "SiteTextReceiver",
+  "version": "1.0.0",
+  "description": "Key-value content slots that agents push to and shortcodes render. Drop [[site-text:key]] in any page.",
+  "author": "Luminal CMS",
+  "category": "content",
+  "entry_point": "SiteTextReceiver.php",
+  "menu_entry": {
+    "title": "Site Text",
+    "href": "SiteTextReceiver.php",
+    "key": "site-text-receiver",
+    "role": "admin",
+    "order": 44,
+    "icon": "📥"
+  },
+  "data_dir": "admin/data/site-text",
+  "shortcodes": [
+    "site-text"
+  ],
+  "package": "content"
+}

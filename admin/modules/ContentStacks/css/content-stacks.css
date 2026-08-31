@@ -1,0 +1,841 @@
+/**
+ * Content Stacks Editor - Styles
+ * @file SITE-ROOT/admin/content-stacks/content-stacks.css
+ */
+
+.cs-wrap{
+  padding: 8px;
+  max-width: 1800px;
+}
+
+/* ======== TOP ACTION BAR (above card grid) ======== */
+.cs-top-bar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+.cs-top-bar-spacer{ flex:1; }
+.cs-new-stack-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #1a1a3e;
+  color: #6580eb;
+  border: 1px solid #6580eb;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+}
+.cs-new-stack-btn:hover{
+  background: #6580eb;
+  color: #fff;
+}
+.cs-new-stack-btn-plus{
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* ======== CARD GRID — MASONRY (CSS columns, variable heights) ======== */
+.cs-card-grid{
+  column-count: 3;
+  column-gap: 18px;
+}
+@media (max-width: 1200px){
+  .cs-card-grid{ column-count: 2; }
+}
+@media (max-width: 720px){
+  .cs-card-grid{ column-count: 1; }
+}
+
+.cs-card{
+  background: #0f0f18;
+  border: 1px solid #222;
+  border-radius: 10px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all .2s;
+  display: block;
+  width: 100%;
+  margin: 0 0 18px;
+  box-sizing: border-box;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  min-height: 160px;
+  position: relative;
+}
+.cs-card-delete{
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.5);
+  color: #888;
+  border: 1px solid #333;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all .15s;
+  z-index: 2;
+  font-size: .9rem;
+}
+.cs-card:hover .cs-card-delete{ opacity: 1; }
+.cs-card-delete:hover{
+  color: #fff;
+  background: #c62828;
+  border-color: #ff4d4d;
+}
+.cs-card:hover{
+  border-color: #ffc30a;
+  background: #1a1a28;
+}
+.cs-card-title{
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e8edf5;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.cs-card-meta{
+  font-size: .8rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+.cs-card-meta code{
+  background: #111;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #6580eb;
+}
+.cs-card-preview{
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.cs-card-thumb{
+  max-width: 100%;
+  max-height: 180px;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #111;
+  border: 1px solid #333;
+  flex-shrink: 0;
+}
+.cs-card-thumb-icon{
+  width: 110px;
+  height: 110px;
+  border-radius: 6px;
+  background: #111;
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #888;
+  font-size: 2.6rem;
+}
+.cs-card-empty{
+  color: #444;
+  font-size: .85rem;
+  font-style: italic;
+  padding: 10px 0;
+}
+.cs-card-count{
+  font-size: .75rem;
+  color: #555;
+  margin-top: 8px;
+}
+.cs-card-shortcode{
+  margin-top: 6px;
+  font-size: .72rem;
+  cursor: pointer;
+}
+.cs-card-shortcode code{
+  background: #111;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #6580eb;
+  font-family: monospace;
+  font-size: .72rem;
+}
+.cs-card-shortcode:hover code{
+  color: #fff;
+  background: #1a1a3e;
+}
+.cs-shortcode-copy{
+  cursor: pointer;
+  transition: all .15s;
+}
+.cs-shortcode-copy:hover{
+  color: #fff !important;
+  background: #1a1a3e !important;
+}
+
+/* Legacy "+New Stack" card (now retired — see .cs-new-stack-btn top button) */
+.cs-card-new{ display: none; }
+
+/* ======== MODAL OVERLAY ======== */
+.cs-modal-overlay{
+  display: none;
+}
+.cs-modal-overlay.open{
+  display: block;
+}
+
+.cs-modal{
+  width: 100%;
+  background: #0a0a0f;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--cs-header-offset, 0px));
+  overflow: hidden;
+}
+
+/* Modal header */
+.cs-modal-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #111;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+.cs-modal-title{
+  margin: 0;
+  color: #e8edf5;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+.cs-modal-header-controls{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.cs-modal-close{
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+.cs-modal-close:hover{ color: #fff; }
+.cs-back-btn{
+  color: #ffc30a;
+  border-color: #444;
+  background: #1a1a28;
+  font-weight: 600;
+  margin-right: 16px;
+}
+.cs-back-btn:hover{
+  color: #000;
+  background: #ffc30a;
+  border-color: #ffc30a;
+}
+
+/* Modal body — 50/50 grid */
+.cs-modal-body{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 12px;
+  overflow: hidden;
+  min-height: 0;
+}
+@media (max-width: 1024px){
+  .cs-modal-body{ grid-template-columns: 1fr; }
+}
+
+/* Browser panel (left) */
+.cs-browser-panel{
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.cs-browser-panel iframe{
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: none;
+}
+
+/* Editor panel (right) */
+.cs-editor-panel{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.cs-modal-toolbar{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.cs-modal-toolbar label{
+  color: #aaa;
+  font-size: .85rem;
+}
+.cs-modal-toolbar select{
+  background: #1a1a2e;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: .85rem;
+}
+
+/* ---- PLAYLIST AREA ---- */
+.cs-playlist{
+  min-height: 200px;
+  flex: 1;
+  overflow-y: auto;
+  border: 2px dashed rgba(83,140,11,0.6);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  transition: all .15s;
+}
+.cs-playlist.cs-drop-active{
+  border-color: #22d3ee;
+  background: rgba(34,211,238,0.12);
+  box-shadow: 0 0 0 2px rgba(34,211,238,0.3);
+}
+/* While a drag is in progress in the iframe, highlight the editor panel so
+   users know they CAN drop into the stack. */
+.cs-editor-panel.cs-drop-ready .cs-playlist{
+  border-color: #0ea5e9;
+  background: rgba(14,165,233,0.04);
+}
+.cs-editor-panel.cs-drop-ready .cs-playlist::before{
+  content: '⬇  Drop here to add to stack  ⬇';
+  display: block;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 8px;
+  color: #0ea5e9;
+  font-size: .85rem;
+  font-weight: 600;
+  border: 1px dashed rgba(14,165,233,0.4);
+  border-radius: 6px;
+  background: rgba(14,165,233,0.06);
+  pointer-events: none;
+}
+.cs-empty{
+  text-align: center;
+  color: #555;
+  padding: 40px 0;
+}
+
+/* ---- PLAYLIST ITEMS ---- */
+.cs-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
+  cursor: move;
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  position: relative;
+}
+.cs-item:hover{
+  border-color: rgba(255,255,255,0.3);
+}
+.cs-item-thumb{
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #111;
+}
+.cs-item-details{
+  flex: 1;
+  overflow: hidden;
+}
+.cs-item-path{
+  font-weight: 700;
+  font-size: .9rem;
+  color: #ffb700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+.cs-item-controls{
+  font-size: .85rem;
+  color: #ccc;
+}
+.cs-item-controls label{
+  margin-right: 10px;
+  cursor: pointer;
+}
+.cs-item-controls input[type="text"]{
+  width: 60%;
+  padding: 4px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: .85rem;
+}
+.cs-item-remove{
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  cursor: pointer;
+  color: #ff6b6b;
+  background: rgba(255,77,77,0.08);
+  border: 1px solid rgba(255,77,77,0.25);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  padding: 0;
+  line-height: 1;
+  transition: all .15s;
+}
+.cs-item-remove:hover{
+  color: #fff;
+  background: #dc2626;
+  border-color: #ef4444;
+}
+
+/* Per-item (HTML block) buttons row + CSS/JS panel */
+.cs-item-buttons{
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.cs-edit-cssjs{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: #1a1a2e;
+  color: #a78bfa;
+  border: 1px solid #4c1d95;
+  border-radius: 4px;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.cs-edit-cssjs:hover,
+.cs-edit-cssjs.active{
+  background: #4c1d95;
+  color: #fff;
+  border-color: #a78bfa;
+}
+.cs-item-cssjs-panel{
+  margin-top: 6px;
+  padding: 8px;
+  background: rgba(167,139,250,0.04);
+  border: 1px solid rgba(167,139,250,0.18);
+  border-radius: 4px;
+}
+.cs-item-cssjs-label{
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a78bfa;
+  font-weight: 700;
+  margin: 4px 0 3px;
+}
+.cs-item-cssjs-label .cs-hint{
+  color: #888;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 6px;
+}
+.cs-item-css,
+.cs-item-js{
+  width: 100%;
+  background: #0f0f1a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  color: #c8ccd0;
+  font: 11px/1.4 "JetBrains Mono", "Consolas", monospace;
+  padding: 6px 8px;
+  resize: vertical;
+}
+
+/* YouTube/Facebook controls */
+.cs-yt-controls{
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* ---- TOP ACTIONS ROW (URL input + Add Link + Save, pinned above playlist) ---- */
+.cs-top-actions{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  /* opaque so list items never bleed through the pinned bar while scrolling */
+  background: #14141c;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  flex-shrink: 0;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+.cs-top-actions .cs-link-input{ flex: 1; min-width: 0; }
+.cs-top-actions .cs-btn{ white-space: nowrap; flex-shrink: 0; }
+
+/* Legacy bottom add-link row (kept in CSS for any template still using it, but hidden by default) */
+.cs-add-link{
+  display: none;
+}
+.cs-link-input{
+  flex: 1;
+  padding: 6px 10px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 6px;
+  font-size: .9rem;
+}
+
+/* ---- BUTTONS ---- */
+.cs-btn{
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  cursor: pointer;
+  font-size: .95rem;
+  font-weight: 600;
+  transition: background .15s;
+}
+.cs-save-btn{
+  background: #1bb458;
+  color: #fff;
+  border-color: #0b3b1e;
+  width: 100%;
+  flex-shrink: 0;
+}
+.cs-save-btn--top{ width: auto; padding: 7px 20px; }
+
+/* FB subtype badge on item thumb (event/reel/live/video/post/etc) */
+.cs-fb-sub-badge{
+  position: absolute;
+  bottom: 4px; left: 4px;
+  background: rgba(0,0,0,0.78);
+  color: #60a5fa;
+  font-size: .62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  display: inline-flex; align-items: center; gap: 4px;
+  pointer-events: none;
+}
+.cs-fb-sub-badge i{ font-size: .7rem; }
+.cs-fb-sub-badge-text{ display:block; font-size:.6rem; margin-top:4px; color:#60a5fa; text-transform:uppercase; }
+.cs-item-thumb{ position: relative; }
+.cs-save-btn:hover{ background: #41f409; color: #000; }
+.cs-add-link-btn{
+  background: #2e4fd6;
+  color: #fff;
+}
+.cs-add-link-btn:hover{ background: #41f409; color: #000; }
+.cs-rename-btn,
+.cs-delete-btn{
+  padding: 4px 12px;
+  font-size: .8rem;
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cs-rename-btn:hover{ color: #ffb700; border-color: #ffb700; }
+.cs-delete-btn:hover{ color: #ff4d4d; border-color: #ff4d4d; }
+
+/* ---- SHORTCODE HINT ---- */
+.cs-shortcode-hint{
+  font-size: .8rem;
+  color: #666;
+}
+.cs-shortcode-hint code{
+  background: #111;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #6580eb;
+  font-size: .8rem;
+}
+
+/* ---- TOAST (top-right so Saved/Deleted callouts stay in view in the editor) ---- */
+.cs-toast{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: .95rem;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+.cs-toast.show{ opacity: 1; }
+.cs-toast.success{ background: #0b3b1e; color: #fff; }
+.cs-toast.error{ background: #3b0b0b; color: #fff; }
+
+/* ---- PDF & FACEBOOK THUMB ICONS ---- */
+.cs-pdf-thumb,
+.cs-fb-thumb{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a0a0a;
+  border: 1px solid #330000;
+}
+.cs-pdf-thumb i{
+  font-size: 2.2rem;
+  color: #e05252;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+.cs-fb-thumb i{
+  font-size: 2.2rem;
+  color: #1877f2;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+.cs-tt-thumb{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #010101;
+  border: 1px solid #333;
+}
+.cs-tt-thumb i{
+  font-size: 2.2rem;
+  color: #ff0050;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+.cs-html-thumb{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a1a0a;
+  border: 1px solid #1b3b1b;
+}
+.cs-html-thumb i{
+  font-size: 2.2rem;
+  color: #0f0;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+.cs-html-edit{
+  width: 100%;
+  height: 250px;
+  background: #000;
+  color: #0f0;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-family: monospace;
+  font-size: .8rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* ======== ITEM EXTRAS (caption + link row) ======== */
+.cs-item-extras{
+  margin-top: 4px;
+}
+
+/* ======== CAPTION TOOLBAR ======== */
+.cs-caption-toolbar{
+  display: flex;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.cs-caption-toolbar button{
+  padding: 2px 6px;
+  background: #1a1a2e;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 3px;
+  font-size: .7rem;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: all .12s;
+}
+.cs-caption-toolbar button:hover{
+  background: #2e4fd6;
+  color: #fff;
+  border-color: #6580eb;
+}
+
+/* ---- SORTABLE PLACEHOLDER ---- */
+.cs-placeholder{
+  border: 2px dashed #2f4fd6;
+  border-radius: 8px;
+  min-height: 60px;
+  margin-bottom: 6px;
+  background: rgba(47,79,214,0.08);
+}
+
+/* HTML-block reference card (first-class library-block item) */
+.cs-hb-ref {
+  padding: 10px 12px;
+  background: rgba(167, 139, 250, 0.06);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-hb-ref-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cs-hb-ref-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #a78bfa;
+}
+.cs-hb-ref-row strong { color: #f3f4f6; font-size: 0.92rem; }
+.cs-hb-ref-shortcode {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: #c4b5fd;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+.cs-hb-ref-shortcode:hover { background: rgba(167, 139, 250, 0.15); color: #fff; }
+.cs-hb-ref-open,
+.cs-hb-ref-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cs-hb-ref-open {
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+.cs-hb-ref-open:hover { background: rgba(52, 211, 153, 0.25); color: #fff; border-color: #34d399; }
+.cs-hb-ref-inline {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: inherit;
+}
+.cs-hb-ref-inline:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+
+/* Save to Library button (on HTML items) */
+.cs-save-to-lib{
+  display: inline-block;
+  margin-top: 4px;
+  padding: 3px 10px;
+  background: #1a1a2e;
+  color: #6580eb;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  font-size: .75rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.cs-save-to-lib:hover{
+  background: #2e4fd6;
+  color: #fff;
+  border-color: #6580eb;
+}
+
+/* HTML block toolbar button */
+.cs-html-btn{
+  background: #0a1a0a;
+  color: #0f0;
+  border-color: #1b3b1b;
+}
+.cs-html-btn:hover{ background: #1b3b1b; }
+.cs-html-btn i{ margin-right: 4px; }
+
+/* ---- HTML block style preset row (above the edit textarea) ---- */
+.cs-html-presets{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+  padding: 2px 0 4px;
+}
+.cs-preset-label{
+  font-size: .7rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-right: 2px;
+}
+.cs-preset-btn{
+  padding: 3px 10px;
+  background: #1a1a2e;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .12s;
+}
+.cs-preset-btn:hover{
+  background: #2e4fd6;
+  color: #fff;
+  border-color: #6580eb;
+}
+.cs-preset-btn--unwrap{
+  color: #94a3b8;
+  margin-left: auto;
+}
+.cs-preset-btn--unwrap:hover{
+  background: #3b0b0b;
+  color: #fff;
+  border-color: #f43f5e;
+}

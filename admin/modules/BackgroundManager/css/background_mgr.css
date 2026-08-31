@@ -1,0 +1,745 @@
+/**
+ * @location    SITE-ROOT/admin/background_mgr/background_mgr.css
+ * @version     2025.07.30.5
+ * @description The complete, final, and de-duplicated stylesheet for the manager.
+ * It styles the layout, preview, accordions, controls, media galleries,
+ * and includes the button-press effect and the always-visible message panel.
+ */
+
+/* --- GENERAL & LAYOUT --- */
+.admin-container {
+    max-width: 1600px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.admin-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-header-bar h1 {
+    margin: 0;
+}
+
+.background-manager-layout {
+    display: flex;
+    gap: 20px;
+}
+
+.bm-left-column {
+    flex: 0 0 450px;
+}
+
+.bm-right-column {
+    flex: 1;
+    min-width: 0; /* Prevents flexbox overflow */
+}
+
+/* --- PANELS & WRAPPERS --- */
+.settings-panel,
+.control-panel,
+.preview-panel-wrapper {
+    background-color: #2a2a2e;
+    border: 1px solid #3a3a3c;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+ ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+#background-preview-panel {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 70vh;
+    background-color: #1a1a1a;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+  ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+
+/* --- CONTROLS & FORMS --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.master-controls-wrapper {
+    display: flex;
+    gap: 20px;  
+;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+.master-controls-col {
+    flex: 1;
+}
+
+.youtube-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* --- ACCORDIONS --- */
+.accordion-item {
+    background: #2a2a2e;
+    border: 1px solid #3a3a3c;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.accordion-header {
+    background: #383838;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.accordion-item.open > .accordion-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #eee;
+    border: none;
+    padding: 0;
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-icon::before {
+    content: '▶';
+}
+
+.accordion-item.open > .accordion-header .accordion-icon {
+    transform: rotate(90deg);
+}
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #444;
+}
+
+.accordion-item.open > .accordion-content {
+    display: block;
+}
+
+/* --- MEDIA, PREVIEW & SLIDESHOW --- */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.media-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: #111;
+    transition: border-color 0.2s ease;
+}
+
+.thumb-delete-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.85);
+    color: white;
+    border: none;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0;
+}
+
+.media-thumb:hover .thumb-delete-btn {
+    display: flex;
+}
+
+.thumb-delete-btn:hover {
+    background: #dc3545;
+    transform: scale(1.1);
+}
+
+.media-thumb:hover {
+    border-color: #00aaff;
+}
+
+.media-thumb.selected {
+    border-color: #00ff7f;
+    box-shadow: 0 0 10px rgba(0, 255, 127, 0.7);
+}
+
+.media-thumb img,
+.media-thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- SLIDESHOW EDITOR CONTROLS --- */
+.slideshow-controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 160px;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 16px;
+}
+.slideshow-controls-grid .form-group {
+    margin-bottom: 0;
+}
+
+.playlist-editor-section {
+    border-top: 2px solid #444;
+    margin-top: 8px;
+    padding-top: 16px;
+}
+.playlist-editor-hint {
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin: 0 0 10px;
+}
+
+.slideshow-tray {
+    min-height: 120px;
+    border: 2px dashed #444;
+    background-color: #1a1a1a;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.preview-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+#preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.panel-placeholder-text {
+    color: #666;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+}
+
+/* --- INPUTS & BUTTONS --- */
+#youtube-url-input {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #eee;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#youtube-url-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+.admin-button, .admin-button-success, .admin-button-danger, .admin-button-sm {
+    font-size: 1rem;
+    padding: 12px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #555;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.admin-button-sm {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+#save-master-settings-btn,
+.admin-button.full-width {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 15px;
+}
+
+#save-master-settings-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+    background: #218838;
+}
+
+/* --- MESSAGE PANEL --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-message-panel {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    color: #333;
+    text-shadow: none;
+    background-color: #f8f9fa; /* Neutral background */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-message-panel.success,
+.admin-message-panel.error,
+.admin-message-panel.info {
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+.admin-message-panel.success {
+    background-color: rgba(40, 167, 69, 0.85);
+    border-color: #218838;
+}
+
+.admin-message-panel.error {
+    background-color: rgba(220, 53, 69, 0.85);
+    border-color: #c82333;
+}
+
+.admin-message-panel.info {
+    background-color: rgba(23, 162, 184, 0.85);
+    border-color: #138496;
+}
+
+/* --- UPLOAD DROPZONE --- */
+.upload-dropzone {
+    border: 2px dashed #555;
+    border-radius: 8px;
+    padding: 24px 16px;
+    margin-bottom: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+}
+
+.upload-dropzone:hover {
+    border-color: #00aaff;
+    background: rgba(0, 170, 255, 0.04);
+}
+
+.upload-dropzone.dragover {
+    border-color: #00ff7f;
+    background: rgba(0, 255, 127, 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 127, 0.15);
+}
+
+.dropzone-file-input {
+    display: none;
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    pointer-events: auto;
+}
+
+.dropzone-icon {
+    font-size: 2rem;
+    color: #666;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.upload-dropzone:hover .dropzone-icon,
+.upload-dropzone.dragover .dropzone-icon {
+    color: #00aaff;
+}
+
+.upload-dropzone.dragover .dropzone-icon {
+    color: #00ff7f;
+}
+
+.dropzone-text {
+    color: #999;
+    font-size: 0.95rem;
+}
+
+.dropzone-text strong {
+    color: #00aaff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.dropzone-hint {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.dropzone-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+.dropzone-progress-bar {
+    width: 0%;
+    height: 6px;
+    background: linear-gradient(90deg, #00aaff, #00ff7f);
+    border-radius: 3px;
+    transition: width 0.15s ease;
+    max-width: 100%;
+    align-self: stretch;
+}
+
+.dropzone-progress-text {
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.admin-message-panel.warning {
+    background-color: rgba(255, 193, 7, 0.85);
+    border-color: #e0a800;
+    color: #333;
+    text-shadow: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .background-manager-layout { flex-direction: column; }
+    .bm-left-column { flex: 1; }
+    .slideshow-controls-grid { grid-template-columns: 1fr; }
+    .master-controls-wrapper { flex-direction: column; }
+}
+/* ============================================================================
+ * Stage 2 · Phase 1 — Tabbed workspace + persistent preview rail
+ * Additive layer on top of the existing styles. The legacy
+ * .background-manager-layout / .bm-left-column / .bm-right-column and
+ * accordion classes are no longer emitted by BackgroundManager.php but
+ * their styles remain harmless. Remove in a later cleanup pass.
+ * ============================================================================ */
+
+/* Workspace is a vertical stack: preview bar at top, then the tabbed
+ * workspace below. Simpler than a two-column grid and puts the live
+ * preview at natural reading-first position. */
+.bgm-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bgm-main-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─────────────────────────  Utility bar button  ───────────────────────── */
+.bgm-utility-btn {
+  align-self: center;
+  margin-right: 8px;
+  padding: 6px 12px;
+  font: 700 11px/1.2 system-ui, sans-serif;
+  background: rgba(220,38,38,0.12);
+  color: #f87171;
+  border: 1px solid rgba(220,38,38,0.28);
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background .12s, border-color .12s;
+}
+.bgm-utility-btn:hover { background: rgba(220,38,38,0.2); border-color: rgba(220,38,38,0.5); }
+
+/* ─────────────────────────  Workspace panels  ───────────────────── */
+.bgm-tab-panel {
+  background: #2a2a2e;
+  border: 1px solid #3a3a3c;
+  border-radius: 10px;
+  padding: 22px 24px;
+  box-shadow: 10px 8px 32px 0 rgba(0,0,0,.55);
+  animation: bgm-panel-in 0.18s ease-out;
+}
+#bgm-panel-master { min-height: 0; }   /* compact master */
+.bgm-mode-panel { margin-top: 18px; min-height: 380px; }
+.bgm-tab-panel[hidden] { display: none; }
+
+/* Utility bar (replaces old tab nav — holds Clear Cache) */
+.bgm-utility-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.bgm-utility-bar-spacer { flex: 1 1 auto; }
+@keyframes bgm-panel-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bgm-section-head { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #3a3a3c; }
+.bgm-section-head h2 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.bgm-section-sub {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #8a8f97;
+  line-height: 1.55;
+  max-width: 72ch;
+}
+
+.bgm-panel-inset {
+  /* When we nest the legacy .control-panel inside a tab, kill the duplicate
+     background/border/shadow — the tab panel is the new frame. */
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.bgm-workspace-footer {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding-top: 4px;
+}
+
+/* ─────────────────────────  Preview bar (top of workspace)  ───
+ * Full-width panel above the tab chooser. Shorter than the old
+ * accordion version to keep the tab workspace above the fold on
+ * most monitors, but scaled via aspect-ratio so it still reads as
+ * the live preview it is. Not sticky — the workspace below is
+ * where the user spends time, they can scroll freely.
+ * ─────────────────────────────────────────────────────────────── */
+.bgm-preview-rail {
+  background: #2a2a2e;
+  border: 1px solid #3a3a3c;
+  border-radius: 10px;
+  padding: 14px 18px 18px;
+  box-shadow: 10px 8px 32px 0 rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bgm-preview-rail-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.bgm-preview-rail-head h2 {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+}
+.bgm-preview-rail-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.4px;
+  color: #8a8f97;
+  font-style: italic;
+}
+.bgm-preview-rail #background-preview-panel {
+  width: 100%;
+  aspect-ratio: 21 / 9;  /* cinemascope-ish; keeps the preview short at top */
+  max-height: 40vh;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #3a3a3c;
+}
+
+/* ─────────────────────────  Responsive  ────────────────────── */
+@media (max-width: 720px) {
+  .bgm-preview-rail #background-preview-panel { aspect-ratio: 16 / 9; max-height: 50vh; }
+}
+
+/* ============================================================================
+ * Phase 2 component catalog — opening member: fc-select
+ * Well-styled native <select>. No JS dependency, full keyboard support,
+ * accessible out of the box. Replaces any "pill" chip pattern for
+ * single-choice controls.
+ * ============================================================================ */
+.fc-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #1b1c1e;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #8a8f97 50%),
+    linear-gradient(135deg, #8a8f97 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) calc(1em + 2px),
+    calc(100% - 12px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  color: #eee;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+  padding: 8px 34px 8px 12px;
+  font: 600 13px/1.3 system-ui, sans-serif;
+  cursor: pointer;
+  transition: border-color .15s, background-color .15s;
+  min-width: 180px;
+}
+.fc-select:hover { border-color: #555; }
+.fc-select:focus { outline: none; border-color: #4a9eff; box-shadow: 0 0 0 2px rgba(74,158,255,0.2); }
+.fc-select option { background: #2a2a2e; color: #eee; }
+
+.bgm-chooser {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: #8a8f97;
+  font: 500 12px/1.3 system-ui, sans-serif;
+  letter-spacing: 0.4px;
+}
+.bgm-chooser-label { text-transform: uppercase; letter-spacing: 1.2px; }
+
+/* ─────────── Slideshow inline library ─────────── */
+.bgm-slideshow-library {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #3a3a3c;
+}
+.bgm-library-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.bgm-library-head h3 {
+  margin: 0;
+  font: 600 0.9rem/1.2 system-ui, sans-serif;
+  color: #fff;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.bgm-library-hint {
+  font-size: 0.78rem;
+  color: #8a8f97;
+  margin: 0 0 16px;
+  font-style: italic;
+}
+.bgm-library-section { margin-bottom: 18px; }
+.bgm-library-section:last-child { margin-bottom: 0; }
+.bgm-library-section-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 4px 0 8px;
+  color: #8a8f97;
+  font: 600 0.72rem/1.2 system-ui, sans-serif;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  border-bottom: 1px dashed #3a3a3c;
+  margin-bottom: 10px;
+}
+.bgm-library-count {
+  background: rgba(255,255,255,0.06);
+  padding: 1px 8px;
+  border-radius: 10px;
+  color: #aaa;
+  font-size: 0.68rem;
+  letter-spacing: 0.8px;
+}
+
+/* Read-only thumb visual cue — no hover-delete affordance */
+.media-thumb-readonly { cursor: grab; }
+.media-thumb-readonly:active { cursor: grabbing; }
+
+/* ─────────── Tab toolbar (filter / sort controls above each grid) ───
+ * One row, aligned with the dropzone below it. Uses the same .fc-select
+ * pulldown pattern as the slideshow library filter. Count readout on
+ * the right gives the user a live sense of "I'm seeing 7 of 23 items"
+ * — a quiet form of feedback that the filter is actually doing
+ * something. */
+.bgm-tab-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid #3a3a3c;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.bgm-toolbar-spacer { flex: 1 1 auto; }
+.bgm-toolbar-count {
+  font: 600 11px/1.2 system-ui, sans-serif;
+  color: #8a8f97;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid #3a3a3c;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+.bgm-toolbar-count span { color: #eee; font-weight: 700; }

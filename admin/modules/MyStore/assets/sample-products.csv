@@ -1,0 +1,5 @@
+SKU,Name,Price,Category,Description,Image,Enabled
+hat-001,"Classic Baseball Cap",24.99,Hats,"Comfortable cotton baseball cap with adjustable strap",/media/store/hat-001/main.jpg,true
+shirt-001,"Premium T-Shirt",19.99,T-Shirts,"Soft cotton t-shirt with premium fit",/media/store/shirt-001/main.jpg,true
+mug-001,"Coffee Mug",12.99,Mugs,"High-quality ceramic coffee mug with comfortable handle",/media/store/mug-001/main.jpg,false
+hoodie-001,"Comfort Hoodie",39.99,Hoodies,"Warm and comfortable hoodie with kangaroo pocket",/media/store/hoodie-001/main.jpg,true

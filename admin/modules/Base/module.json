@@ -1,0 +1,7 @@
+{
+  "name": "Base",
+  "version": "1.0.0",
+  "description": "Base kit — core renderers with no feature-module owner (page rendering, panel columns, legacy AI page, EPK events widget, this-week widget). No admin menu entry; present on every site and auto-loaded via the module renderer loader (includes/module-renderers.php).",
+  "distribution": "base",
+  "extension": { "type": "core", "label": "Base Kit", "owns_renderers": true }
+}

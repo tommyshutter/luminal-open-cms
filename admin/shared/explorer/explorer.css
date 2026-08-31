@@ -1,0 +1,298 @@
+/**
+ * Luminal CMS — Explorer (reusable media browser)
+ * @file /admin/shared/explorer/explorer.css
+ *
+ * One file/media browsing component, configured per host (full File Manager
+ * page, or a /media-scoped picker iframe). Grid (thumbnails) and List
+ * (details) view modes, like the main File Manager — with full filenames
+ * (never ellipsis-clipped) and rich metadata on every object.
+ */
+:root{
+  --ex-bg:#0f172a; --ex-surface:#1e293b; --ex-surface-2:#172033;
+  --ex-border:#334155; --ex-text:#f1f5f9; --ex-muted:#94a3b8; --ex-faint:#64748b;
+  --ex-accent:#38bdf8; --ex-accent-soft:rgba(56,189,248,.12);
+  --ex-red:#f43f5e; --ex-green:#22c55e; --ex-amber:#fbbf24;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body.ex-body{
+  margin:0; background:var(--ex-bg); color:var(--ex-text);
+  font-family:-apple-system,system-ui,Segoe UI,Roboto,sans-serif; font-size:14px;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────── */
+.ex-toolbar{
+  display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  padding:.45rem .6rem; background:var(--ex-surface); border-bottom:1px solid var(--ex-border);
+}
+.ex-tabs{display:flex; gap:.25rem}
+.ex-tab{
+  padding:.32rem .6rem; border-radius:6px; cursor:pointer; font-weight:600; font-size:.8rem;
+  color:var(--ex-muted); border:1px solid transparent; white-space:nowrap; user-select:none;
+}
+.ex-tab:hover{color:var(--ex-text); background:rgba(255,255,255,.05)}
+.ex-tab.active{color:var(--ex-accent); border-color:var(--ex-accent); background:var(--ex-accent-soft)}
+.ex-sep{width:1px; align-self:stretch; background:var(--ex-border); margin:2px 2px}
+.ex-spacer{flex:1 1 auto}
+
+.ex-search{
+  display:flex; align-items:center; gap:.35rem; background:var(--ex-bg);
+  border:1px solid var(--ex-border); border-radius:6px; padding:.2rem .5rem; min-width:140px;
+}
+.ex-search input{
+  background:transparent; border:none; outline:none; color:var(--ex-text);
+  font-size:.8rem; width:100%;
+}
+.ex-search .ex-search-ico{color:var(--ex-faint); font-size:.8rem}
+
+.ex-btn{
+  display:inline-flex; align-items:center; gap:.3rem; appearance:none;
+  border:1px solid var(--ex-border); background:var(--ex-surface-2); color:var(--ex-text);
+  border-radius:6px; padding:.32rem .55rem; cursor:pointer; font-size:.78rem; font-weight:600;
+  white-space:nowrap; line-height:1.2;
+}
+.ex-btn:hover{border-color:var(--ex-accent); background:rgba(255,255,255,.04)}
+.ex-btn.active{color:var(--ex-accent); border-color:var(--ex-accent); background:var(--ex-accent-soft)}
+.ex-btn.primary{background:var(--ex-accent); color:#04141f; border-color:var(--ex-accent)}
+.ex-btn.danger{background:var(--ex-red); color:#fff; border-color:var(--ex-red)}
+.ex-btn[disabled]{opacity:.4; cursor:not-allowed}
+.ex-btn-ico{font-size:.95rem; line-height:1}
+
+.ex-viewtoggle{display:flex; border:1px solid var(--ex-border); border-radius:6px; overflow:hidden}
+.ex-viewtoggle .ex-btn{border:none; border-radius:0; background:var(--ex-surface-2)}
+.ex-viewtoggle .ex-btn+.ex-btn{border-left:1px solid var(--ex-border)}
+
+.ex-zoom{display:flex; align-items:center; gap:.35rem}
+.ex-zoom-ico{color:var(--ex-faint); font-size:.65rem; line-height:1; user-select:none}
+.ex-zoom-ico.big{font-size:1rem}
+#ex-zoom-range{
+  width:110px; accent-color:var(--ex-accent); cursor:pointer; margin:0;
+}
+#ex-zoom-range::-webkit-slider-thumb{width:18px; height:18px}   /* easier to grab */
+.ex-sort select{
+  background:var(--ex-bg); color:var(--ex-text); border:1px solid var(--ex-border);
+  border-radius:6px; padding:.28rem .4rem; font-size:.76rem; cursor:pointer;
+}
+
+/* ── Hint strip ────────────────────────────────────────────────────── */
+.ex-hint{
+  padding:.25rem .6rem; font-size:.72rem; color:var(--ex-faint);
+  background:var(--ex-surface); border-bottom:1px solid var(--ex-border); text-align:center;
+}
+
+/* ── Body / scroll region ──────────────────────────────────────────── */
+/* position:relative anchors the drag-select marquee in content space. */
+.ex-body-scroll{flex:1 1 auto; overflow:auto; padding:.5rem .6rem 2rem; position:relative}
+.ex-body-scroll.ex-marqueeing{cursor:crosshair; user-select:none}
+.ex-marquee{
+  position:absolute; z-index:50; pointer-events:none;
+  background:rgba(56,189,248,.14); border:1px solid var(--ex-accent); border-radius:2px;
+}
+.ex-status{padding:.4rem .6rem; font-size:.8rem; min-height:1.4em}
+.ex-status.ok{color:var(--ex-green)} .ex-status.err{color:var(--ex-red)} .ex-status.busy{color:var(--ex-amber)}
+.ex-empty{text-align:center; color:var(--ex-faint); padding:2.5rem 1rem; font-style:italic}
+
+/* ── Folder groups ─────────────────────────────────────────────────── */
+.ex-group{margin-bottom:1rem}
+.ex-group-head{
+  display:flex; align-items:center; gap:.5rem; padding:.4rem .6rem; cursor:pointer; user-select:none;
+  background:rgba(255,255,255,.04); border-left:3px solid var(--ex-accent); border-radius:0 6px 6px 0;
+  font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ex-accent);
+}
+.ex-group-head .ex-caret{transition:transform .18s; color:var(--ex-muted)}
+.ex-group-head.collapsed .ex-caret{transform:rotate(-90deg)}
+.ex-group-head .ex-grp-count{color:var(--ex-muted); font-weight:500}
+.ex-group-head .ex-grp-size{margin-left:auto; color:var(--ex-faint); font-weight:400; font-size:.7rem}
+.ex-group-head.drop-active{background:rgba(56,189,248,.16); border-left-color:#22d3ee; color:#22d3ee}
+/* Per-folder Select-all toggle — sits in the divider next to the count.
+   ☐ → ☑ when every file in the folder is selected. */
+.ex-group-head .ex-grp-select{
+  appearance:none; margin-left:.15rem; padding:1px 7px; border:1px solid var(--ex-border);
+  background:var(--ex-surface-2); color:var(--ex-muted); border-radius:5px; cursor:pointer;
+  font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+  line-height:1.5; white-space:nowrap; transition:color .15s, border-color .15s, background .15s;
+}
+.ex-group-head .ex-grp-select::before{content:'\2610\00a0'}      /* ☐ */
+.ex-group-head .ex-grp-select.on::before{content:'\2611\00a0'}   /* ☑ */
+.ex-group-head .ex-grp-select:hover{color:var(--ex-accent); border-color:var(--ex-accent)}
+.ex-group-head .ex-grp-select.on{color:var(--ex-accent); border-color:var(--ex-accent); background:var(--ex-accent-soft)}
+/* Folder delete — subtle, revealed on header hover; red on hover. */
+.ex-group-head .ex-grp-del{
+  margin-left:.4rem; padding:1px 5px; border:0; border-radius:5px; cursor:pointer;
+  background:transparent; color:var(--ex-faint); font-size:.82rem; line-height:1; opacity:0;
+  transition:opacity .15s, background .15s;
+}
+.ex-group-head:hover .ex-grp-del{opacity:.6}
+.ex-group-head .ex-grp-del:hover{opacity:1; background:rgba(248,113,113,.22)}
+@media (hover:none){ .ex-group-head .ex-grp-del{opacity:.6} }
+/* .grid / .list set display:grid|block below with equal specificity — the
+   collapsed rule must out-rank them or the caret toggle does nothing. */
+.ex-group-body.collapsed{display:none !important}
+
+/* ── GRID (thumbnails) view ────────────────────────────────────────── */
+.ex-group-body.grid{
+  display:grid; gap:.7rem; padding:.6rem .2rem;
+  grid-template-columns:repeat(auto-fill, minmax(var(--ex-cell,150px), 1fr));
+}
+.ex-group-body.grid.drop-active{outline:2px dashed var(--ex-accent); outline-offset:-3px; border-radius:8px}
+.ex-card{
+  position:relative; background:var(--ex-surface); border:2px solid transparent; border-radius:8px;
+  overflow:hidden; cursor:pointer; transition:border-color .15s, transform .1s;
+}
+.ex-card:hover{border-color:var(--ex-border)}
+.ex-card.selected{border-color:var(--ex-accent)}
+.ex-card.dragging{opacity:.35}
+.ex-thumb{
+  display:block; width:100%; height:var(--ex-thumb-h,120px); object-fit:contain;
+  background:var(--ex-bg);
+}
+.ex-thumb[data-fit="cover"]{object-fit:cover}
+.ex-thumb-fallback{
+  display:flex; align-items:center; justify-content:center; width:100%; height:var(--ex-thumb-h,120px);
+  background:var(--ex-bg); font-size:2.2rem; color:var(--ex-faint);
+}
+.ex-card-name{
+  padding:.4rem .5rem .2rem; font-size:.76rem; line-height:1.25; color:var(--ex-text);
+  word-break:break-word;            /* full name — wraps, never clipped */
+}
+.ex-card-meta{padding:0 .5rem .45rem; font-size:.66rem; color:var(--ex-faint); line-height:1.3}
+.ex-card-check{
+  position:absolute; top:5px; left:5px; width:18px; height:18px; border-radius:4px;
+  background:rgba(0,0,0,.55); border:1px solid var(--ex-border); display:none;
+  align-items:center; justify-content:center; font-size:.7rem; color:#fff;
+}
+.ex-card:hover .ex-card-check, .ex-card.selected .ex-card-check{display:flex}
+.ex-card.selected .ex-card-check{background:var(--ex-accent); color:#04141f; border-color:var(--ex-accent)}
+
+/* ── LIST (details) view ───────────────────────────────────────────── */
+.ex-group-body.list{display:block; padding:.2rem 0}
+.ex-list-head, .ex-row{
+  display:grid; grid-template-columns:34px 1fr 90px 120px 110px; align-items:center;
+  gap:.5rem; padding:.3rem .55rem;
+}
+.ex-list-head{
+  font-size:.66rem; text-transform:uppercase; letter-spacing:.04em; color:var(--ex-faint);
+  font-weight:700; border-bottom:1px solid var(--ex-border); position:sticky; top:0; background:var(--ex-bg); z-index:1;
+}
+.ex-list-head span{cursor:pointer}
+.ex-list-head span:hover{color:var(--ex-accent)}
+.ex-row{border-bottom:1px solid rgba(255,255,255,.04); cursor:pointer; font-size:.78rem}
+.ex-row:hover{background:rgba(255,255,255,.04)}
+.ex-row.selected{background:var(--ex-accent-soft)}
+.ex-row.dragging{opacity:.35}
+.ex-row-thumb{width:30px; height:30px; border-radius:4px; object-fit:cover; background:var(--ex-surface)}
+.ex-row-thumb.fallback{display:flex; align-items:center; justify-content:center; font-size:1rem; color:var(--ex-faint)}
+.ex-row-name{word-break:break-word; color:var(--ex-text)}          /* full name */
+.ex-row-meta{color:var(--ex-faint); font-size:.72rem; font-family:ui-monospace,Menlo,monospace; white-space:nowrap}
+.ex-row-meta.r{text-align:right}
+
+/* ── Context menu ──────────────────────────────────────────────────── */
+.ex-ctx{
+  position:fixed; z-index:9999; min-width:180px; background:var(--ex-surface);
+  border:1px solid var(--ex-border); border-radius:7px; padding:4px 0;
+  box-shadow:0 8px 24px rgba(0,0,0,.55); font-size:.82rem;
+}
+.ex-ctx-item{padding:.4rem .9rem; cursor:pointer; color:var(--ex-text); white-space:nowrap}
+.ex-ctx-item:hover{background:rgba(255,255,255,.07)}
+.ex-ctx-item.danger{color:var(--ex-red)}
+.ex-ctx-sep{height:1px; background:var(--ex-border); margin:3px 0}
+
+/* ── Modal (move / rename / prompt) ────────────────────────────────── */
+.ex-overlay{position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; padding:20px}
+.ex-modal{background:var(--ex-surface); border:1px solid var(--ex-border); border-radius:10px; padding:1.25rem; min-width:320px; max-width:440px; color:var(--ex-text); box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.ex-modal h3{margin:0 0 .9rem; font-size:.95rem}
+.ex-modal label{display:block; font-size:.74rem; font-weight:600; color:var(--ex-muted); margin:.5rem 0 .25rem}
+.ex-modal input, .ex-modal select{width:100%; padding:.45rem .6rem; background:var(--ex-bg); color:var(--ex-text); border:1px solid var(--ex-border); border-radius:6px; font-size:.85rem}
+.ex-modal-actions{display:flex; gap:.5rem; justify-content:flex-end; margin-top:1.1rem}
+
+/* ── Lightbox (click-to-preview) ───────────────────────────────────── */
+.ex-lb{
+  position:fixed; inset:0; z-index:10001; background:rgba(2,6,16,.88);
+  display:none; align-items:center; justify-content:center; flex-direction:column; padding:14px;
+}
+.ex-lb-stage{
+  flex:1 1 auto; min-height:0; width:100%; display:flex;
+  align-items:center; justify-content:center;
+}
+.ex-lb-media{max-width:min(92vw,1400px); max-height:calc(100vh - 120px); object-fit:contain; border-radius:8px; box-shadow:0 18px 60px rgba(0,0,0,.7); background:#000}
+.ex-lb-pdf{width:min(92vw,1000px); height:calc(100vh - 120px); border:none; border-radius:8px; background:#fff; box-shadow:0 18px 60px rgba(0,0,0,.7)}
+.ex-lb-close{
+  position:absolute; top:10px; right:14px; z-index:2; width:42px; height:42px; border-radius:50%;
+  background:rgba(255,255,255,.08); color:var(--ex-text); border:1px solid var(--ex-border);
+  font-size:1.5rem; line-height:1; cursor:pointer;
+}
+.ex-lb-close:hover{background:var(--ex-red); border-color:var(--ex-red)}
+.ex-lb-nav{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+  width:46px; height:72px; border-radius:10px; cursor:pointer; font-size:2rem; line-height:1;
+  background:rgba(255,255,255,.08); color:var(--ex-text); border:1px solid var(--ex-border);
+}
+.ex-lb-nav:hover{background:var(--ex-accent-soft); border-color:var(--ex-accent); color:var(--ex-accent)}
+.ex-lb-prev{left:12px} .ex-lb-next{right:12px}
+.ex-lb-bar{
+  flex:0 0 auto; width:100%; max-width:1100px; display:flex; align-items:center; gap:1rem;
+  padding:.55rem .9rem; margin-top:10px; background:var(--ex-surface);
+  border:1px solid var(--ex-border); border-radius:10px;
+}
+.ex-lb-info{min-width:0; flex:1 1 auto}
+.ex-lb-name{font-size:.9rem; font-weight:700; color:var(--ex-text); word-break:break-word}
+.ex-lb-meta{font-size:.72rem; color:var(--ex-muted); margin-top:2px}
+.ex-lb-add{flex:0 0 auto; font-size:.85rem; padding:.5rem .9rem}
+
+/* ── INSERTS source (shortcode catalog cards) ──────────────────────── */
+.ex-card-ins{border-left:3px solid var(--ins-accent,#6580eb)}
+.ex-ins-swatch{
+  display:flex; align-items:center; justify-content:center; width:100%; height:var(--ex-thumb-h,120px);
+  background:linear-gradient(150deg, color-mix(in srgb, var(--ins-accent,#6580eb) 26%, var(--ex-bg)), var(--ex-bg) 75%);
+}
+.ex-ins-badge{
+  font-size:.68rem; font-weight:700; letter-spacing:.04em; padding:.25rem .55rem; border-radius:999px;
+  background:rgba(0,0,0,.4); border:1px solid var(--ins-accent,#6580eb); color:var(--ex-text);
+  max-width:90%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.ex-ins-code{font-family:ui-monospace,Menlo,monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.ex-row-ins{grid-template-columns:34px 1fr minmax(140px,1.2fr) 110px 0}
+.ex-ins-dot{width:12px; height:12px; border-radius:50%; background:var(--ins-accent,#6580eb); justify-self:center}
+
+/* Inserts lightbox: live preview frame + no-preview info card */
+.ex-lb-ins{background:transparent}
+.ex-lb-inscard{
+  display:flex; flex-direction:column; align-items:center; gap:.7rem; text-align:center;
+  min-width:min(480px,88vw); padding:2.2rem 2.6rem; border-radius:14px;
+  background:var(--ex-surface); border:1px solid var(--ins-accent,#6580eb);
+  box-shadow:0 18px 60px rgba(0,0,0,.7);
+}
+.ex-lb-inscard-badge{
+  font-size:.7rem; font-weight:700; letter-spacing:.05em; padding:.3rem .7rem; border-radius:999px;
+  background:rgba(0,0,0,.4); border:1px solid var(--ins-accent,#6580eb); color:var(--ex-text);
+}
+.ex-lb-inscard-name{font-size:1.15rem; font-weight:700; color:var(--ex-text)}
+.ex-lb-inscard-desc{font-size:.82rem; color:var(--ex-muted)}
+.ex-lb-inscard-code{
+  font-family:ui-monospace,Menlo,monospace; font-size:.85rem; color:var(--ex-accent);
+  background:rgba(0,0,0,.35); padding:.4rem .8rem; border-radius:8px;
+}
+.ex-lb-inscard-note{font-size:.68rem; color:var(--ex-faint)}
+
+/* ── Narrow-host LIST refinement (2026-06-06) ───────────────────────
+   Inside narrow iframes (PageManager sidebar ≈370px) the 5-column list
+   grid crushed the Name column and overflowed the meta columns. Under
+   620px: media rows = thumb + name + size; inserts rows = dot + label
+   with the shortcode stacked beneath. The lightbox carries full detail. */
+@media (max-width: 620px) {
+  .ex-list-head, .ex-row { grid-template-columns: 34px minmax(0,1fr) 70px; }
+  /* keep thumb+name+size; drop modified+dimensions (row divs: name=1st, metas=2nd-4th) */
+  .ex-list-head span:nth-child(n+4), .ex-row .ex-row-meta:nth-of-type(n+3) { display: none; }
+
+  .ex-row-ins { grid-template-columns: 14px minmax(0,1fr); align-items: start; padding: .42rem .55rem; }
+  .ex-row-ins .ex-ins-dot { margin-top: .35rem; }
+  .ex-row-ins .ex-row-name { grid-column: 2; }
+  .ex-row-ins .ex-ins-code { grid-column: 2; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: .75; }
+  .ex-row-ins .ex-row-meta.r, .ex-row-ins > div:last-child { display: none; }
+
+  .ex-list-head { padding-right: .55rem; }
+}
+/* Wide hosts: give inserts list rows breathing room + dim the code col */
+.ex-row-ins .ex-ins-code { color: var(--ex-accent); opacity: .8; }
+.ex-row-ins:hover .ex-ins-code { opacity: 1; }

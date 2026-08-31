@@ -1,0 +1,53 @@
+# File: /robots.txt
+# Version: 2026.07.13.15.00.00
+
+# Allow AI assistants for site review and assistance
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Allow all other search engines and crawlers
+User-agent: *
+Allow: /
+
+# Block access to sensitive directories
+Disallow: /admin/
+Disallow: /config/
+Disallow: /data/
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /tmp/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /backup/
+Disallow: /utils.php
+Disallow: /panels/
+
+# Allow specific important files and directories
+Allow: /media/images/
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /pages/
+Allow: /media/videos/
+
+# LLM / AI briefing — machine-readable site summary (llmstxt.org standard).
+# Explicitly advertised so AI assistants (ChatGPT, Claude, Perplexity, Google AI)
+# can discover and read the site's authoritative overview.
+Allow: /llms.txt
+Allow: /llms-full.txt
+Llms: /llms.txt
+
+# Sitemap — dynamic, auto-generated from published pages
+Sitemap: /sitemap.xml
+
+# Crawl delay (optional - removes if you want faster crawling)
+# Crawl-delay: 1

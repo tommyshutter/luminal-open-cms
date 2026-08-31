@@ -1,0 +1,32 @@
+{
+  "name": "PrivacyPolicy",
+  "version": "1.0.0",
+  "description": "Editable privacy policy with configurable fields, feature flags, and custom HTML override. Generates public /privacy-policy page.",
+  "author": "Luminal CMS",
+  "entry_point": "PrivacyPolicy.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [
+    "PrivacyPolicy"
+  ],
+  "menu_group": "system",
+  "menu_entry": {
+    "key": "PrivacyPolicy",
+    "title": "Privacy Policy",
+    "href": "/admin/modules/PrivacyPolicy/PrivacyPolicy.php",
+    "role": "admin",
+    "order": 18,
+    "icon": "🔒"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write"
+    ],
+    "superadmin": [
+      "read",
+      "write",
+      "delete"
+    ]
+  }
+}

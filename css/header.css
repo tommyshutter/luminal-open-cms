@@ -1,0 +1,219 @@
+/**
+ * @file SITE-ROOT/css/header.css
+ * @version 2025.10.13.18.15.00
+ * @description Complete header and navigation styles
+ * 
+ * CHANGELOG:
+ * - Moved inline styles from document_header_body.php to proper CSS file
+ * - Added .header-shell and .header-inner styles
+ * - Added brand/logo/navigation styles
+ * - Added hamburger menu visibility rules
+ * - Preserved legacy .site-header styles for backward compatibility
+ */
+
+/* ==========================================================================
+   CURRENT HEADER SYSTEM (.header-shell, .header-inner)
+   ========================================================================== */
+
+/* Header frame; colors/fonts come from header_core + site-style.php */
+.header-shell { 
+  position: relative; 
+  z-index: 3; 
+  width: 100%; 
+}
+
+.header-shell.is-fullwidth { 
+  width: 100%; 
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;             /* keep logo/title/menu on one line */
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 14px;
+  flex-wrap: nowrap;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.brand-logo {
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.brand-logo img {
+  width: auto;
+  max-width: 100%;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .brand-logo img {
+    max-height: 44px;
+    max-width: min(200px, 50vw);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .brand-logo img {
+    max-height: 36px;
+    max-width: min(160px, 45vw);
+  }
+}
+
+.brand-title {
+  margin: 0; 
+  line-height: 1; 
+  letter-spacing: .03em;
+  font-family: var(--site-header-font-family);
+  font-size: var(--site-header-font-size);
+  color: var(--site-header-font-color);
+}
+
+.brand-link { 
+  color: inherit; 
+  text-decoration: none; 
+}
+
+.nav-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: var(--menu-alignment, flex-end);
+  gap: 10px;
+}
+
+.site-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--menu-font-family);
+  font-size: var(--menu-font-size);
+  font-weight: var(--menu-font-weight);
+  font-style: var(--menu-font-style);
+}
+
+.site-menu > li > a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--menu-font-color);
+  background: var(--menu-item-bg);
+  font-weight: var(--menu-font-weight);
+  font-style: var(--menu-font-style);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.site-menu > li.active > a {
+  background: var(--menu-current-bg);
+  color: var(--menu-current-font-color);
+  font-weight: 800;
+}
+
+.site-menu > li > a:hover {
+  background: var(--menu-item-hover-bg);
+  color: var(--menu-font-hover-color);
+}
+
+/* Hamburger button - hidden on desktop, shown on mobile via media query */
+.menu-toggle {
+  display: none;
+}
+
+/* Show hamburger on mobile (mobile-nav-integration.css handles the full styling) */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: flex !important;
+  }
+  
+  /* Hide desktop menu on mobile (hamburger takes over) */
+  .site-menu {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LEGACY HEADER SYSTEM (.site-header) - Preserved for backward compatibility
+   ========================================================================== */
+
+.site-header {
+  padding: 15px 0;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1020;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  background-color: transparent; /* Always transparent by default */
+  box-shadow: none;
+}
+
+.site-header .header-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+.site-header.container .header-container {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.site-logo { 
+  flex-shrink: 0; 
+}
+
+.site-title { 
+  margin-left: 15px; 
+}
+
+.main-navigation { 
+  margin-left: auto; 
+}
+
+.main-navigation ul { 
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.main-navigation li { 
+  margin-left: 25px; 
+}
+
+.main-navigation a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+.main-navigation a:hover {
+  color: #00aaff;
+  border-bottom-color: #00aaff;
+}
+
+/* ==========================================================================
+   END HEADER CSS
+   ========================================================================== */

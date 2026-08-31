@@ -1,0 +1,89 @@
+/**
+ * @file         SITE-ROOT/admin/css/pdf-gallery-manager-browser.css
+ * @version      2.1.0 (2025-09-05)
+ * @author       Gemini
+ * @license      Apache-2.0 — see LICENSE and NOTICE
+ * @description  Styles for the PDF browser (left column) in the manager.
+ * Updated to a dark theme with a fixed aspect ratio for cards.
+ */
+
+/* Container for available PDF items */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+    padding: 15px;
+    background-color: transparent; /* Dark gray-blue */
+    border: 0px solid #4b5563;
+    border-radius: 4px;
+
+}
+
+.gallery-container {}
+
+
+/* Individual PDF item styling (Dark Theme) */
+.gallery-item.pdf-item {
+    position: relative;
+    cursor: grab;
+    background-color: #1e293b; /* Dark blue-slate background */
+    border-radius: 4px;
+    border: 1px solid #4b5563;
+    box-shadow: -10px 12px 14px rgba(0, 0, 0, .51);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease;
+    text-align: center;
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    aspect-ratio: 2 / 3; /* Enforce a fixed size ratio */
+}
+
+.gallery-item.pdf-item:hover {
+    border-color: #38bdf8; /* Accent color on hover */
+}
+
+.gallery-item.pdf-item:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon styling */
+.gallery-item .pdf-icon {
+    font-size: 4.5rem; /* Larger icon */
+    color: #ef4444; /* PDF red color */
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Title styling */
+.gallery-item .item-title {
+    font-size: ;
+    font-weight: 500;
+    color: #e0e6f0; /* Light text for dark background */
+    display: block;
+    line-height: 1.3;
+}
+
+/* Empty state message */
+.empty-text {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #9ca3af;
+    padding: 20px;
+}
+
+/* This is a temporary class added by SortableJS during a drag operation */
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: #38bdf8;
+}
+
+
+
+INPUT#gallery-name {font-size:1.4rem!important;padding:2px;background:#f6d7d7!important
+color:#000
+}

@@ -1,0 +1,50 @@
+
+/* === dashboard.css === */
+
+.backups-panel h2,
+.backups-panel .section-title,
+.backups-panel summary,
+.backups-panel .meta .label { font-size: 1.2rem; }
+
+.btn-aqua      { background: linear-gradient(135deg,#7fffd4 0%,#2ec7b8 100%); color:#0b1117; }
+.btn-green     { background: linear-gradient(135deg,#32d77e 0%,#128f53 100%); }
+.btn-cobalt    { background: linear-gradient(135deg,#3a66ff 0%,#2037a5 100%); }
+.btn-rainbow   { background: linear-gradient(90deg,#ff6a6a,#f6b73c,#6fd34b,#4db8ff,#b78cff); background-size:300% 300%; animation:rbw 6s linear infinite; }
+@keyframes rbw { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+
+.btn-burgundy  { background:#800020; color:#fff; }
+.backups-panel .btn {
+  border:1px solid rgba(255,255,255,.28); color:#fff; padding:8px 12px;
+  border-radius:10px; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+.backups-panel .btn:hover { filter:brightness(1.05); }
+
+.backups-panel { border:1px solid rgba(255,255,255,.15); padding:12px; border-radius:12px; background:#0e141b; color:#e8eef6; box-shadow:0 4px 18px rgba(0,0,0,.35) }
+.backups-meta  { font:12px/1.5 monospace; opacity:.9; margin-bottom:8px; }
+
+.crb-paths { font:12px/1.5 monospace; margin:6px 0; }
+.crb-paths .row { display:block; white-space:nowrap; }
+.crb-paths .label { display:inline-block; min-width:60px; color:#9bd; }
+
+.details-app   > summary { background:rgba(18,143,83,.18); }
+.details-data  > summary { background:rgba(32,55,165,.18); }
+.details-media > summary { background:rgba(183,140,255,.18); }
+summary { list-style:none; 
+;background-color:blue;text-transform:uppercase;font-size:1.33rem!important;
+padding:2px 10px; border-radius:8px; border:1px solid rgba(255,255,255,.12); cursor:pointer; }
+
+/* Jobs header */
+#backup-jobs .jobrow { display:flex; align-items:center; gap:10px; margin:6px 0 }
+#backup-jobs .jobrow .bar { flex:1; height:6px; border-radius:6px; background:#22303f; overflow:hidden }
+@keyframes bk-stripes { 0%{transform:translateX(-40%)} 100%{transform:translateX(100%)} }
+
+/* Toasters copyable */
+#toast-notification, #toast-notification-local, .pp-toast { user-select:text; pointer-events:auto; }
+
+/* Tables */
+.table { width:100%; border-collapse:collapse; margin-top:6px }
+.table th, .table td { padding:6px; border-bottom:1px solid rgba(255,255,255,.08) }
+.table th { border-bottom:1px solid rgba(255,255,255,.15); text-align:left }
+.table td a{fon t-size:1.1rem;font-family:cour;
+font-size:99%;color:#fff!important;max-width:90%!important;
+}

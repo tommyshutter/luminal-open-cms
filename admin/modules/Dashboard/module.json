@@ -1,0 +1,25 @@
+{
+  "name": "Dashboard",
+  "version": "1.0.0",
+  "description": "Admin dashboard — overview panel and quick actions",
+  "author": "Luminal CMS",
+  "entry_point": "Dashboard.php",
+  "requires_data_dirs": [],
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read"
+    ],
+    "staff": [
+      "read"
+    ]
+  },
+  "menu_entry": {
+    "title": "Dashboard",
+    "href": "Dashboard.php",
+    "key": "Dashboard",
+    "role": "staff",
+    "order": 1,
+    "icon": "📊"
+  }
+}

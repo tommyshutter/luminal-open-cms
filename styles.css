@@ -1,0 +1,78 @@
+/**
+ * FILE LOCATION: SITE-ROOT/styles.css
+ *
+ * Site-root stylesheet for Luminal Open CMS.
+ *
+ * This file is an import manifest, not a place to write rules. It pulls in the
+ * theme layers from /css/ in cascade order — later imports win. Add your own
+ * site-specific rules by appending an @import for your own file at the end, so
+ * an update to the shipped layers never overwrites your work.
+ *
+ * The ?v= query strings are cache-busting stamps; bump them when you edit a layer.
+ */
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+@import url("/css/base.css?v=1");
+
+/* ==========================================================================
+   PAGE, HEADER & FONTS
+   ========================================================================== */
+@import url("/css/page.css?v=1");
+@import url("/css/header.css?v=1");
+@import url("/css/custom-fonts.css?v=1");
+
+/* ==========================================================================
+   MAIN CONTENT AREA & WRAPPER FOR BACKGROUND LAYERING
+   ========================================================================== */
+@import url("/css/main.css?v=1");
+
+/* ==========================================================================
+   DYNAMIC BACKGROUND & OVERLAY
+   ========================================================================== */
+@import url("/css/backgrounds.css?v=1");
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+@import url("/css/nav.css?v=1");
+
+/* ==========================================================================
+   LAYOUT & HERO PANEL
+   ========================================================================== */
+@import url("/css/layout.css?v=1");
+
+/* ==========================================================================
+   VIDEO
+   ========================================================================== */
+@import url("/css/videos.css?v=1");
+
+/* ==========================================================================
+   GALLERIES
+   ========================================================================== */
+@import url("/css/photo_gallery.css?v=1");
+@import url("/css/galleries.css?v=1");
+@import url("/css/pdf-gallery-cards.css?v=1");
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+@import url("/css/footer.css?v=1");
+
+/* ==========================================================================
+   LIGHTBOX
+   ========================================================================== */
+@import url("/css/lightbox.css?v=1");
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+@import url("/css/mobile.css?v=1");
+@import url("/css/mobile-nav-integration.css?v=1");
+@import url("/css/mobile-master.css?v=1");
+
+/* ==========================================================================
+   GLASS SHELL — reusable rounded-corner translucent wrapper
+   ========================================================================== */
+@import url("/css/glass-shell.css?v=1");

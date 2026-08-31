@@ -1,0 +1,44 @@
+{
+  "name": "PrintfulManager",
+  "version": "1.1.0",
+  "description": "Printful print-on-demand integration for merchandise management",
+  "author": "Luminal CMS",
+  "entry_point": "printful-manager.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "PrintfulManager",
+    "title": "Printful",
+    "href": "printful-manager.php",
+    "role": "admin",
+    "order": 10,
+    "icon": "👕"
+  },
+  "menu_entries": [
+    {
+      "key": "PrintfulManager",
+      "title": "Printful",
+      "href": "printful-manager.php",
+      "role": "admin",
+      "order": 10,
+      "icon": "👕"
+    },
+    {
+      "key": "PrintfulOrders",
+      "title": "Printful Orders",
+      "href": "printful-orders.php",
+      "role": "admin",
+      "order": 11,
+      "icon": "👕"
+    }
+  ],
+  "menu_group": "ecommerce",
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "TechSupport",
+  "version": "2.0.0",
+  "description": "Feedback intake — simple modal widget with AgentScheduler pipeline",
+  "author": "Luminal CMS",
+  "entry_point": "TechSupport.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "TechSupport",
+    "title": "Support",
+    "href": "TechSupport.php",
+    "role": "admin",
+    "order": 90,
+    "icon": "🎫"
+  },
+  "dependencies": []
+}

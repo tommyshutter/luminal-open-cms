@@ -1,0 +1,65 @@
+/* ==========================================================================
+   HOME PAGE LAYOUT & HERO PANEL
+   ========================================================================== */
+
+
+/**** home-layout-grid {display: grid;grid-template-columns: 320px 2fr;gap: 10px;align-items: start;}***/
+
+
+.hero-content-wrapper {margin:0 auto;;  position: relative; border-radius: 5px; overflow: hidden}
+.hero-media {width: auto;height: auto;object-fit: cover;position: relative;margin: 0 auto;top:0;left:0;}
+
+/* --- HERO VIDEO SIZING FIX --- */
+.video-wrapper.hero-media { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.video-wrapper[data-hero-sizing="contain"] iframe { object-fit: contain; width: 100%; height: 100%; }
+.video-wrapper[data-hero-sizing="fill"] iframe { object-fit: fill; width: 100%; height: 100%; }
+/* This is the primary fix for the "cover" state to fill the panel */
+.video-wrapper[data-hero-sizing="cover"] iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+}
+/* --- END FIX --- */
+
+#hero-panel-slideshow { position: relative; width: 100%; height: 100%; }
+#hero-panel-slideshow .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.5s ease-in-out; object-fit: cover; border-radius: 15px; }
+#hero-panel-slideshow .hero-slide.active { opacity: 1; }
+
+
+/* ==========================================================================
+   about PAGE STYLES
+   ========================================================================== */
+.about-header-video { width: 100%; height: 60vh; background-color: #000; margin-bottom: 50px; border-radius: 15px; overflow: hidden;}
+.about-header-video iframe { width: 100%; height: 100%; border: 0; }
+.about-content { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; padding: 50px 0; }
+.about-main-col img { max-width: 100%; height: auto; border-radius: 10px; margin: 20px 0; }
+.about-side-col .testimonial { background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+.about-side-col .testimonial blockquote { border-left: 3px solid #00d4ff; padding-left: 15px; font-style: italic; margin: 0 0 10px 0; }
+.about-side-col .testimonial .author { text-align: right; font-weight: bold; }
+.about-side-col .media-links ul { list-style: none; }
+.about-side-col .media-links li { margin-bottom: 10px; }
+
+
+
+/* ==========================================================================
+   APPLE-STYLE DROP SHADOWS
+   ========================================================================== */
+.panel-box, .tour-date-card, .photo-item, .video-item, .hero-content-wrapper, .about-header-video, .about-side-col .testimonial {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05),
+                0 2px 4px rgba(0,0,0,0.05),
+                0 4px 8px rgba(0,0,0,0.05),
+                0 8px 16px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.tour-date-card:hover, .photo-item:hover, .video-item:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08), 0 3px 6px rgba(0,0,0,0.12);
+}
+.site-header.scrolled {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+

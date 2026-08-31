@@ -1,0 +1,272 @@
+/**
+ * @file admin/modules/AdminThemes/css/admin-themes.css
+ * @desc Shared theming engine. Scoped to any non-default theme via
+ *       html[data-admin-theme]:not([data-admin-theme="luminal"]).
+ *       Theme files (themes/*.css) only set --at-* variables + OS-specific chrome.
+ *       The default "luminal" theme loads NO css and is untouched here.
+ */
+
+/* ============================================================
+   Scope alias — every override below lives under .at-themed
+   (we cannot use a CSS variable for a selector, so the long
+   :not() form is repeated; grouped where practical).
+   ============================================================ */
+
+/* ---------- Surfaces ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) body {
+  background: var(--at-bg, #0a0a0a) var(--at-bg-image, none) !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  color: var(--at-text, #e6e6e6) !important;
+  font-family: var(--at-font, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif) !important;
+  padding-top: var(--at-topbar-h, 30px);
+  padding-bottom: var(--at-dock-h, 0px);
+  transition: background-color .25s ease, color .25s ease;
+}
+
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .admin-container {
+  max-width: 96%;
+}
+
+/* The content column becomes a "window" */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .content-area {
+  background: var(--at-surface, rgba(255,255,255,.05)) !important;
+  border: 1px solid var(--at-surface-border, rgba(255,255,255,.12)) !important;
+  border-radius: var(--at-radius-window, 12px) !important;
+  box-shadow: var(--at-shadow, 0 18px 50px rgba(0,0,0,.45)) !important;
+  margin-top: 6px;
+}
+/* NOTE: deliberately NO overflow:clip here — it would crop custom dropdowns/poppers
+   rendered inside .content-area. The title bar's top radius caps the window instead. */
+
+/* JS-injected window title bar inside .content-area */
+.at-window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  height: auto;
+  padding: 8px 12px;
+  background: var(--at-titlebar-bg, rgba(0,0,0,.35));
+  color: var(--at-titlebar-text, #fff);
+  border-bottom: 1px solid var(--at-surface-border, rgba(255,255,255,.12));
+  border-radius: var(--at-radius-window, 12px) var(--at-radius-window, 12px) 0 0;
+  font-family: var(--at-font, system-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  user-select: none;
+  position: relative;
+}
+.at-window-titlebar .at-wt-title {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 1;
+  /* STREET SIGN on OS-style themes — big letter-spaced landmark (matches the
+     default theme's .panel_header_h1, which these themes hide in favour of this bar). */
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+.at-window-titlebar .at-wt-spacer { width: 60px; }   /* balances controls width */
+
+/* Window control dots/buttons (rendered, behavior is cosmetic) */
+.at-winctl { display: flex; align-items: center; gap: 8px; }
+.at-winctl .at-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  display: inline-block; border: none; cursor: default;
+  position: relative;
+}
+/* default (overridden per OS): three neutral dots */
+.at-winctl .at-dot.close   { background: #ff5f57; }
+.at-winctl .at-dot.min     { background: #febc2e; }
+.at-winctl .at-dot.max     { background: #28c840; }
+
+/* ---------- Headings / panel strips ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) h1,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) h2,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) h3 {
+  font-family: var(--at-font, system-ui) !important;
+  color: var(--at-heading-text, var(--at-text, #fff)) !important;
+  background: var(--at-heading-bg, var(--at-surface-2, rgba(255,255,255,.06))) !important;
+  border: 1px solid var(--at-surface-border, rgba(255,255,255,.10)) !important;
+  border-radius: var(--at-radius, 8px) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  font-weight: 600 !important;
+}
+html[data-admin-theme]:not([data-admin-theme="luminal"]) h1 {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+/* When the window titlebar carries the page title, mute the in-flow h1 */
+html[data-admin-theme].at-has-window-title:not([data-admin-theme="luminal"]) .content-area > h1:first-of-type,
+html[data-admin-theme].at-has-window-title:not([data-admin-theme="luminal"]) .admin-container > h1.panel_header_h1 {
+  display: none !important;
+}
+
+/* ---------- Cards (dashboard vsd-*) ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .vsd-panel,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .vsd-card,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .card,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .panel {
+  background: var(--at-surface-2, rgba(255,255,255,.06)) !important;
+  border: 1px solid var(--at-surface-border, rgba(255,255,255,.10)) !important;
+  border-radius: var(--at-radius, 8px) !important;
+  color: var(--at-text, #e6e6e6) !important;
+}
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .vsd-card:hover {
+  border-color: var(--at-accent, #4c6fff) !important;
+}
+
+/* ---------- Buttons ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) button,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .btn,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) input[type="submit"],
+html[data-admin-theme]:not([data-admin-theme="luminal"]) input[type="button"] {
+  font-family: var(--at-font, system-ui);
+  border-radius: var(--at-radius-btn, 7px) !important;
+}
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .at-btn-primary,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) button.primary {
+  background: var(--at-accent, #4c6fff) !important;
+  color: var(--at-accent-contrast, #fff) !important;
+  border: none !important;
+}
+
+/* ---------- Inputs ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) input:not([type="checkbox"]):not([type="radio"]),
+html[data-admin-theme]:not([data-admin-theme="luminal"]) select,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) textarea {
+  background: var(--at-input-bg, rgba(255,255,255,.08)) !important;
+  color: var(--at-input-text, var(--at-text, #fff)) !important;
+  border: 1px solid var(--at-input-border, var(--at-surface-border, rgba(255,255,255,.18))) !important;
+  border-radius: var(--at-radius-btn, 7px) !important;
+}
+
+/* ---------- Links ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) a { color: var(--at-accent, #6f8cff); }
+
+/* ---------- Left rail recolor (structure preserved) ---------- */
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .admin-aside {
+  top: var(--at-topbar-h, 30px) !important;
+  background: var(--at-rail-bg, var(--at-surface, rgba(20,20,20,.92))) !important;
+  border-right: 1px solid var(--at-surface-border, rgba(255,255,255,.10)) !important;
+}
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .admin-aside a.active,
+html[data-admin-theme]:not([data-admin-theme="luminal"]) .admin-aside .active > a {
+  background: var(--at-accent, #4c6fff) !important;
+  color: var(--at-accent-contrast, #fff) !important;
+}
+
+/* ============================================================
+   OS CHROME — top bar
+   ============================================================ */
+.at-topbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--at-topbar-h, 30px);
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 14px;
+  background: var(--at-topbar-bg, rgba(20,20,20,.85));
+  color: var(--at-topbar-text, #fff);
+  font-family: var(--at-font, system-ui);
+  font-size: 13px;
+  z-index: 100000;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--at-topbar-border, rgba(255,255,255,.10));
+  user-select: none;
+}
+.at-topbar .at-tb-brand { font-weight: 700; display: flex; align-items: center; gap: 7px; }
+.at-topbar .at-tb-logo { width: 16px; height: 16px; display: grid; place-items: center; }
+.at-topbar .at-tb-spacer { flex: 1; }
+.at-topbar .at-tb-right { display: flex; align-items: center; gap: 14px; }
+.at-topbar .at-tb-clock { font-variant-numeric: tabular-nums; opacity: .9; min-width: 11ch; text-align: right; }
+.at-topbar .at-tb-theme {
+  cursor: pointer; padding: 2px 10px; border-radius: 999px;
+  background: var(--at-topbar-pill, rgba(255,255,255,.14));
+  display: flex; align-items: center; gap: 6px;
+}
+.at-topbar .at-tb-theme:hover { background: var(--at-accent, #4c6fff); color: var(--at-accent-contrast,#fff); }
+
+/* ============================================================
+   OS CHROME — bottom dock / taskbar
+   ============================================================ */
+.at-dock {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: var(--at-dock-gap, 10px);
+  display: flex; align-items: center; gap: var(--at-dock-gap-i, 8px);
+  padding: var(--at-dock-pad, 8px 12px);
+  background: var(--at-dock-bg, rgba(40,40,40,.55));
+  border: 1px solid var(--at-dock-border, rgba(255,255,255,.18));
+  border-radius: var(--at-dock-radius, 18px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.5);
+  z-index: 100000;
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+}
+.at-dock .at-dock-item {
+  width: var(--at-dock-icon, 42px); height: var(--at-dock-icon, 42px);
+  display: grid; place-items: center;
+  border-radius: var(--at-dock-item-radius, 12px);
+  background: var(--at-dock-item-bg, rgba(255,255,255,.10));
+  color: var(--at-dock-item-text, #fff);
+  font-size: 20px; cursor: pointer; text-decoration: none;
+  transition: transform .12s ease, background .12s ease;
+  border: 1px solid transparent;
+}
+.at-dock .at-dock-item:hover {
+  transform: translateY(-8px) scale(1.12);
+  background: var(--at-accent, #4c6fff);
+}
+.at-dock .at-dock-sep {
+  width: 1px; height: 30px; background: rgba(255,255,255,.22); margin: 0 4px;
+}
+
+/* ============================================================
+   Quick theme menu (opened from top bar pill)
+   ============================================================ */
+.at-thememenu {
+  position: fixed; z-index: 100001;
+  min-width: 220px; padding: 6px;
+  background: var(--at-menu-bg, rgba(30,30,32,.96));
+  color: var(--at-menu-text, #fff);
+  border: 1px solid var(--at-surface-border, rgba(255,255,255,.16));
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  font-family: var(--at-font, system-ui); font-size: 13px;
+  display: none;
+}
+.at-thememenu.open { display: block; }
+.at-thememenu .at-tm-group { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; opacity: .5; padding: 8px 10px 4px; }
+.at-thememenu .at-tm-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 8px; cursor: pointer;
+}
+.at-thememenu .at-tm-item:hover { background: rgba(255,255,255,.10); }
+.at-thememenu .at-tm-item.active { background: var(--at-accent, #4c6fff); color: var(--at-accent-contrast,#fff); }
+.at-thememenu .at-tm-swatch { width: 26px; height: 18px; border-radius: 4px; border: 1px solid rgba(255,255,255,.3); flex: 0 0 auto; }
+.at-thememenu .at-tm-check { margin-left: auto; opacity: 0; }
+.at-thememenu .at-tm-item.active .at-tm-check { opacity: 1; }
+
+/* Hide chrome on small screens — fall back to recolor only */
+@media (max-width: 960px) {
+  .at-dock { display: none; }
+  html[data-admin-theme]:not([data-admin-theme="luminal"]) body { padding-bottom: 0; }
+}
+
+/* Saved toast */
+.at-toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--at-accent, #4c6fff); color: var(--at-accent-contrast, #fff);
+  padding: 10px 18px; border-radius: 999px; font-family: var(--at-font, system-ui);
+  font-size: 13px; font-weight: 600; z-index: 100002; opacity: 0;
+  transition: opacity .2s ease, transform .2s ease; pointer-events: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+.at-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

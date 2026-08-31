@@ -1,0 +1,754 @@
+/**
+ * PayPal Store — Admin CSS
+ * Scoped with .ps-* prefix to avoid conflicts with admin shell styles.
+ * Replaces Tailwind CDN + inline <style> block from standalone index.php.
+ */
+
+/* ============================================================================
+   CSS Variables (PayPal Store theme)
+   ============================================================================ */
+:root {
+    --ps-bg: #000000;
+    --ps-fg: #ffffff;
+    --ps-card: rgba(37, 37, 37, 0.8);
+    --ps-card-fg: #ffffff;
+    --ps-popover: rgba(37, 37, 37, 0.95);
+    --ps-popover-fg: #ffffff;
+    --ps-primary: #fbbf24;
+    --ps-primary-fg: #000000;
+    --ps-secondary: #f5f5f5;
+    --ps-secondary-fg: #030213;
+    --ps-muted: #444444;
+    --ps-muted-fg: #717182;
+    --ps-destructive: #d4183d;
+    --ps-destructive-fg: #ffffff;
+    --ps-border: rgba(255, 255, 255, 0.1);
+    --ps-input-bg: rgba(68, 68, 68, 0.6);
+    --ps-radius: 0.625rem;
+    --ps-glass-bg: rgba(0, 0, 0, 0.2);
+    --ps-glass-border: rgba(255, 255, 255, 0.1);
+    --ps-glass-blur: 20px;
+    --ps-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --ps-card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --ps-modal-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================================
+   Glass morphism cards
+   ============================================================================ */
+.ps-glass-card {
+    background: var(--ps-glass-bg);
+    backdrop-filter: blur(var(--ps-glass-blur));
+    -webkit-backdrop-filter: blur(var(--ps-glass-blur));
+    border: 1px solid var(--ps-glass-border);
+    box-shadow: var(--ps-card-shadow);
+    border-radius: var(--ps-radius);
+    transition: all 0.3s ease;
+}
+.ps-glass-card:hover {
+    box-shadow: var(--ps-card-shadow-hover);
+    transform: translateY(-2px);
+}
+.ps-glass-modal {
+    background: var(--ps-popover);
+    backdrop-filter: blur(var(--ps-glass-blur));
+    -webkit-backdrop-filter: blur(var(--ps-glass-blur));
+    border: 1px solid var(--ps-glass-border);
+    box-shadow: var(--ps-modal-shadow);
+    border-radius: var(--ps-radius);
+}
+
+/* ============================================================================
+   Buttons
+   ============================================================================ */
+.ps-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--ps-radius);
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    color: var(--ps-fg);
+}
+.ps-btn-primary {
+    background: var(--ps-primary);
+    color: var(--ps-primary-fg);
+}
+.ps-btn-primary:hover {
+    background: #f59e0b;
+    transform: translateY(-1px);
+}
+.ps-btn-outline {
+    background: transparent;
+    color: var(--ps-fg);
+    border: 1px solid var(--ps-border);
+}
+.ps-btn-outline:hover {
+    background: var(--ps-glass-bg);
+    border-color: var(--ps-primary);
+}
+.ps-btn-destructive {
+    background: var(--ps-destructive);
+    color: var(--ps-destructive-fg);
+}
+.ps-btn-destructive:hover {
+    background: #b91c1c;
+}
+.ps-btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* ============================================================================
+   Form elements
+   ============================================================================ */
+.ps-form-input {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--ps-input-bg);
+    border: 1px solid var(--ps-border);
+    border-radius: var(--ps-radius);
+    color: var(--ps-fg);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+.ps-form-input:focus {
+    outline: none;
+    border-color: var(--ps-primary);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+    background: rgba(68, 68, 68, 0.8);
+}
+.ps-form-group {
+    margin-bottom: 1rem;
+}
+.ps-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--ps-fg);
+}
+.ps-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.ps-form-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+.ps-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* Switch toggle */
+.ps-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.ps-switch input { opacity: 0; width: 0; height: 0; }
+.ps-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--ps-muted);
+    transition: .4s;
+    border-radius: 24px;
+}
+.ps-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .ps-slider { background-color: var(--ps-primary); }
+input:checked + .ps-slider:before { transform: translateX(20px); }
+
+/* ============================================================================
+   Modal
+   ============================================================================ */
+.ps-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10001;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5vh;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.ps-modal.show { display: flex; }
+.ps-modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+.ps-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--ps-border);
+    position: sticky;
+    top: 0;
+    background: var(--ps-popover);
+    z-index: 10;
+}
+.ps-modal-body {
+    padding: 1.5rem;
+}
+.ps-modal-footer {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--ps-border);
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 0;
+    background: var(--ps-popover);
+    z-index: 10;
+}
+
+/* ============================================================================
+   Product grid
+   ============================================================================ */
+.ps-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+}
+.ps-product-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+/* ==== Bulk-select: per-card checkbox ==== */
+.ps-product-select-wrap {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 5px 6px 3px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ps-product-select-wrap:hover {
+    background: rgba(0, 0, 0, 0.75);
+    border-color: rgba(245, 158, 11, 0.5);
+}
+.ps-product-select {
+    margin: 0;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: #f59e0b;
+}
+.ps-product-card.is-selected {
+    outline: 2px solid #f59e0b;
+    outline-offset: -2px;
+}
+
+/* ==== Bulk-select controls in the bulk actions bar ==== */
+.ps-bulk-selectall {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ps-bulk-selectall input {
+    margin: 0;
+    cursor: pointer;
+    accent-color: #f59e0b;
+}
+.ps-bulk-count {
+    font-size: 0.75rem;
+    color: #888;
+    padding: 0 6px;
+    white-space: nowrap;
+}
+.ps-bulk-count.has-selection {
+    color: #f59e0b;
+    font-weight: 600;
+}
+.ps-bulk-delete-btn[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.ps-product-card:hover {
+    transform: translateY(-4px);
+}
+.ps-product-image-container {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--ps-muted);
+    border-radius: var(--ps-radius);
+}
+.ps-product-image {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.ps-product-card:hover .ps-product-image {
+    transform: scale(1.05);
+}
+.ps-product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+}
+.ps-product-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* ============================================================================
+   Drag and drop
+   ============================================================================ */
+.ps-dropzone {
+    border: 2px dashed var(--ps-border);
+    border-radius: var(--ps-radius);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: rgba(251, 191, 36, 0.05);
+}
+.ps-dropzone.active,
+.ps-dropzone:hover {
+    border-color: var(--ps-primary);
+    background: rgba(251, 191, 36, 0.1);
+}
+
+/* ============================================================================
+   Tabs (settings modal)
+   ============================================================================ */
+.ps-tabs { width: 100%; }
+.ps-tab-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--ps-muted);
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}
+.ps-tab-trigger {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    border: none;
+    background: transparent;
+    color: var(--ps-muted-fg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.ps-tab-trigger:hover { background: rgba(255, 255, 255, 0.1); }
+.ps-tab-trigger.active {
+    background: var(--ps-primary);
+    color: var(--ps-primary-fg);
+}
+.ps-tab-content { display: none; }
+.ps-tab-content.active { display: block; }
+
+/* ============================================================================
+   Badges
+   ============================================================================ */
+.ps-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: calc(var(--ps-radius) - 2px);
+}
+.ps-badge-success { background: #10b981; color: white; }
+.ps-badge-destructive { background: var(--ps-destructive); color: var(--ps-destructive-fg); }
+.ps-badge-secondary { background: var(--ps-secondary); color: var(--ps-secondary-fg); }
+
+/* ============================================================================
+   Toast notifications
+   ============================================================================ */
+.ps-toast {
+    position: fixed;
+    top: 1rem; right: 1rem;
+    z-index: 10002;
+    padding: 1rem;
+    border-radius: var(--ps-radius);
+    color: white;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    min-width: 300px;
+}
+.ps-toast.show { opacity: 1; transform: translateX(0); }
+.ps-toast-success { background: #10b981; }
+.ps-toast-error { background: var(--ps-destructive); }
+.ps-toast-info { background: #3b82f6; }
+
+/* ============================================================================
+   Layout controls
+   ============================================================================ */
+.ps-layout-controls {
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+.ps-controls-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.ps-controls-panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+.ps-control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.ps-control-group label { font-size: 0.875rem; font-weight: 500; }
+.ps-control-group input[type="range"] { width: 100%; }
+
+/* ============================================================================
+   Search section
+   ============================================================================ */
+.ps-search-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.ps-search-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+.ps-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    background: var(--ps-input-bg);
+    border: 1px solid var(--ps-border);
+    border-radius: var(--ps-radius);
+    color: var(--ps-fg);
+}
+.ps-search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ps-muted-fg);
+}
+.ps-bulk-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ============================================================================
+   Settings sections
+   ============================================================================ */
+.ps-settings-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--ps-border);
+}
+.ps-settings-section:last-child { border-bottom: none; }
+.ps-settings-section h4 {
+    margin-bottom: 1rem;
+    color: var(--ps-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   Empty state & placeholders
+   ============================================================================ */
+.ps-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ps-muted-fg);
+}
+.ps-empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+.ps-image-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--ps-muted) 0%, #444 100%);
+    color: var(--ps-muted-fg);
+    font-size: 0.875rem;
+}
+.ps-image-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+.ps-status-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+}
+
+/* ============================================================================
+   Loading spinner
+   ============================================================================ */
+.ps-loading-spinner {
+    border: 2px solid var(--ps-muted);
+    border-top: 2px solid var(--ps-primary);
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    animation: ps-spin 1s linear infinite;
+    display: inline-block;
+}
+@keyframes ps-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   Background customizer panel
+   ============================================================================ */
+.ps-bg-customizer {
+    position: fixed;
+    top: 50%; right: 1rem;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 200px;
+    transition: transform 0.3s ease;
+}
+
+/* ============================================================================
+   Utility classes (scoped)
+   ============================================================================ */
+.ps-flex { display: flex; }
+.ps-flex-col { flex-direction: column; }
+.ps-flex-1 { flex: 1; }
+.ps-flex-wrap { flex-wrap: wrap; }
+.ps-items-center { align-items: center; }
+.ps-justify-between { justify-content: space-between; }
+.ps-justify-center { justify-content: center; }
+.ps-gap-2 { gap: 0.5rem; }
+.ps-gap-4 { gap: 1rem; }
+.ps-gap-6 { gap: 1.5rem; }
+.ps-p-4 { padding: 1rem; }
+.ps-p-6 { padding: 1.5rem; }
+.ps-mb-2 { margin-bottom: 0.5rem; }
+.ps-mb-4 { margin-bottom: 1rem; }
+.ps-mb-6 { margin-bottom: 1.5rem; }
+.ps-mt-4 { margin-top: 1rem; }
+.ps-mr-4 { margin-right: 1rem; }
+.ps-w-full { width: 100%; }
+.ps-text-center { text-align: center; }
+.ps-text-sm { font-size: 0.875rem; }
+.ps-text-lg { font-size: 1.125rem; }
+.ps-text-xl { font-size: 1.25rem; }
+.ps-text-2xl { font-size: 1.5rem; }
+.ps-text-3xl { font-size: 1.875rem; }
+.ps-text-4xl { font-size: 2.25rem; }
+.ps-font-bold { font-weight: bold; }
+.ps-text-primary { color: var(--ps-primary); }
+.ps-text-muted { color: var(--ps-muted-fg); }
+.ps-text-destructive { color: var(--ps-destructive); }
+.ps-border-primary { border-color: var(--ps-primary); }
+.ps-border-l-4 { border-left: 4px solid; }
+.ps-rounded-lg { border-radius: var(--ps-radius); }
+.ps-hidden { display: none; }
+.ps-block { display: block; }
+.ps-grid { display: grid; }
+.ps-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ps-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ps-relative { position: relative; }
+.ps-absolute { position: absolute; }
+
+/* ============================================================================
+   Main container — content within admin shell
+   ============================================================================ */
+.ps-container {
+    padding: 0.5rem;
+    max-width: 80rem;
+}
+
+/* ============================================================================
+   Header bar
+   ============================================================================ */
+.ps-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* ============================================================================
+   Navigation (Products / Orders)
+   ============================================================================ */
+.ps-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--ps-border);
+    padding-bottom: 1rem;
+}
+
+/* ============================================================================
+   Version header
+   ============================================================================ */
+.ps-version-header {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--ps-primary);
+}
+
+/* ============================================================================
+   Responsive
+   ============================================================================ */
+@media (max-width: 768px) {
+    .ps-products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+    .ps-search-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ps-bulk-actions { justify-content: center; }
+    .ps-controls-panel { grid-template-columns: 1fr; }
+    .ps-tab-list {
+        grid-template-columns: repeat(3, 1fr);
+        font-size: 0.7rem;
+    }
+    .ps-form-row,
+    .ps-form-row-3 {
+        grid-template-columns: 1fr;
+    }
+    .ps-header { flex-direction: column; align-items: stretch; }
+}
+
+@media (max-width: 480px) {
+    .ps-products-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================================
+   Legibility + punch pass (2026-07-11) — settings modal was faint/cramped:
+   green bleed through glass, 0.75rem faint tabs, fields overflowing (no box-sizing).
+   ============================================================================ */
+:root, .ps-scope, body {
+    --ps-muted-fg: #aab2c4;                    /* faint #717182 → legible */
+    --ps-popover: rgba(18, 20, 32, 0.985);     /* near-solid → kills the green bleed-through */
+}
+.ps-tab-list { grid-template-columns: repeat(auto-fit, minmax(98px, 1fr)) !important; gap: 6px !important; padding: 6px !important; }
+.ps-tab-trigger { font-size: 0.92rem !important; font-weight: 650 !important; padding: 12px 10px !important; letter-spacing: .01em; }
+.ps-tab-trigger:not(.active) { color: #aab2c4 !important; }
+.ps-tab-trigger.active { box-shadow: 0 4px 14px rgba(251, 191, 36, .35); }
+.ps-form-input { box-sizing: border-box !important; padding: 11px 13px !important; font-size: 0.95rem !important; min-height: 44px; }
+.ps-form-group label { font-size: 0.9rem !important; color: #cfd6e4 !important; }
+.ps-settings-section h4 { font-size: 1.06rem !important; }
+
+/* ============================================================================
+   Breathing-room pass (2026-07-11) — was edge-to-edge & jammed. Nested padding
+   (body → section panel → field), soft depth. "let it breathe."
+   ============================================================================ */
+.ps-modal-body { padding: 1.9rem 2.1rem 2.1rem !important; }
+.ps-modal-header, .ps-modal-footer { padding-left: 2.1rem !important; padding-right: 2.1rem !important; }
+.ps-tab-content { padding: 6px 2px 2px !important; }
+/* each settings section becomes a softly-inset panel so content descends into it */
+.ps-settings-section {
+    padding: 1.35rem 1.5rem !important;
+    margin-bottom: 1.4rem !important;
+    background: rgba(255,255,255,.028);
+    border: 1px solid rgba(255,255,255,.07) !important;
+    border-radius: 13px;
+    box-shadow: 0 3px 14px rgba(0,0,0,.22);
+}
+.ps-settings-section:last-child { margin-bottom: .5rem !important; }
+.ps-settings-section h4 { margin-bottom: 1.15rem !important; padding-bottom: .55rem; border-bottom: 1px solid rgba(255,255,255,.07); }
+.ps-form-group { margin-bottom: 1.15rem; }
+.ps-form-row, .ps-form-row-3 { gap: 1.15rem !important; }
+/* pinch of depth on the fields */
+.ps-form-input { box-shadow: inset 0 1px 2px rgba(0,0,0,.28), 0 1px 3px rgba(0,0,0,.18); }
+.ps-form-input:focus { box-shadow: 0 0 0 3px rgba(251,191,36,.22), 0 2px 9px rgba(0,0,0,.3) !important; }
+
+/* Settings modal — ONE fixed size; stop autosizing up/down on tab-switch (annoying).
+   Short tabs just get empty space (fine); overflow scrolls inside the body. */
+#ps-settings-modal .ps-modal-content { height: min(80vh, 760px) !important; }
+
+/* ============================================================================
+   Scroll affordance (2026-07-11) — settings modal: body scrolls, footer pinned,
+   + subtle bottom edge-glow & "more below" pill when the tab continues below.
+   ============================================================================ */
+#ps-settings-modal .ps-modal-content { display:flex; flex-direction:column; overflow:hidden !important; }
+#ps-settings-modal .ps-modal-header,
+#ps-settings-modal .ps-modal-footer { position:static !important; flex-shrink:0; }
+#ps-settings-modal .ps-modal-body { flex:1 1 auto; overflow-y:auto; position:relative; }
+/* absolute overlay on the (non-scrolling) content, pinned just above the footer =
+   flush with the real bottom edge of the scroll area. footer height measured by JS. */
+#ps-settings-modal .ps-scroll-more {
+    position:absolute; left:0; right:0; bottom: var(--ps-footer-h, 82px); height:32px;
+    pointer-events:none; z-index:7; opacity:0; transition:opacity .18s ease;
+    background:linear-gradient(to top, rgba(20,22,42,.5), transparent);
+    box-shadow: inset 0 -9px 11px -11px rgba(251,191,36,.2);   /* dialed-back edge glow */
+}
+#ps-settings-modal .ps-scroll-more.ps-show { opacity:1; }
+#ps-settings-modal .ps-scroll-more span {
+    position:absolute; left:1.5rem; bottom:5px;
+    font-size:.57rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:#fbbf24; background:rgba(16,18,34,.9); border:1px solid rgba(251,191,36,.35);
+    border-radius:999px; padding:2px 8px;
+}

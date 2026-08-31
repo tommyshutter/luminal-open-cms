@@ -1,0 +1,43 @@
+{
+  "name": "UserManager",
+  "version": "1.1.0",
+  "description": "User account management with role-based access control (superadmin, admin, staff). Roster management is superadmin-only; everyone below gets a self-service My Account panel (own profile + password). Email-based password recovery.",
+  "author": "Luminal CMS",
+  "entry_point": "UserManager.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "UserManager",
+    "title": "Users",
+    "href": "UserManager.php",
+    "role": "staff",
+    "order": 27,
+    "icon": "👤"
+  },
+  "dependencies": [],
+  "permissions": {
+    "superadmin": [
+      "read",
+      "write",
+      "create",
+      "delete",
+      "manage_admins",
+      "manage_permissions"
+    ],
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete_staff"
+    ],
+    "staff": []
+  },
+  "features": [
+    "User CRUD operations",
+    "Role-based access (superadmin, admin, staff)",
+    "Password management and reset",
+    "Access privilege matrix (superadmin only)",
+    "Status toggling (active/inactive)",
+    "Email-based authentication"
+  ]
+}

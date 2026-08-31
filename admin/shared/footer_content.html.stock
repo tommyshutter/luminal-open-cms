@@ -1,0 +1,39 @@
+
+  <!-- Business Info Section -->
+        <div class="footer-business-info">
+            <h2 class="footer-title">  </h2>
+            <div class="contact-info">
+                <div class="address">
+                    <span class="address-line"> </span>
+                    <span class="city-state"> </span>
+                </div>
+                <div class="phone">
+                    <a href="tel:"></a>
+                </div>
+                <div class="email">
+                    <a href="mailto:"> &lt; EMAIL CONTACT &gt;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sponsor / Social Logos Section -->
+        <!-- Edit this file (or admin/shared/footer_content.html) to point these at your
+             own profiles, or delete the rows you do not use. -->
+      <div class="footer-sponsors">
+                           <div class="sponsors-row">
+
+                               <div class="sponsor-item facebook-promo">
+                                   <a href="#" target="blank">    <img src="/panels/footer_images/facebook-icon.png" alt="Facebook" class="facebook-icon">  </a>
+                               </div>
+
+                               <div class="sponsor-item instagram-promo">
+                                   <a href="#" target="blank">    <img src="/panels/footer_images/insta_color.png" alt="Instagram" class="insta-icon">  </a>
+                               </div>
+
+                               <!-- YouTube Channel -->
+                               <div class="sponsor-item youtube-promo">
+                                   <a href="#" target="blank">   <img src="/panels/footer_images/youtube.jpg" alt="YouTube" class="youtube-icon"> </a>
+                               </div>
+                           </div>
+                  </div>
+    </div>

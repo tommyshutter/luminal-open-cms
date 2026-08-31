@@ -1,0 +1,307 @@
+/* ═══════════════════════════════════════════
+   AudienceBuilder — Frontend Form Styles
+   Rendered by [[ab-form:slug]] shortcode
+   ═══════════════════════════════════════════ */
+
+.ab-form-wrap {
+    max-width: 640px;
+    margin: 24px auto;
+    padding: 0;
+}
+
+.ab-form-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 16px;
+}
+
+/* ── Field rows (half-width pairs) ── */
+.ab-field-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ab-field {
+    margin-bottom: 16px;
+}
+.ab-field-full { width: 100%; }
+.ab-field-half { width: calc(50% - 8px); }
+
+.ab-field label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ab-field input[type="text"],
+.ab-field input[type="email"],
+.ab-field input[type="tel"],
+.ab-field input[type="url"],
+.ab-field input[type="number"],
+.ab-field input[type="date"],
+.ab-field textarea,
+.ab-field select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff;
+    color: #222;
+    transition: border-color .2s, box-shadow .2s;
+    box-sizing: border-box;
+}
+
+.ab-field input:focus,
+.ab-field textarea:focus,
+.ab-field select:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33,150,243,.15);
+}
+
+.ab-field textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ── Radio / Checkbox ── */
+.ab-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+.ab-radio-label,
+.ab-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.ab-radio-label input,
+.ab-checkbox-label input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+/* ── Submit ── */
+.ab-submit {
+    display: inline-block;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #fff;
+    background: #1976d2;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+}
+.ab-submit:hover { background: #1565c0; }
+.ab-submit:active { transform: scale(.98); }
+.ab-submit:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* ── Required asterisk ── */
+.req { color: #e53935; font-weight: 700; }
+
+/* ── Success message ── */
+.ab-form-success {
+    text-align: center;
+    padding: 28px 20px;
+    color: #2e7d32;
+    font-size: 18px;
+    font-weight: 600;
+    background: #e8f5e9;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+.ab-form-success i {
+    margin-right: 8px;
+    font-size: 22px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .ab-field-half { width: 100%; }
+    .ab-field-row { gap: 0; }
+}
+
+/* ═══════════════════════════════════════════
+   PRESET: Semitransparent Glass
+   ═══════════════════════════════════════════ */
+
+.ab-form-wrap[data-ab-style="glass"] .ab-form-wrap {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-form-title {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-field label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="text"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="email"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="tel"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="url"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="number"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field input[type="date"],
+.ab-form-wrap[data-ab-style="glass"] .ab-field textarea,
+.ab-form-wrap[data-ab-style="glass"] .ab-field select {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-field input::placeholder,
+.ab-form-wrap[data-ab-style="glass"] .ab-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-field input:focus,
+.ab-form-wrap[data-ab-style="glass"] .ab-field textarea:focus,
+.ab-form-wrap[data-ab-style="glass"] .ab-field select:focus {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-submit {
+    background: rgba(56, 189, 248, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 4px 16px rgba(56, 189, 248, 0.15);
+}
+.ab-form-wrap[data-ab-style="glass"] .ab-submit:hover {
+    background: rgba(56, 189, 248, 0.4);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-radio-label,
+.ab-form-wrap[data-ab-style="glass"] .ab-checkbox-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .ab-form-success {
+    background: rgba(46, 125, 50, 0.15);
+    color: #66bb6a;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(46, 125, 50, 0.2);
+}
+
+.ab-form-wrap[data-ab-style="glass"] .req { color: #f87171; }
+
+/* ═══════════════════════════════════════════
+   PRESET: Bare (Minimal)
+   ═══════════════════════════════════════════ */
+
+.ab-form-wrap[data-ab-style="bare"] .ab-form-wrap {
+    background: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="text"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="email"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="tel"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="url"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="number"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field input[type="date"],
+.ab-form-wrap[data-ab-style="bare"] .ab-field textarea,
+.ab-form-wrap[data-ab-style="bare"] .ab-field select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 0;
+    padding: 8px 0;
+    color: inherit;
+    box-shadow: none;
+}
+
+.ab-form-wrap[data-ab-style="bare"] .ab-field input:focus,
+.ab-form-wrap[data-ab-style="bare"] .ab-field textarea:focus,
+.ab-form-wrap[data-ab-style="bare"] .ab-field select:focus {
+    border-bottom-color: currentColor;
+    box-shadow: none;
+    outline: none;
+}
+
+.ab-form-wrap[data-ab-style="bare"] .ab-field label {
+    font-weight: 400;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+}
+
+.ab-form-wrap[data-ab-style="bare"] .ab-submit {
+    background: transparent;
+    color: inherit;
+    border: 1px solid currentColor;
+    padding: 10px 28px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+.ab-form-wrap[data-ab-style="bare"] .ab-submit:hover {
+    background: rgba(128, 128, 128, 0.1);
+}
+
+.ab-form-wrap[data-ab-style="bare"] .ab-form-success {
+    background: transparent;
+    color: inherit;
+    opacity: 0.8;
+    border: none;
+}
+
+/* ── Lightbox display mode (display_mode:lightbox) ── */
+.ab-lightbox-launch { margin: 16px 0; }
+.ab-lightbox-overlay {
+    position: fixed; inset: 0; z-index: 2147483640;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: rgba(8, 10, 14, 0.78);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    opacity: 0; transition: opacity .25s ease;
+}
+.ab-lightbox-overlay.ab-lightbox-open { opacity: 1; }
+.ab-lightbox-overlay[hidden] { display: none; }
+.ab-lightbox-box {
+    position: relative; max-width: 560px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    background: rgba(20, 22, 30, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px; padding: 28px 26px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+    transform: translateY(8px); transition: transform .25s ease;
+}
+.ab-lightbox-open .ab-lightbox-box { transform: translateY(0); }
+.ab-lightbox-box .ab-form-wrap { margin: 0; max-width: none; }
+.ab-lightbox-close {
+    position: absolute; top: 10px; right: 12px;
+    background: transparent; border: none; color: rgba(255, 255, 255, 0.6);
+    font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 4px 8px;
+}
+.ab-lightbox-close:hover { color: #fff; }

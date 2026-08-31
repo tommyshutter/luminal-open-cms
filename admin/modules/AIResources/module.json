@@ -1,0 +1,18 @@
+{
+  "name": "AIResources",
+  "version": "1.0.0",
+  "description": "AI provider and MCP server management — visual resource cards for API keys, models, and tool servers",
+  "author": "Luminal CMS",
+  "entry_point": "AIResources.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "AIResources",
+    "title": "AI Resources",
+    "href": "AIResources.php",
+    "role": "superadmin",
+    "order": 6,
+    "icon": "🤖"
+  },
+  "menu_group": "system",
+  "dependencies": []
+}

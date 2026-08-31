@@ -1,0 +1,19 @@
+{
+    "name": "FileManager",
+    "version": "1.3.0",
+    "description": "Dual-pane file browser with upload, edit, zip, backup, and ownership management",
+    "author": "Luminal CMS",
+    "entry_point": "FileManager.php",
+    "api_endpoint": "api.php",
+    "menu_entry": {
+        "key": "FileManager",
+        "title": "File Manager",
+        "href": "FileManager.php",
+        "role": "staff",
+        "order": 20,
+        "icon": "📁",
+        "color": "red"
+    },
+    "requires_data_dirs": [],
+    "dependencies": []
+}

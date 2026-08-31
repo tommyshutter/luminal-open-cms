@@ -1,0 +1,109 @@
+# ============================================================
+# Luminal CMS — Root Security .htaccess
+# Blocks: dot-files, dot-dirs, sensitive config files,
+#         scanner paths, directory listing
+# ============================================================
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # -- Force HTTPS ------------------------------------------------------
+    # Shared-hosting sites have no vhost-level redirect, so a plain-HTTP request
+    # would otherwise serve the admin sign-in form -- password field and all --
+    # in clear text. Sites already redirected by the web server never reach this
+    # rule, because HTTPS is on by the time .htaccess is read.
+    #   X-Forwarded-Proto: if TLS terminates upstream, %{HTTPS} reads "off" here
+    #     and the site would redirect to itself forever without this test.
+    #   .well-known: ACME certificate validation is served over plain HTTP;
+    #     redirecting it can break automatic certificate renewal.
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{REQUEST_URI} !^/\.well-known/
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # Block dot-files and dot-directories
+    # Allow .well-known (Let's Encrypt) and .cache/ (media thumbnails).
+    # .htaccess is NOT exempt: it was served 200 fleet-wide until 2026-08-30, disclosing
+    # every block rule and carve-out. This rewrite [F] is the ONLY layer that actually
+    # fires -- <Location "/"> Require all granted defeats Files/FilesMatch authz, and
+    # main-server rewrite rules never inherit into vhosts (no RewriteOptions Inherit).
+    RewriteRule (^|/)\.(?!well-known|cache/) - [F,L]
+
+    # Allow /admin/data/site-assets/ (OG images, favicons — public by design)
+    # Must come BEFORE the admin/data block rule
+    RewriteRule ^admin/data/site-assets/[a-zA-Z0-9._-]+\.(png|jpg|jpeg|gif|webp|svg|ico)$ - [L]
+
+    # Block admin/data/ tree (belt-and-suspenders; admin/data/.htaccess also covers it)
+    RewriteRule ^admin/data(/|$) - [F,L]
+
+    # Block config/registry JSON anywhere under admin/.
+    # Every consumer reads these from DISK (file_get_contents), never over HTTP, so
+    # blocking costs nothing -- and a config JSON served over HTTP is a disclosure.
+    # Extension rules below already cover .bak copies; this covers the bare .json.
+    RewriteRule ^admin/.*\.json$ - [F,L]
+
+    # Block dev-only trees that leak onto deployed sites (defense-in-depth; the
+    # manifest sweep removes the files, this denies web access even if any remain).
+    # VERTICALS/ and scripts-php/ contain executable CLI/cron PHP — never public.
+    RewriteRule (^|/)(VERTICALS|scripts-php)(/|$) - [F,L]
+
+    # Block sensitive file extensions — via RewriteRule because FilesMatch is INERT
+    # on these vhosts (AllowOverride doesn't grant Limit scope; verified 2026-06-08
+    # that the FilesMatch block below never fired). md = dev docs (CLAUDE/README/SKILLS).
+    # (\.|$) after the ext also catches date-suffixed backups (foo.php.bak.20260325)
+    # Blocked-extension rule. The trailing class is ([^a-zA-Z0-9]|$), NOT (\.|$).
+    #
+    # It used to be (\.|$), which requires the extension at end-of-string or before a dot.
+    # Our OWN backup convention writes  page.php.bak-20260703-221228  — .bak followed by a
+    # HYPHEN — so the convention defeated the rule. On 2026-08-30, 155 such files across both
+    # droplets were serving RAW PHP SOURCE with HTTP 200: the name does not end in .php, so
+    # Apache returned it as plain text instead of executing it. Dating from July.
+    RewriteRule \.(sql|bak|log|sh|key|pem|crt|p12|pfx|cfg|htpasswd|htdigest|md|orig|swp|swo)(\.|$) - [F,L]
+
+    # Second rule for OUR OWN backup convention: a blocked extension followed by a hyphen or
+    # underscore, as in page.php.bak-20260703-221228. The first rule cannot cover this,
+    # because it requires the extension at end-of-string or before a dot.
+    #
+    # 'save' and 'old' appear HERE but deliberately NOT in the rule above: `.save.php` is a
+    # real endpoint name (MenuManager's menu-manager.save.php, fetched by menu-manager.js).
+    # An earlier version of this fix put 'save' in the terminal list and 403'd that endpoint
+    # on every site — menu saving was broken fleet-wide until it was caught by the audit.
+    RewriteRule \.(bak|orig|save|old|swp|swo)[-_] - [F,L]
+
+    # Belt and braces: a PHP file with ANYTHING appended is never meant to be served, whatever
+    # the suffix is called. This catches naming schemes nobody has invented yet.
+    RewriteRule \.php[^a-zA-Z0-9/] - [F,L]
+
+    # Block config/package files in web root
+    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|yarn\.lock)$ - [F,L]
+
+    # Block WordPress/common scanner probe paths
+    RewriteRule ^(wp-admin|wp-login\.php|wp-content|wp-includes|xmlrpc\.php|phpmyadmin|pma|myadmin|adminer)(\/|$) - [F,L]
+
+    # Sitemap canonical URL
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # Article URLs: /blog/{slug} or /articles/{slug} → article.php?slug={slug}
+    RewriteRule ^blog/([a-zA-Z0-9_-]+)/?$ article.php?slug=$1 [L,QSA]
+    RewriteRule ^articles/([a-zA-Z0-9_-]+)/?$ article.php?slug=$1 [L,QSA]
+
+    # Clean page URLs: /slug → index.php?p=slug
+    # Only applies when slug is not a real file or directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?p=$1 [L,QSA]
+</IfModule>
+
+# Block sensitive file extensions
+# md = dev docs (CLAUDE.md, README.md, SKILLS.md, module docs) — never web-served (content renders via PHP)
+<FilesMatch "\.(sql|bak|log|sh|key|pem|crt|p12|pfx|cfg|htpasswd|htdigest|md)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

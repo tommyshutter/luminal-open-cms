@@ -1,0 +1,19 @@
+{
+    "name": "MembershipManager",
+    "version": "2.1.0",
+    "description": "Invite-only membership with referral tracking, leaderboards, and activity logging",
+    "entry_point": "MembershipManager.php",
+    "api_endpoint": "api.php",
+    "menu_entry": {
+        "title": "Membership Manager",
+        "href": "MembershipManager.php",
+        "key": "MembershipManager",
+        "role": "admin",
+        "order": 201,
+        "icon": "\ud83c\udfc5"
+    },
+    "requires_data_dirs": [
+        "MembershipManager"
+    ],
+    "dependencies": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "MyStore",
+  "version": "1.3.0",
+  "description": "E-commerce store management — products, orders, storefront, per-quantity shipping rules, date-range sales dashboard, shipping-notification / tracking + receipt fulfillment, and customer exports (Mailchimp / CSV / Markdown / Audience Leads)",
+  "author": "Luminal CMS",
+  "entry_point": "MyStoreAdmin.php",
+  "menu_entry": {
+    "key": "MyStore",
+    "title": "My Store",
+    "href": "MyStoreAdmin.php",
+    "role": "admin",
+    "order": 50,
+    "icon": "🛒"
+  },
+  "menu_entries": [
+    {
+      "key": "MyStore",
+      "title": "My Store",
+      "href": "MyStoreAdmin.php",
+      "role": "admin",
+      "order": 50,
+      "icon": "🛒"
+    },
+    {
+      "key": "MyStoreOrders",
+      "title": "My Store Orders",
+      "href": "orders.php",
+      "role": "admin",
+      "order": 51,
+      "icon": "🛒"
+    }
+  ],
+  "dependencies": []
+}

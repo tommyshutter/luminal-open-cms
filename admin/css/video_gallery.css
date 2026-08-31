@@ -1,0 +1,13 @@
+ 
+  #video-grid{
+    min-height:240px;
+    border:2px dashed #2b3b45;
+    border-radius:10px;
+    background:rgba(10,16,20,.45);
+    padding:10px;
+  }
+  /* (these might already exist, but include to be safe) */
+  .thumb-card{position:relative;aspect-ratio:16/9;background:#10171c;border:1px solid #23343e;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#9fb7c9;cursor:grab}
+  .thumb-card .filename{position:absolute;left:6px;right:6px;bottom:22px;background:rgba(0,0,0,.55);font-size:12px;padding:4px 6px;border-radius:4px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .thumb-card .meta-line{position:absolute;left:6px;right:6px;bottom:4px;color:#c5d0d8;font-size:11px;opacity:.9;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+ 

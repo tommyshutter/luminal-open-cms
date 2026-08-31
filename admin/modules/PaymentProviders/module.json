@@ -1,0 +1,23 @@
+{
+  "name": "PaymentProviders",
+  "version": "1.0.0",
+  "description": "Payment gateway configuration — PayPal, Stripe, Square",
+  "entry_point": "PaymentProviders.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "PaymentProviders",
+    "title": "Payment Methods",
+    "href": "PaymentProviders.php",
+    "role": "admin",
+    "order": 15,
+    "icon": "💳"
+  },
+  "menu_group": "ecommerce",
+  "requires_data_dirs": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write"
+    ]
+  }
+}

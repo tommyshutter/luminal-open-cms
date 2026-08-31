@@ -1,0 +1,582 @@
+/* ============================================================
+   YouTube Playlist Studio — Admin Styles
+   Scoped with .yps-* prefix
+   ============================================================ */
+
+.yps-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+}
+
+/* Card Grid */
+.yps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.yps-card {
+    background: #252535;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+}
+.yps-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.yps-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #eee;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.yps-card-meta {
+    font-size: 0.78rem;
+    color: #888;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.yps-card-shortcode {
+    font-size: 0.72rem;
+    font-family: 'Courier New', monospace;
+    color: #60a5fa;
+    background: rgba(59,130,246,.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* New card */
+.yps-card-new {
+    border: 2px dashed #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    color: #666;
+    font-size: 0.9rem;
+    transition: border-color .15s, color .15s;
+}
+.yps-card-new:hover {
+    border-color: #3b82f6;
+    color: #60a5fa;
+}
+.yps-card-new span {
+    font-size: 1.5rem;
+    margin-right: 8px;
+}
+
+/* Modal Overlay */
+.yps-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 9000;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+}
+.yps-overlay.open { display: flex; }
+
+.yps-modal {
+    background: #1e1e2e;
+    border: 1px solid #444;
+    border-radius: 8px;
+    width: 640px;
+    max-width: 95vw;
+    max-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+}
+
+.yps-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid #333;
+}
+.yps-modal-header h3 {
+    margin: 0; padding: 0; border: 0;
+    font-size: 1rem;
+    color: #fff;
+}
+.yps-modal-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.yps-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.yps-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-top: 1px solid #333;
+}
+.yps-modal-footer .yps-shortcode-hint {
+    font-size: 0.78rem;
+    font-family: 'Courier New', monospace;
+    color: #60a5fa;
+}
+
+/* Form fields */
+.yps-field {
+    margin-bottom: 16px;
+}
+.yps-field label {
+    display: block;
+    font-size: 0.78rem;
+    color: #aaa;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.yps-field input[type="text"],
+.yps-field input[type="number"] {
+    width: 100%;
+    background: #2a2a3a;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    box-sizing: border-box;
+}
+.yps-field input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+.yps-field input[readonly] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.yps-row {
+    display: flex;
+    gap: 14px;
+}
+.yps-row .yps-field { flex: 1; }
+
+.yps-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.yps-check label {
+    margin: 0;
+    text-transform: none;
+    font-weight: normal;
+    color: #ccc;
+    font-size: 0.85rem;
+}
+
+/* Preview section */
+.yps-preview-section {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #2a2a3a;
+}
+.yps-preview-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.yps-preview-status {
+    font-size: 0.78rem;
+    color: #888;
+}
+
+.yps-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+}
+.yps-preview-item {
+    background: #252535;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.yps-preview-item img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+}
+.yps-preview-item .yps-pv-title {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ⭐ Smart Add bar — the primary "paste any URL" control */
+.yps-smart {
+    background: #1c1c28;
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
+.yps-smart > label { color: #e5e7eb; font-weight: 600; }
+.yps-smart-sub { color: #6b7280; font-weight: 400; font-size: 0.78rem; }
+.yps-smart #yps-smart-preview { margin-top: 10px; }
+#yps-smart-status:not(:empty),
+#yps-video-resolve-status:not(:empty) { display: block; margin-top: 6px; }
+
+/* Advanced disclosure — RETIRED 2026-08-17 (API key is now always visible in
+   the Source fieldset). Rules kept harmless in case a site has a stale cached
+   page mid-deploy. */
+.yps-adv { margin: 4px 0 10px; }
+.yps-adv > summary {
+    cursor: pointer;
+    color: #9ca3af;
+    font-size: 0.78rem;
+    list-style: none;
+    user-select: none;
+}
+.yps-adv > summary::-webkit-details-marker { display: none; }
+.yps-adv > summary::before { content: '▸ '; }
+.yps-adv[open] > summary::before { content: '▾ '; }
+
+/* Buttons (reuse admin patterns) */
+.yps-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+.yps-btn-primary { background: #3b82f6; color: #fff; }
+.yps-btn-primary:hover { background: #2563eb; }
+.yps-btn-secondary { background: #374151; color: #ccc; border-color: #555; }
+.yps-btn-secondary:hover { background: #4b5563; color: #fff; }
+.yps-btn-danger { background: #7f1d1d; color: #fca5a5; border-color: #991b1b; }
+.yps-btn-danger:hover { background: #991b1b; color: #fff; }
+.yps-btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+
+/* Status message */
+.yps-status {
+    font-size: 0.78rem;
+    color: #888;
+    margin-left: auto;
+}
+
+/* Empty state */
+.yps-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Type selector — Playlist vs Single Video */
+.yps-type-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #2a2a3a;
+}
+.yps-type-opt {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #2a2a3a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: #aaa;
+    transition: border-color .15s, color .15s, background .15s;
+}
+.yps-type-opt:hover { border-color: #555; color: #ccc; }
+.yps-type-opt input[type="radio"] { margin: 0; cursor: pointer; }
+.yps-type-opt:has(input:checked) {
+    border-color: #3b82f6;
+    color: #fff;
+    background: rgba(59,130,246,.15);
+}
+
+/* Mode-conditional groups (toggled by JS via [hidden]) */
+.yps-mode[hidden] { display: none; }
+
+/* Inline row: text input + side button (for Resolve) */
+.yps-inline-row {
+    display: flex;
+    gap: 8px;
+}
+.yps-inline-row input { flex: 1; }
+.yps-inline-row .yps-btn { white-space: nowrap; }
+
+.yps-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.yps-field textarea {
+    width: 100%;
+    background: #2a2a3a;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+}
+.yps-field textarea:focus { outline: none; border-color: #3b82f6; }
+.yps-field select {
+    width: 100%;
+    background: #2a2a3a;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    box-sizing: border-box;
+}
+
+/* Card type badges */
+.yps-card-header {
+    margin-bottom: 6px;
+}
+.yps-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+.yps-badge-video {
+    background: rgba(239, 68, 68, .15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, .3);
+}
+.yps-badge-playlist {
+    background: rgba(59, 130, 246, .15);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, .3);
+}
+/* Channel / Topic — distinct from playlist blue so a channel card is not mistaken
+   for a playlist at a glance. */
+.yps-badge-channel {
+    background: rgba(168, 85, 247, .15);
+    color: #d8b4fe;
+    border: 1px solid rgba(168, 85, 247, .3);
+}
+
+/* Mode-gating: applyTypeMode() sets the `hidden` ATTRIBUTE, but any class with
+   its own `display` beats the UA's [hidden]{display:none}. That already made
+   the two Playback checkboxes (.yps-check{display:flex}) show while editing a
+   Single Video, and would have done the same to the new section headers. One
+   rule, everything inside the modal, so it cannot drift again. */
+.yps-modal [hidden] { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   COLOURED, THEME-PROOF SECTION HEADERS  (feedback_cms_colorful_theme_proof_headers)
+   Gradient background + white text forced, so an admin theme that
+   recolours headings cannot wash these out. Added 2026-08-17.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.yps-sec-head {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 22px 0 12px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+}
+
+/* The first header in the modal body shouldn't push a gap above itself. */
+.yps-modal-body > .yps-sec-head:first-child,
+.yps-smart > .yps-sec-head:first-child { margin-top: 0; }
+
+/* One accent per section — distinct hues so the eye finds a block by colour. */
+.yps-sec-smart    { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); }  /* blue   */
+.yps-sec-identity { background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); }  /* violet */
+.yps-sec-source   { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }  /* YT red */
+.yps-sec-video    { background: linear-gradient(135deg, #db2777 0%, #9d174d 100%); }  /* pink   */
+.yps-sec-playlist { background: linear-gradient(135deg, #ea580c 0%, #9a3412 100%); }  /* orange */
+.yps-sec-playback { background: linear-gradient(135deg, #0d9488 0%, #115e59 100%); }  /* teal   */
+.yps-sec-preview  { background: linear-gradient(135deg, #16a34a 0%, #14532d 100%); }  /* green  */
+
+/* ── Source fieldset — always-visible IDs and key ───────────────── */
+.yps-source {
+    border: 1px solid #3f3f52;
+    border-radius: 8px;
+    padding: 4px 14px 14px;
+    margin: 0 0 18px;
+    background: rgba(255, 255, 255, 0.02);
+}
+/* A <legend> ignores width/display in most engines; float it back into the
+   border gap so it still reads as a full coloured bar. */
+.yps-source > legend.yps-sec-head {
+    width: auto;
+    margin: 0;
+    padding: 6px 14px;
+}
+.yps-source .yps-field:last-of-type { margin-bottom: 0; }
+
+/* ── Stored-data read-back ──────────────────────────────────────── */
+.yps-stored {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid #3f3f52;
+}
+.yps-stored-head {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 8px;
+}
+.yps-stored-warn {
+    margin: 0 0 10px;
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 0.78rem;
+    color: #fde68a;
+    background: rgba(245, 158, 11, 0.14);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+}
+.yps-stored-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 4px 14px;
+    margin: 0;
+    font-size: 0.8rem;
+}
+.yps-stored-list dt {
+    color: #9ca3af;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.yps-stored-list dd {
+    margin: 0;
+    color: #e5e7eb;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.yps-stored-list dd.yps-mono {
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: #93c5fd;
+}
+.yps-stored-list dd a { color: #60a5fa; text-decoration: none; }
+.yps-stored-list dd a:hover { text-decoration: underline; }
+
+@media (max-width: 560px) {
+    .yps-stored-list { grid-template-columns: 1fr; gap: 2px 0; }
+    .yps-stored-list dt { margin-top: 6px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NOTHING IS CLIPPED  — 2026-08-18
+   Tom: "the YouTube links, URLs are obfuscated."
+   The card title, the meta line and the SHORTCODE were all
+   white-space:nowrap + text-overflow:ellipsis, so the three values you
+   most need to read or copy — the playlist ID, the full title, and the
+   [[shortcode]] you paste into a page — were the ones being cut off.
+   Long ids now wrap instead of vanishing.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.yps-card-title,
+.yps-card-meta,
+.yps-card-shortcode {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+}
+
+.yps-card-meta { line-height: 1.45; }
+
+/* Label / value pairing on the card so a long id still reads clearly. */
+.yps-card-meta .yps-k {
+    color: #6b7280;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin-right: 4px;
+}
+.yps-card-meta .yps-v {
+    color: #cbd5e1;
+    font-family: 'Courier New', monospace;
+    font-size: 0.74rem;
+    user-select: all;          /* one click selects the whole id for copying */
+}
+
+/* The shortcode is for copying — make that easy and never truncate it. */
+.yps-card-shortcode { user-select: all; line-height: 1.5; }
+
+/* Preview captions may wrap to two lines rather than being cut mid-word. */
+.yps-preview-item .yps-pv-title {
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow-wrap: anywhere;
+}
+
+/* Source inputs hold long ids and keys — show them in a legible mono face. */
+#yps-f-playlist-id,
+#yps-f-video-url,
+#yps-f-api-key,
+#yps-f-smart-url {
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+}
+
+/* The "current source" line under Smart Add. */
+#yps-smart-status a { color: #60a5fa; }

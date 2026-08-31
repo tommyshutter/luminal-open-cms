@@ -1,0 +1,850 @@
+/* =========================================================================
+   Galleries CSS — Fixed Ghost Placeholders, Lightbox, & Layouts
+   @appname  The Site
+   @file     /css/galleries.css
+   @version  2025.10.13.17.10.00-EST — Fixed duplicates, placeholders, layouts
+   Notes:
+   - Ghost placeholders ONLY show when no thumbnail exists
+   - Single play badge per video
+   - Respects JSON layout settings (masonry, grid, rows)
+   - No captions displayed
+   - Proper lightbox support
+   ========================================================================= */
+
+/* Base containers (no defaults for vars) */
+.gallery-images,
+.gallery-videos,
+.gallery-pdfs,
+.gallery-combined {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ======================= GRID (needs --cols/--gap) ===================== */
+.gallery-images[data-layout="grid"],
+.gallery-videos[data-layout="grid"],
+.gallery-pdfs[data-layout="grid"],
+.gallery-combined[data-layout="grid"] {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  gap: var(--gap, 20px);
+}
+
+/* ===================== MASONRY (needs --cols/--gap) ==================== */
+.gallery-images[data-layout="masonry"] {
+  display: block;
+  -webkit-column-count: var(--cols, 3);
+  -webkit-column-gap: var(--gap, 20px);
+  -moz-column-count: var(--cols, 3);
+  -moz-column-gap: var(--gap, 20px);
+  column-count: var(--cols, 3);
+  column-gap: var(--gap, 20px);
+}
+.gallery-images[data-layout="masonry"] .gi {
+  break-inside: avoid;
+  margin-bottom: var(--gap, 20px);
+  width: 100%;
+  height: auto;
+}
+.gallery-images[data-layout="masonry"] .gi img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* no cropping in masonry */
+}
+
+/* ============================ LIST MODE ================================ */
+.gallery-images[data-layout="list"],
+.gallery-videos[data-layout="list"],
+.gallery-pdfs[data-layout="list"],
+.gallery-combined[data-layout="list"] { display: block; }
+
+.gallery-images[data-layout="list"] .gi,
+.gallery-videos[data-layout="list"] .gv,
+.gallery-pdfs[data-layout="list"] .pdf-item {
+  display: flex;
+  align-items: center;
+  gap: var(--gap, 20px);
+  padding: calc(var(--gap, 20px) * 0.75);
+  border: 1px solid #222;
+  border-radius: 12px;
+  background: #0f0f0f;
+  margin-bottom: var(--gap, 20px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+/* ====================== IMAGE TILE AESTHETICS ========================= */
+.gallery-images .gi {
+  position: relative;
+  overflow: hidden;
+  border-radius: 9px;
+  background: transparent;
+  border: 0px solid #222;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  aspect-ratio: calc(1 * var(--square)) / calc(1 * var(--square));
+}
+.gallery-images .gi:not(:where([style*="--square: 1"], [style*="--square:1"])) {
+  aspect-ratio: auto;
+  height: var(--row-h);
+}
+.gallery-images .gi img {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--fit, cover);
+  display: block;
+  transform: translateZ(0);
+  margin: 1px;
+}
+
+.gallery-images {
+  padding: 3px;
+  background: transparent;
+}
+.gi {
+  margin: 10px!important;
+}
+
+.gallery-images .gi a,
+.gallery-combined .gi a { display: block; }
+.gallery-images .gi img,
+.gallery-combined .gi img { width: 100%; max-width: 100%; height: auto; display: block; }
+.gallery-images .gi:hover img { filter: brightness(0.97); }
+
+/* ============================ VIDEOS ================================== */
+
+.gallery-videos .gv {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000000;
+  border: 1px solid #222;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  margin-bottom: 20px;
+}
+
+.gallery-videos .gv a {
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Video thumbnails - REAL images */
+.gallery-videos .gv img.video-thumb,
+.gallery-videos .gv img,
+.gallery-combined .gv img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.gallery-videos .gv video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: var(--fit, cover);
+}
+
+ 
+
+/* Play badge styling - appears OVER the thumbnail */
+.ri-play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.gallery-videos .gv:hover .ri-play-badge {
+  font-size: 56px;
+  color: rgba(255, 255, 255, 1);
+}
+
+/* NO CAPTIONS - Per user request, captions are hidden */
+
+.gallery-videos .gv figcaption,
+.gallery-videos .gv .vt,
+figure.gv figcaption {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.gallery-videos[data-layout="rows"] .gv { 
+  aspect-ratio: auto; 
+  height: var(--row-h); 
+}
+
+/* ============================== PDFs ================================== */
+.gallery-pdfs .pdf-item {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 0.75rem 0.875rem;
+  gap: var(--gap, 20px);
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  margin-bottom: var(--gap, 20px);
+}
+.gallery-pdfs .pdf-item a {
+  flex: 1;
+  color: #ddd;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.gallery-pdfs .pdf-item a:hover { 
+  color: #fff; 
+  text-decoration: underline; 
+}
+
+/* ========================= COMBINED GALLERY ============================ */
+/* Combined galleries reuse .gi, .gv, .pdf-item from typed galleries */
+.gallery-combined .gi { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid #222; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.gallery-combined .gi a { display: block; }
+.gallery-combined .gi img { width: 100%; height: auto; display: block; object-fit: cover; }
+.gallery-combined .gv { position: relative; overflow: hidden; border-radius: 12px; background: #000; border: 1px solid #222; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.gallery-combined .gv a { display: block; position: relative; text-decoration: none; }
+.gallery-combined .gv img { width: 100%; height: auto; display: block; object-fit: cover; }
+.gallery-combined .gv:hover .ri-play-badge { font-size: 56px; color: rgba(255,255,255,1); }
+.gallery-combined .pdf-item { position: relative; overflow: hidden; border-radius: 12px; background: #121212; border: 1px solid #222; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.gallery-combined .pdf-item a { display: block; text-decoration: none; color: #ddd; }
+.gallery-combined .pdf-item img { width: 100%; height: auto; display: block; object-fit: cover; }
+.gallery-combined .pdf-item .pdf-icon { display: flex; align-items: center; justify-content: center; height: 180px; font-size: 3rem; color: #f43f5e; }
+.gallery-combined .pdf-item .item-title { display: block; padding: 0.5rem; font-size: 0.8rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: rgba(0,0,0,.5); color: #94a3b8; }
+
+/* =================== PANEL MASONRY & VARIABLE BRIDGE =================== */
+/* Honor per-panel columns via --ri-cols; no other defaults */
+.ri-stack.ri-stack--left  .gallery-images,
+.ri-stack.ri-stack--right .gallery-images,
+.ri-stack.ri-stack--left  .gallery-videos,
+.ri-stack.ri-stack--right .gallery-videos,
+.ri-stack.ri-stack--left  .gallery-pdfs,
+.ri-stack.ri-stack--right .gallery-pdfs,
+.ri-stack.ri-stack--left  .gallery-combined,
+.ri-stack.ri-stack--right .gallery-combined {
+  --cols: var(--ri-cols);
+}
+
+/* Ensure masonry inside panels respects the mapped --cols/--gap */
+.panel-left  .gallery-images[data-layout="masonry"],
+.left-column .gallery-images[data-layout="masonry"],
+.panel-right .gallery-images[data-layout="masonry"],
+.right-column .gallery-images[data-layout="masonry"] {
+  -webkit-column-count: var(--cols, 3);
+  -webkit-column-gap: var(--gap, 20px);
+  -moz-column-count: var(--cols, 3);
+  -moz-column-gap: var(--gap, 20px);
+  column-count: var(--cols, 3);
+  column-gap: var(--gap, 20px);
+}
+
+/* ====================== Legacy card compatibility ===================== */
+.ri-g-item,
+.ri-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  bor der: 1px solid #23343e;
+  border-radius: 12px;
+  background: #0b121600;
+  box- shadow: 0 6px 18px rgba(0,0,0,.35);
+  transition: transform .15s ease, box-shadow .15s ease;
+  margin-top: 25px;
+}
+.ri-g-item:hover, 
+.ri-card:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 10px -10px 24px rgba(0,0,0,.45); 
+}
+.ri-g-item img, 
+.ri-card img { 
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+
+
+}
+
+/* Hide captions inside cards too */
+.ri-card figcaption,
+.ri-g-item figcaption {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ============================ Captions off ============================ */
+.gallery .filename,
+.gallery .file-name,
+.gallery .caption,
+figure .filename,
+figure .file-name,
+figure figcaption {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* === Panel stacks: use --ri-cols for masonry of .ri-g-item (no defaults) === */
+.ri-stack .ri-stack-inner {
+  -webkit-column-count: var(--ri-cols);
+  -moz-column-count: var(--ri-cols);
+  column-count: var(--ri-cols);
+  -webkit-column-gap: var(--gap, 20px);
+  -moz-column-gap: var(--gap, 20px);
+  column-gap: var(--gap, 20px);
+}
+
+.ri-stack .ri-stack-inner .ri-g-item {
+  break-inside: avoid;
+  display: block;
+  width: 100%;
+  margin-bottom: var(--gap, 20px);
+}
+
+html, body {    
+  overflow-y: auto;  /* No !important */   
+}
+
+body.lightbox-active {
+  position: fixed !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* === 2025.10.13: Video masonry layout properly configured === */
+.gallery-videos[data-layout="masonry"] {
+  display: block;
+  -webkit-column-count: var(--cols, 3);
+  -webkit-column-gap: var(--gap, 20px);
+  -moz-column-count: var(--cols, 3);
+  -moz-column-gap: var(--gap, 20px);
+  column-count: var(--cols, 3);
+  column-gap: var(--gap, 20px);
+}
+
+.gallery-videos[data-layout="masonry"] .gv {
+  break-inside: avoid;
+  margin-bottom: var(--gap, 20px);
+}
+
+.gallery-videos[data-layout="masonry"] .gv img,
+.gallery-videos[data-layout="masonry"] .gv video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain; /* avoid cropping thumbnails in masonry */
+}
+
+/* Column-count reinforcement for common wrappers (left/right columns, panels) */
+.gallery-videos[data-layout="masonry"],
+.left-column .gallery-videos[data-layout="masonry"],
+.panel-right .gallery-videos[data-layout="masonry"],
+.right-column .gallery-videos[data-layout="masonry"] {
+  -webkit-column-count: var(--cols, 3);
+  -webkit-column-gap: var(--gap, 20px);
+  -moz-column-count: var(--cols, 3);
+  -moz-column-gap: var(--gap, 20px);
+  column-count: var(--cols, 3);
+  column-gap: var(--gap, 20px);
+}
+
+/* === ROWS layout for videos === */
+.gallery-videos[data-layout="rows"] {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
+  gap: var(--gap, 20px);
+  grid-auto-rows: var(--row-h, 200px);
+}
+
+.gallery-videos[data-layout="rows"] .gv {
+  height: 100%;
+}
+
+.gallery-videos[data-layout="rows"] .gv img {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--fit, cover);
+}
+
+/* ==========================================================================
+   INLINE VIDEO STYLES (for content stacks)
+   ========================================================================== */
+
+:root { 
+  --stack-video-ratio: 16/9; 
+}
+
+/* MP4 video tile we inject */
+.ri-video *,
+.ri-inline-video {
+  width: 100%;
+  aspe ct-ratio: var(--stack-video-ratio);
+  aspect-ratio: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #00000000;
+}
+
+/* YouTube inline tile */
+.ri-inline-yt {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--stack-video-ratio);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  border: none;
+  outline: none;
+}
+
+.ri-inline-yt-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%; 
+  display: block; 
+  border: 0;
+  outline: none;
+  transform: scale(var(--stack-yt-crop, 1.08));
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+/* Additional fix: ensure no parent link styling creates borders */
+a .ri-inline-yt {
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+/* Hide broken <img> if swapped to player */
+.ri-thumb-missing { 
+  display: none !important; 
+}
+
+/* Fallback placeholder (rare) */
+.ri-video-ph {
+  display: grid; 
+  place-items: center;
+  width: 100%;
+  aspect-ratio: var(--stack-video-ratio);
+  background: #0f1620;
+  color: #9fb0c3;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  font-weight: 700; 
+  letter-spacing: .08em; 
+  font-size: 12px;
+}
+
+/* Subtle outline when a real <video> is actively playing */
+.ri-video-playing {
+  outline: 2px solid rgba(255,255,255,.12);
+  outline-offset: 0;
+}
+
+/* ==========================================================================
+   EMBED CONTAINERS (YouTube, TikTok, etc.)
+   ========================================================================== */
+
+.ri-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+.ri-embed.ri-vertical {
+  aspect-ratio: 9/16;
+  max-height: 80vh;
+  max-width: 45vh; /* 80vh × 9/16 */
+  margin: 0 auto;
+}
+.ri-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Vertical images in lightbox triggers */
+.ri-vertical img {
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* PDF placeholder (inline SVG fallback) */
+.ri-pdf-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #1a0a0a;
+  border-radius: 8px;
+}
+.ri-pdf-label {
+  margin-top: .5rem;
+  font-size: .8rem;
+  color: #e05252;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Stack grid layout */
+.ri-stack {
+  display: grid;
+  grid-template-columns: repeat(var(--ri-cols, 1), minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE OVERRIDES
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  /* Two columns on tablets */
+  .gallery-images[data-layout="grid"],
+  .gallery-videos[data-layout="grid"],
+  .gallery-pdfs[data-layout="grid"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  
+  .gallery-images[data-layout="masonry"],
+  .gallery-videos[data-layout="masonry"] {
+    column-count: 2 !important;
+    -webkit-column-count: 2 !important;
+    -moz-column-count: 2 !important;
+  }
+  
+  .gallery-videos[data-layout="rows"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Single column on mobile */
+  .gallery-images[data-layout="grid"],
+  .gallery-videos[data-layout="grid"],
+  .gallery-pdfs[data-layout="grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+  
+  .gallery-images[data-layout="masonry"],
+  .gallery-videos[data-layout="masonry"] {
+    column-count: 1 !important;
+    -webkit-column-count: 1 !important;
+    -moz-column-count: 1 !important;
+    column-gap: 0;
+  }
+  
+  .gallery-videos[data-layout="rows"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .gallery-images .gi,
+  .gallery-videos .gv,
+  .gallery-pdfs .pdf-item {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* Make play badges slightly smaller on mobile */
+  .ri-play-badge {
+    font-size: 40px;
+  }
+  
+  .gallery-videos .gv:hover .ri-play-badge {
+    font-size: 44px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Extra small screens */
+  .gallery-images .gi,
+  .gallery-videos .gv,
+  .gallery-pdfs .pdf-item {
+    margin-bottom: 15px;
+  }
+  
+  .ri-play-badge {
+    font-size: 36px;
+  }
+  
+  .gallery-videos .gv:hover .ri-play-badge {
+    font-size: 40px;
+  }
+}
+
+/* ==========================================================================
+   EVENT CARD STYLES (from Events Manager shortcodes)
+   ========================================================================== */
+
+.event-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  border-color: #b22222;
+}
+
+.event-card-image {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.event-card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.event-card-body {
+  padding: 20px 25px;
+}
+
+.event-title {
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.event-datetime {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #00d2ff;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.event-datetime i {
+  color: #b22222;
+}
+
+.event-time-separator {
+  color: #666;
+  margin: 0 4px;
+}
+
+.event-venue {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px 18px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 3px solid #b22222;
+}
+
+.event-venue .venue-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+  flex-shrink: 0;
+}
+
+.event-venue .venue-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.event-venue .venue-name {
+  color: #ffc30a;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.event-venue .venue-address,
+.event-venue .venue-phone,
+.event-venue .venue-website {
+  color: #999;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.event-venue .venue-address:hover,
+.event-venue .venue-phone:hover,
+.event-venue .venue-website:hover {
+  color: #00d2ff;
+}
+
+.event-venue .venue-address i,
+.event-venue .venue-phone i,
+.event-venue .venue-website i {
+  width: 14px;
+  text-align: center;
+  color: #b22222;
+}
+
+.event-description {
+  color: #bbb;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.event-links {
+  display: flex;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #222;
+}
+
+.event-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.event-link-share {
+  background: #1877F2;
+  color: #fff;
+  width: auto;
+  padding: 0 15px;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.event-link-share:hover {
+  background: #3b9eff;
+  transform: scale(1.05);
+}
+
+.event-link-fb {
+  background: #1877F2;
+  color: #fff;
+}
+
+.event-link-fb:hover {
+  background: #3b9eff;
+  transform: scale(1.1);
+}
+
+.event-link-map {
+  background: #b22222;
+  color: #fff;
+}
+
+.event-link-map:hover {
+  background: #cc3333;
+  transform: scale(1.1);
+}
+
+.event-link-yt {
+  background: #FF0000;
+  color: #fff;
+}
+
+.event-link-yt:hover {
+  background: #ff3333;
+  transform: scale(1.1);
+}
+
+.event-link-email {
+  background: #444;
+  color: #fff;
+}
+
+.event-link-email:hover {
+  background: #666;
+  transform: scale(1.1);
+}
+
+/* Event card responsive */
+@media screen and (max-width: 768px) {
+  .event-card-body {
+    padding: 15px 18px;
+  }
+
+  .event-title {
+    font-size: 1.2rem;
+  }
+
+  .event-datetime {
+    font-size: 0.85rem;
+  }
+
+  .event-venue {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .event-venue .venue-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .event-venue .venue-details {
+    align-items: center;
+  }
+
+  .event-venue .venue-address,
+  .event-venue .venue-phone,
+  .event-venue .venue-website {
+    justify-content: center;
+  }
+
+  .event-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .event-link-share {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   END GALLERIES CSS
+   ========================================================================== */

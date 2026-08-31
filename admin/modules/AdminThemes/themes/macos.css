@@ -1,0 +1,66 @@
+/**
+ * macOS (graphite / dark vibrancy) — traffic lights, SF font, Dock, menubar.
+ * Scoped under html[data-admin-theme="macos"].
+ */
+html[data-admin-theme="macos"] {
+  --at-font: -apple-system, "SF Pro Text", "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
+
+  --at-bg: #1b1b22;
+  --at-bg-image: linear-gradient(150deg, rgba(72,38,122,.55) 0%, rgba(28,46,108,.45) 42%, rgba(20,20,26,.2) 100%);
+  --at-text: #f5f5f7;
+  --at-text-dim: #a1a1a8;
+
+  --at-accent: #0a84ff;
+  --at-accent-contrast: #ffffff;
+
+  --at-surface: rgba(42,42,48,.72);
+  --at-surface-2: rgba(58,58,66,.55);
+  --at-surface-border: rgba(255,255,255,.13);
+
+  --at-heading-bg: rgba(70,70,80,.45);
+  --at-heading-text: #ffffff;
+
+  --at-input-bg: rgba(255,255,255,.08);
+  --at-input-text: #f5f5f7;
+  --at-input-border: rgba(255,255,255,.18);
+
+  --at-rail-bg: rgba(28,28,34,.82);
+
+  --at-radius: 9px;
+  --at-radius-window: 13px;
+  --at-radius-btn: 8px;
+  --at-shadow: 0 22px 60px rgba(0,0,0,.5);
+
+  --at-titlebar-bg: rgba(54,54,62,.55);
+  --at-titlebar-text: #f5f5f7;
+  --at-titlebar-h: 38px;
+
+  --at-topbar-h: 28px;
+  --at-topbar-bg: rgba(26,26,32,.6);
+  --at-topbar-text: #f5f5f7;
+  --at-topbar-border: rgba(255,255,255,.10);
+  --at-topbar-pill: rgba(255,255,255,.14);
+
+  --at-dock-h: 88px;
+  --at-dock-bg: rgba(60,60,70,.42);
+  --at-dock-border: rgba(255,255,255,.22);
+  --at-dock-radius: 22px;
+  --at-dock-icon: 46px;
+  --at-dock-item-radius: 13px;
+
+  --at-menu-bg: rgba(36,36,42,.92);
+}
+
+/* Traffic lights on the LEFT; hide right control cluster */
+html[data-admin-theme="macos"] .at-winctl-right { display: none; }
+html[data-admin-theme="macos"] .at-winctl-left { display: flex; }
+html[data-admin-theme="macos"] .at-winctl .at-dot { width: 12px; height: 12px; border-radius: 50%; }
+html[data-admin-theme="macos"] .at-winctl .at-dot::after { content: ""; }   /* no glyphs, pure dots */
+
+/* Title bar text centered (already), give it a hairline top sheen */
+html[data-admin-theme="macos"] .at-window-titlebar {
+  background: linear-gradient(var(--at-titlebar-bg), rgba(40,40,46,.5));
+}
+
+/* Pill-ish primary buttons */
+html[data-admin-theme="macos"] .at-dock { padding: 7px 11px; }

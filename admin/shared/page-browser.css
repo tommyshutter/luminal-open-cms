@@ -1,0 +1,166 @@
+/* ============================================================
+   Page Browser — Shared modal for browsing CMS pages
+   Included by HTMLEditor + MDEditor via <link> tag.
+   Namespace: .pb-
+   ============================================================ */
+
+.pb-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pb-modal {
+    background: #111118;
+    border: 1px solid #333;
+    border-radius: 12px;
+    width: 90vw;
+    max-width: 900px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+/* ---- Header ---- */
+.pb-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #222;
+}
+
+.pb-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffc30a;
+    white-space: nowrap;
+}
+
+.pb-search {
+    flex: 1;
+    padding: 7px 12px;
+    font-size: .85rem;
+    background: #0a0a12;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ddd;
+    outline: none;
+    font-family: inherit;
+}
+.pb-search::placeholder { color: #555; }
+.pb-search:focus { border-color: #ffc30a; }
+
+.pb-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+.pb-close:hover { color: #fff; }
+
+/* ---- Body ---- */
+.pb-body {
+    overflow-y: auto;
+    padding: 16px 20px;
+    flex: 1;
+}
+
+.pb-loading {
+    text-align: center;
+    padding: 40px 0;
+    color: #888;
+    font-size: .9rem;
+}
+
+/* ---- Card Grid ---- */
+.pb-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.pb-card {
+    background: #0f0f18;
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.pb-card:hover { border-color: #ffc30a; background: #1a1a28; }
+
+.pb-card-title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #ffc30a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pb-card-slug {
+    font-size: .7rem;
+    color: #555;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pb-card-snippet {
+    font-size: .75rem;
+    color: #888;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---- Card Actions ---- */
+.pb-card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.pb-card-btn {
+    padding: 4px 10px;
+    font-size: .7rem;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #ccc;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all .15s;
+}
+.pb-card-btn:hover { background: #2a2a2a; border-color: #ffc30a; color: #ffc30a; }
+
+.pb-card-load { border-color: #00d2ff; color: #00d2ff; }
+.pb-card-load:hover { background: #00d2ff; color: #000; }
+
+.pb-card-preview { border-color: #555; color: #aaa; }
+.pb-card-preview:hover { border-color: #ffc30a; color: #ffc30a; }
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+    .pb-modal { width: 96vw; max-height: 90vh; }
+    .pb-header { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+    .pb-search { min-width: 100%; }
+    .pb-cards { grid-template-columns: 1fr; }
+}

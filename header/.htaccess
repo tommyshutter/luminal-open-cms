@@ -1,0 +1,48 @@
+# ============================================================
+# Luminal CMS — Root Security .htaccess
+# Blocks: dot-files, dot-dirs, sensitive config files,
+#         scanner paths, directory listing
+# ============================================================
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block dot-files and dot-directories
+    # Allow .well-known (Let's Encrypt) and .cache/ (media thumbnails).
+    # .htaccess is NOT exempt: it was served 200 fleet-wide until 2026-08-30, disclosing
+    # every block rule and carve-out. This rewrite [F] is the ONLY layer that actually
+    # fires -- <Location "/"> Require all granted defeats Files/FilesMatch authz, and
+    # main-server rewrite rules never inherit into vhosts (no RewriteOptions Inherit).
+    RewriteRule (^|/)\.(?!well-known|cache/) - [F,L]
+
+    # Block admin/data/ tree (belt-and-suspenders; admin/data/.htaccess also covers it)
+    RewriteRule ^admin/data(/|$) - [F,L]
+
+    # Block config/package files in web root
+    RewriteRule ^(composer\.(json|lock)|package(-lock)?\.json|yarn\.lock)$ - [F,L]
+
+    # Block WordPress/common scanner probe paths
+    RewriteRule ^(wp-admin|wp-login\.php|wp-content|wp-includes|xmlrpc\.php|phpmyadmin|pma|myadmin|adminer)(\/|$) - [F,L]
+
+    # Sitemap canonical URL
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # Clean page URLs: /slug → index.php?p=slug
+    # Only applies when slug is not a real file or directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?p=$1 [L,QSA]
+</IfModule>
+
+# Block sensitive file extensions
+<FilesMatch "\.(sql|bak|log|sh|key|pem|crt|p12|pfx|cfg|htpasswd|htdigest)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

@@ -1,0 +1,21 @@
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+p { margin-bottom: 1.5rem; line-height: 1.8; color: rgba(255, 255, 255, 0.9); }
+
+.container {max-width: 1440px;margin: 0 auto;;margin-top:-30px!important;}
+
+.section { padding: 80px 0; position: relative; }
+
+*:focus { outline: 2px solid #00d4ff !important; outline-offset: 2px !important; }
+
+.fade-in { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(30px); }
+
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+.podcast-card.playing { /* Example: Slightly less transparent when playing */ background-color: rgb(248 4 4 / 60%); }

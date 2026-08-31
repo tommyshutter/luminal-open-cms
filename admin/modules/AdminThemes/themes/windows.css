@@ -1,0 +1,69 @@
+/**
+ * Windows 11 (dark Mica) — Segoe font, squared-soft surfaces, taskbar dock,
+ * min/restore/close controls on the right. Scoped under [data-admin-theme="windows"].
+ */
+html[data-admin-theme="windows"] {
+  --at-font: "Segoe UI Variable", "Segoe UI", system-ui, Roboto, sans-serif;
+
+  --at-bg: #202124;
+  --at-bg-image: linear-gradient(160deg, rgba(20,60,110,.5) 0%, rgba(28,30,38,.4) 55%, rgba(18,18,22,.2) 100%);
+  --at-text: #ffffff;
+  --at-text-dim: #c8c8cc;
+
+  --at-accent: #4cc2ff;            /* Win 11 accent (cyan-blue) */
+  --at-accent-contrast: #04243a;
+
+  --at-surface: rgba(43,43,48,.78);     /* Mica */
+  --at-surface-2: rgba(56,56,62,.62);
+  --at-surface-border: rgba(255,255,255,.10);
+
+  --at-heading-bg: rgba(60,60,68,.5);
+  --at-heading-text: #ffffff;
+
+  --at-input-bg: rgba(255,255,255,.06);
+  --at-input-text: #ffffff;
+  --at-input-border: rgba(255,255,255,.16);
+
+  --at-rail-bg: rgba(32,33,36,.9);
+
+  --at-radius: 7px;
+  --at-radius-window: 9px;
+  --at-radius-btn: 6px;
+  --at-shadow: 0 16px 44px rgba(0,0,0,.55);
+
+  --at-titlebar-bg: rgba(48,48,54,.7);
+  --at-titlebar-text: #ffffff;
+  --at-titlebar-h: 36px;
+
+  --at-topbar-h: 0px;              /* Windows has no top menubar */
+  --at-topbar-bg: transparent;
+
+  --at-dock-h: 64px;               /* taskbar */
+  --at-dock-bg: rgba(32,33,38,.82);
+  --at-dock-border: rgba(255,255,255,.08);
+  --at-dock-radius: 10px;
+  --at-dock-icon: 40px;
+  --at-dock-item-radius: 7px;
+  --at-dock-gap: 8px;
+
+  --at-menu-bg: rgba(43,43,48,.96);
+}
+
+/* Windows: controls RIGHT, square hover buttons with glyphs, close turns red */
+html[data-admin-theme="windows"] .at-winctl-left { display: none; }
+html[data-admin-theme="windows"] .at-winctl-right { display: flex; gap: 0; margin-left: auto; }
+html[data-admin-theme="windows"] .at-winctl .at-dot {
+  width: 40px; height: 36px; border-radius: 0; background: transparent !important;
+  display: grid; place-items: center; color: #fff; font-size: 13px;
+}
+html[data-admin-theme="windows"] .at-winctl .at-dot::after { content: attr(data-g); }
+html[data-admin-theme="windows"] .at-winctl .at-dot:hover { background: rgba(255,255,255,.12) !important; }
+html[data-admin-theme="windows"] .at-winctl .at-dot.close:hover { background: #e81123 !important; }
+html[data-admin-theme="windows"] .at-window-titlebar { padding-right: 0; }
+
+/* Taskbar look: centered, slim, bottom-anchored full feel */
+html[data-admin-theme="windows"] .at-dock { bottom: 8px; }
+html[data-admin-theme="windows"] .at-dock .at-dock-item:hover { transform: translateY(-3px) scale(1.06); }
+
+/* Start-button accent on first dock item */
+html[data-admin-theme="windows"] .at-dock .at-dock-item.at-start { color: var(--at-accent); }

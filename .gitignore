@@ -1,0 +1,67 @@
+# ============================================================
+# Luminal Open CMS — .gitignore
+#
+# These rules protect YOUR deployment: they keep site data,
+# uploaded media and credentials out of git if you track your
+# own site in a repository. Note that ignoring a file does not
+# remove one that is already tracked.
+# ============================================================
+
+# ---- Site-specific data (ALL of admin/data/) ----
+# Pages, galleries, settings, events, users, sessions and module
+# data are unique per site and must NEVER be committed.
+admin/data/*
+!admin/data/README.md
+# Keep .stock template files (used for new site setup)
+!admin/data/*.stock
+
+# ---- Auth (secrets, sessions, passwords) ----
+admin/auth/
+admin/data/auth/
+
+# ---- Per-site menu hook (survives updates) ----
+admin/admin_menu_local.php
+
+# ---- Uploaded media (large, site-specific) ----
+media/*
+!media/README.md
+
+# ---- Credentials and environment ----
+.env
+.env.*
+*.local
+config.local.php
+*.key
+*.pem
+credvault.key
+rclone.conf
+.rclone*
+
+# ---- Generated caches / thumbnails / logs ----
+.cache/
+admin/data/thumbnails/
+admin/data/logs/
+admin/data/caches/
+admin/data/tmp/
+images/ai-generated/
+
+# ---- Backup / editor / temp files ----
+# This class is why a public site can end up serving raw PHP source:
+# a stray .bak sits next to the original and is served as plain text.
+*.bak
+*.bak-*
+*.orig
+*.save
+*.old
+*.pre
+*.working
+*.swp
+*.swo
+*~
+.OLD/
+
+# ---- OS / IDE ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

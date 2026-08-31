@@ -1,0 +1,99 @@
+{
+    "_doc": "Base admin menu \u2014 sections available to every site. A module's entry appears only if that module is installed: the loader globs admin/modules/*/module.json, so dropping a module directory in adds it and removing the directory drops it silently. Top-level holds the most-used daily drivers; the content-authoring trio (Page/Stacks/Articles) sits there too.",
+    "top_level": [
+        "Dashboard",
+        "FileManager",
+        "PageManager",
+        "ContentStacks",
+        "ArticlesManager",
+        "BackgroundManager",
+        "MenuManager",
+        "SiteSettings",
+        "UserManager"
+    ],
+    "sections": [
+        {
+            "id": "content-tools",
+            "title": "Content Tools",
+            "color": "section-green",
+            "modules": [
+                "HTMLBlocks",
+                "HTMLEditor",
+                "MDEditor",
+                "FontManager",
+                "SiteTextReceiver"
+            ]
+        },
+        {
+            "id": "imaging",
+            "title": "Imaging",
+            "color": "section-green",
+            "modules": [
+                "GalleryManager",
+                "MediaThumbs"
+            ]
+        },
+        {
+            "id": "podcasting",
+            "title": "Podcasting",
+            "color": "section-goldenrod",
+            "modules": [
+                "YouTubePlaylist"
+            ]
+        },
+        {
+            "id": "events-management",
+            "title": "Events Management",
+            "color": "section-amber",
+            "modules": [
+                "EventsManagerPro",
+                "FacebookEvents"
+            ]
+        },
+        {
+            "id": "ecommerce",
+            "title": "Ecommerce Platforms",
+            "color": "section-money",
+            "modules": [
+                "AffiliateProducts",
+                "PrintfulManager",
+                "MyStore",
+                "PaymentProviders",
+                "PrivacyPolicy"
+            ]
+        },
+        {
+            "id": "social-platforms",
+            "title": "Social Platforms",
+            "color": "section-blue",
+            "modules": [
+                "SocialPublisher",
+                "BlogManager",
+                "CommunityManager",
+                "MembershipManager"
+            ]
+        },
+        {
+            "id": "lead-gathering",
+            "title": "Lead Gathering",
+            "color": "section-teal",
+            "modules": [
+                "AudienceBuilder"
+            ]
+        },
+        {
+            "id": "system-admin",
+            "title": "System Admin",
+            "color": "section-red",
+            "modules": [
+                "AdminThemes",
+                "AIResources",
+                "GoogleAuth",
+                "LogViewer",
+                "MailgunManager",
+                "TechSupport",
+                "Tools"
+            ]
+        }
+    ]
+}

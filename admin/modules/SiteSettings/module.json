@@ -1,0 +1,18 @@
+{
+    "name": "SiteSettings",
+    "version": "1.1.0",
+    "description": "Site identity, typography, logo, landing page, footer, and maintenance tools",
+    "menu_entry": {
+        "key": "SiteSettings",
+        "title": "Site Settings",
+        "href": "/admin/modules/SiteSettings/SiteSettings.php",
+        "role": "admin",
+        "order": 15,
+        "icon": "⚙️",
+        "color": "light"
+    },
+    "requires_data_dirs": [],
+    "dependencies": [],
+    "author": "Luminal CMS",
+    "entry_point": "SiteSettings.php"
+}

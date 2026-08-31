@@ -1,0 +1,16 @@
+{
+  "name": "AffiliateProducts",
+  "version": "1.0.0",
+  "description": "Generic affiliate product management — Amazon, Walmart, Best Buy + AI discovery",
+  "entry_point": "AffiliateProducts.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "AffiliateProducts",
+    "title": "Affiliates",
+    "icon": "🔗",
+    "href": "AffiliateProducts.php",
+    "role": "admin",
+    "order": 5
+  },
+  "menu_group": "ecommerce"
+}

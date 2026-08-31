@@ -1,0 +1,903 @@
+/**
+ * FILE LOCATION: SITE-ROOT/css/mobile-master.css
+ * VERSION: 2025.10.13.14.30.00-EST
+ * DESCRIPTION: Comprehensive mobile responsiveness master stylesheet
+ * 
+ * This file handles:
+ * - Two-column layouts collapsing to single column on mobile
+ * - Left column leads, right column follows underneath
+ * - Proper padding to keep content away from edges
+ * - Background videos, slideshows, and images maintained
+ * - Hamburger menu refinements
+ * - Video gallery mobile optimizations
+ * - Content stack mobile optimizations
+ * 
+ * @author Claude (Anthropic)
+ */
+
+/* ==========================================================================
+   MOBILE BREAKPOINTS AND CORE LAYOUT
+   ========================================================================== */
+
+/* Tablet and below (iPad Portrait and smaller) */
+@media screen and (max-width: 1024px) {
+    
+    /* Page Manager Grid - Two Column Layout */
+    .pm-grid {
+        display: block !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Left column takes full width, appears first */
+    .pm-col.pm-left {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 20px;
+        order: 1;
+    }
+    
+    /* Right column takes full width, appears second */
+    .pm-col.pm-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        order: 2;
+    }
+    
+    /* Home layout grid adjustment */
+    .home-layout-grid {
+        display: block !important;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Left and right panel containers */
+    #left-panel-container,
+    #right-panel-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+    
+    #left-panel-container {
+        margin-bottom: 20px;
+    }
+    
+    /* Main content wrapper padding */
+    #main-content,
+    #main-content-wrapper,
+    .main-content-container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    /* Content inner padding */
+    .content-inner,
+    .content-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    /* Container padding */
+    .container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    img {  width: 100%;  object-fit: cover;}
+
+}
+
+/* Phone Landscape and below */
+@media screen and (max-width: 768px) {
+    
+    /* ==========================================================================
+       TWO-COLUMN TO SINGLE-COLUMN LAYOUT
+       ========================================================================== */
+    
+    /* All grid-based two-column layouts collapse */
+    .pm-grid,
+    .home-layout-grid,
+    [style*="grid-template-columns"] {
+        display: block !important;
+        width: 100%;
+    }
+    
+    /* All columns take full width */
+    .pm-col,
+    .panel-left,
+    .panel-right,
+    .left-column,
+    .right-column,
+    #left-panel-container,
+    #right-panel-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        float: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    /* Ensure left column appears first, right column second */
+    .pm-col.pm-left,
+    .panel-left,
+    .left-column,
+    #left-panel-container {
+        order: 1;
+        margin-bottom: 20px;
+    }
+    
+    .pm-col.pm-right,
+    .panel-right,
+    .right-column,
+    #right-panel-container {
+        order: 2;
+        margin-top: 20px;
+    }
+    
+    /* ==========================================================================
+       MOBILE PADDING AND SPACING
+       ========================================================================== */
+    
+    /* Global mobile padding - keeps content 10px from edges */
+    body {
+        padding: 0 10px;
+    }
+    
+    #main-content,
+    .main-content-container,
+    main {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    /* Panel boxes mobile padding */
+    .panel-box {
+        padding: 15px 10px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Section padding */
+    .section {
+        padding: 40px 10px !important;
+    }
+    
+    /* ==========================================================================
+       BACKGROUND VIDEOS, SLIDESHOWS, AND IMAGES
+       ========================================================================== */
+    
+    /* Maintain background videos on mobile */
+    .background-video,
+    .hero-media video,
+    video.bg-video,
+    .video-background {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px;
+        object-fit: cover;
+    }
+    
+    /* Hero panel and slideshow maintained */
+    #hero-panel-slideshow,
+    .hero-content-wrapper {
+        display: block !important;
+        width: 100% !important;
+        min-height: 250px;
+        margin: 0 !important;
+    }
+    
+    .hero-slide {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 250px;
+        object-fit: cover;
+    }
+    
+    /* Background images maintained */
+    .background-image,
+    .hero-media img,
+    [style="background-image"] {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Video wrappers for YouTube/Vimeo */
+    .video-wrapper,
+    .ri-embed,
+    .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+    
+    .video-wrapper iframe,
+    .ri-embed iframe,
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    /* ==========================================================================
+       VIDEO GALLERIES MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    /* Video gallery grid becomes single column */
+    .gallery-videos {
+        width: 100% !important;
+        padding: 0 10px;
+    }
+    
+    .gallery-videos[data-layout="grid"],
+    .gallery-videos[data-layout="masonry"] {
+        display: block !important;
+        column-count: 1 !important;
+        -webkit-column-count: 1 !important;
+        -moz-column-count: 1 !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Video items take full width on mobile */
+    .gallery-videos .gv {
+        width: 100% !important;
+        margin-bottom: 20px;
+        break-inside: avoid;
+    }
+    
+    .gallery-videos .gv img,
+    .gallery-videos .gv video {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Video thumbnails and players */
+    .video-thumb-fallback,
+    .ri-play-badge {
+        display: block;
+    }
+    
+    /* Video info boxes */
+    .video-info {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    /* Standard video gallery (legacy) */
+    .video-gallery {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+    
+    .video-item {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+    
+    /* ==========================================================================
+       IMAGE GALLERIES MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    /* Image galleries - single column on phone */
+    .gallery-images[data-layout="grid"],
+    .gallery-images[data-layout="masonry"] {
+        column-count: 1 !important;
+        -webkit-column-count: 1 !important;
+        -moz-column-count: 1 !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    .gallery-images .gi {
+        width: 100% !important;
+        margin-bottom: 15px;
+        break-inside: avoid;
+    }
+    
+    .gallery-images .gi img {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Photo gallery */
+    .photo-gallery {
+        column-count: 1 !important;
+        padding: 0 10px;
+    }
+    
+    /* ==========================================================================
+       PDF GALLERIES MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    .gallery-pdfs {
+        width: 100% !important;
+        padding: 0 10px;
+    }
+    
+    .gallery-pdfs .pdf-item {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+    
+    /* ==========================================================================
+       CONTENT STACK MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    /* Content stack items */
+    .ri-card,
+    .ri-g-item {
+        width: 100% !important;
+        margin-bottom: 15px;
+        break-inside: avoid;
+    }
+    
+    /* Stack containers */
+    .ri-stack .ri-stack-inner {
+        column-count: 1 !important;
+        -webkit-column-count: 1 !important;
+        -moz-column-count: 1 !important;
+    }
+    
+    /* Left column content */
+    .left-column-content img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 10px auto !important;
+    }
+    
+    .left-column-content ul {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+    }
+    
+    /* ==========================================================================
+       HAMBURGER MENU REFINEMENTS
+       ========================================================================== */
+    
+    /* Menu toggle button - ensure it's always visible on mobile */
+    .menu-toggle {
+        display: flex !important;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    /* Hide desktop navigation on mobile */
+    .nav-menu,
+    .main-navigation:not(.mobile-menu-active .main-navigation) {
+        display: none;
+    }
+    
+    /* Mobile menu when active */
+    body.mobile-menu-active .main-navigation {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Prevent body scroll when menu is open */
+    body.mobile-menu-active {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+    }
+    
+    /* ==========================================================================
+       HEADER AND SITE TITLE
+       ========================================================================== */
+    
+    .site-header {
+        padding: 10px !important;
+        flex-direction: row !important;
+        height: auto;
+    }
+    
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .site-logo img {
+        max-width: 40px !important;
+        max-height: 40px !important;
+    }
+    
+    .site-title,
+    .site-title h1 {
+        font-size: 1.2rem !important;
+        margin: 0 !important;
+    }
+    
+    /* ==========================================================================
+       ABOUT PAGE MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    .about-content {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+    
+    .about-header-video {
+        height: 40vh;
+        min-height: 250px;
+    }
+    
+    .about-main-col,
+    .about-side-col {
+        width: 100% !important;
+    }
+    
+    /* ==========================================================================
+       FORMS AND BUTTONS
+       ========================================================================== */
+    
+    /* Make buttons and form elements mobile-friendly */
+    button,
+    .button,
+    .submit-button,
+    input[type="submit"] {
+        min-height: 44px;
+        padding: 12px 20px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+        min-height: 44px;
+    }
+    
+    /* ==========================================================================
+       TOUR DATES AND CARDS
+       ========================================================================== */
+    
+    .tour-date-card {
+        grid-template-columns: 1fr !important;
+        padding: 15px;
+    }
+    
+    /* ==========================================================================
+       LIGHTBOX MOBILE OPTIMIZATION
+       ========================================================================== */
+    
+    /* Ensure lightbox works properly on mobile */
+    .lightbox-overlay {
+        padding: 20px 10px;
+    }
+    
+    .lightbox-content {
+        max-width: calc(100vw - 20px);
+        max-height: calc(100vh - 40px);
+    }
+    
+    .lightbox-content img,
+    .lightbox-content video {
+        max-width: 100%;
+        max-height: calc(100vh - 80px);
+        width: auto;
+        height: auto;
+    }
+    
+        img {  width: 100%;  object-fit: cover;}
+
+    
+    
+    
+}
+
+/* ==========================================================================
+   EXTRA SMALL PHONES (iPhone SE and smaller)
+   ========================================================================== */
+
+@media screen and (max-width: 480px) {
+    
+    /* Tighter padding on very small screens */
+    body {
+        padding: 0 8px;
+    }
+    
+    #main-content,
+    .main-content-container,
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    
+    .panel-box {
+        padding: 12px 8px !important;
+    }
+    
+    /* Smaller fonts for small screens */
+    .site-title,
+    .site-title h1 {
+        font-size: 1rem !important;
+    }
+    
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Video galleries - ensure they don't overflow */
+    .gallery-videos,
+    .gallery-images,
+    .gallery-pdfs {
+        padding: 0 8px;
+    }
+    
+    /* Reduce gaps on small screens */
+    .gallery-videos .gv,
+    .gallery-images .gi,
+    .gallery-pdfs .pdf-item {
+        margin-bottom: 15px;
+    }
+    
+    #lightbox-content iframe {width:99.99%!important;height:auto;}
+
+}
+
+/* ==========================================================================
+   LANDSCAPE ORIENTATION OPTIMIZATIONS
+   ========================================================================== */
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    
+    /* Adjust video heights in landscape */
+    .hero-content-wrapper,
+    #hero-panel-slideshow {
+        min-height: 200px;
+    }
+    
+    .about-header-video {
+        height: 80vh;
+    }
+    
+    /* Mobile menu in landscape */
+    .main-navigation ul {
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 10px;
+    }
+    
+    .main-navigation a {
+        padding: 8px 15px !important;
+        font-size: 0.95rem !important;
+        min-height: 40px;
+    }
+    #lightbox-content iframe {width:99.99%!important;height:auto;}
+
+}
+
+/* ==========================================================================
+   ACCESSIBILITY AND TOUCH TARGETS
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    
+    /* Ensure all clickable elements have proper touch targets (44x44px minimum) */
+    a,
+    button,
+    .lightbox-trigger,
+    .menu-toggle {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Links in galleries */
+    .gallery-videos a,
+    .gallery-images a,
+    .gallery-pdfs a {
+        min-height: 44px;
+    }
+
+    #lightbox-content iframe {width:99.99%!important;height:auto;}
+
+}
+
+/* ==========================================================================
+   PERFORMANCE OPTIMIZATIONS FOR MOBILE
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    
+    /* Use transform for animations instead of position changes */
+    .gallery-videos .gv,
+    .gallery-images .gi,
+    .ri-card {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+    
+    /* Optimize hover states for touch devices */
+    @media (hover: none) {
+        .gallery-videos .gv:hover,
+        .gallery-images .gi:hover,
+        .tour-date-card:hover,
+        .photo-item:hover,
+        .video-item:hover {
+            box-shadow: 0 6px 18px rgba(0,0,0,.35);
+            transform: none;
+        }
+    }
+    #lightbox-content iframe {width:99.99%!important;height:auto;}
+
+}
+
+/* ==========================================================================
+   AGGRESSIVE MOBILE PADDING OVERRIDE - EDGE-TO-EDGE CONTENT
+   Forces content to use full screen width with minimal 5px edge padding
+   Overrides INLINE STYLES on .pm-grid and nested containers
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+    /* Reset ALL padding and margins on body */
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    /* CRITICAL: Override inline grid styles on .pm-grid */
+    .pm-grid,
+    .pm-grid[style],
+    div.pm-grid,
+    .home-layout-grid .pm-grid,
+    #main-content .pm-grid,
+    .content-wrapper .pm-grid {
+        display: block !important;
+        grid-template-columns: none !important;
+        gap: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 5px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ALL main/content wrappers - zero padding */
+    #content,
+    main#content,
+    main#main-content,
+    .content-wrapper,
+    .content-inner,
+    .main-content-container,
+    #main-content,
+    #main-content-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ALL .container elements - override inline styles too */
+    .container,
+    .container[style],
+    div.container,
+    .pm-col .container,
+    .pm-col.pm-left .container,
+    .pm-col.pm-right .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        margin-top: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* PM columns - full width, stacked */
+    .pm-col,
+    .pm-col.pm-left,
+    .pm-col.pm-right,
+    .pm-col[data-col="left"],
+    .pm-col[data-col="right"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 0 15px 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Home layout grid */
+    .home-layout-grid,
+    .home-layout-grid[style],
+    #home {
+        display: block !important;
+        grid-template-columns: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* pm-rendered-layout */
+    .pm-rendered-layout,
+    .pm-rendered-layout[style] {
+        display: block !important;
+        grid-template-columns: none !important;
+        padding: 0 5px !important;
+        margin: 0 !important;
+        margin-top: 80px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Section and panel box */
+    .section,
+    .panel-box {
+        padding: 10px 5px !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Glass card and bio - common content containers */
+    .glass-card,
+    .bio {
+        padding: 10px 5px !important;
+        margin: 0 0 10px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Override fixed widths on panel containers */
+    #left-panel-container,
+    #right-panel-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Gallery containers */
+    .gallery-images,
+    .gallery-videos,
+    .gallery-pdfs,
+    .photo-gallery,
+    .video-gallery {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ri-stack containers */
+    .ri-stack,
+    .ri-stack-inner,
+    .ri-stack[style],
+    .ri-stack-inner[style] {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        column-count: 1 !important;
+    }
+
+    /* Gallery items - full width */
+    .gi,
+    .gv,
+    .gallery-images .gi,
+    .gallery-videos .gv,
+    .ri-card,
+    .ri-g-item {
+        margin: 0 0 10px 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Left/right column content */
+    .left-column-content,
+    .right-column-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .left-column-content img {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Header keeps small padding */
+    .header-shell,
+    .header-inner,
+    .header-container,
+    .site-header,
+    #dhb-header,
+    #dhb-header-inner {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* Footer container */
+    .footer-container,
+    .site-footer {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* Images fill container */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Video embeds - full width */
+    .video-wrapper,
+    .ri-embed,
+    .video-container,
+    .video-responsive {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Extra small screens - same treatment */
+    .pm-grid,
+    .pm-grid[style] {
+        padding: 0 5px !important;
+    }
+
+    .pm-rendered-layout,
+    .pm-rendered-layout[style] {
+        padding: 0 5px !important;
+    }
+
+    .header-shell,
+    .header-inner,
+    .header-container,
+    .site-header,
+    .footer-container,
+    .site-footer {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+}
+
+
+/* ==========================================================================
+   END MOBILE MASTER CSS
+   ========================================================================== 
+a:link {color:goldenrod}
+a:visited {color:goldenrod}
+a:link {color:goldenrod}
+**/

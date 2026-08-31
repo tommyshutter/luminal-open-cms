@@ -1,0 +1,34 @@
+{
+  "name": "SocialPublisher",
+  "version": "1.0.0",
+  "description": "Social media posting — publish image ads and promotional content to Facebook Pages, Twitter/X",
+  "author": "Luminal CMS",
+  "entry_point": "SocialPublisher.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [
+    "SocialPublisher",
+    "SocialPublisher/posts"
+  ],
+  "dependencies": [
+    "AIResources"
+  ],
+  "menu_entry": {
+    "key": "SocialPublisher",
+    "title": "Social Publisher",
+    "icon": "📢",
+    "href": "SocialPublisher.php",
+    "role": "admin",
+    "order": 26
+  },
+  "menu_group": "server_tier2",
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "post"
+    ],
+    "staff": [
+      "read"
+    ]
+  }
+}

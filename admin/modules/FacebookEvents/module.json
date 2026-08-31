@@ -1,0 +1,17 @@
+{
+  "name": "FacebookEvents",
+  "version": "1.1.0",
+  "description": "Facebook Events integration — sync and display events from Facebook Pages",
+  "author": "Luminal CMS",
+  "entry_point": "FacebookEvents.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "FacebookEvents",
+    "title": "FB Events",
+    "href": "FacebookEvents.php",
+    "role": "admin",
+    "order": 41,
+    "icon": "🗓️"
+  },
+  "dependencies": []
+}

@@ -1,0 +1,117 @@
+/**
+ * @appname   Luminal Open CMS
+ * @file      /css/pdf-galleries.css
+ * @version   2025.09.25.2249.00-EST (single public skin; admin look; iron sizing)
+ * @description
+ *   Public PDF gallery cards, pixel-matching the Admin look, with explicit knobs.
+ *   Works with BOTH admin and public class hooks emitted by the renderer.
+ */
+
+/* ===== CONTROLS (override per gallery via inline style on .pdf-gallery-skin) ===== */
+
+.pdf-gallery-skin{
+  --pg-cols: 3;                               /* desktop column count (ignored by flex; kept for convenience) */
+  --pg-gap: 22px;                             /* gap between cards */
+  --pg-card-w: 220px;                         /* card width (iron) */
+  --pg-card-h: 280px;                         /* card height (iron) */
+  --pg-radius: 12px;                          /* card border radius */
+  --pg-shadow: 0 24px 48px rgba(0,0,0,.42),   /* card shadow */
+               0 2px 0 rgba(255,255,255,.04) inset;
+  --pg-shadow-hover: 0 34px 68px rgba(0,0,0,.48),
+                     0 2px 0 rgba(255,255,255,.06) inset;
+  --pg-icon-size: 64px;                       /* FA icon size */
+  --pg-title-size: 14px;                      /* face title size */
+  --pg-title-weight: 800;
+  --pg-title-color: #eef4ff;
+  --pg-title-shadow: 0 1px 1px rgba(0,0,0,.35);
+}
+
+/* ===== GRID (FLEX so width is fixed exactly) ===== */
+.pdf-gallery-manager,
+.pdf-gallery-browser,
+.pdf-galleries,
+.gallery-pdfs{ width:100%; }
+
+.pdf-gallery-manager .pdf-gallery-grid,
+.pdf-gallery-browser .pdf-gallery-grid,
+.pdf-galleries .pdf-gallery-grid,
+.gallery-pdfs .pdf-gallery-grid{
+  display:flex !important;
+  flex-wrap:wrap;
+  gap: var(--pg-gap);
+  list-style:none; padding:0; margin:16px 0;
+}
+
+/* Each item has an iron width. Height comes from the card. */
+.pdf-gallery-grid .pdf-item{
+  width: var(--pg-card-w);
+}
+
+/* ===== CARD (exact admin vibe) ===== */
+.pdf-gallery-manager .pdf-card,
+.pdf-gallery-browser .pdf-card,
+.pdf-galleries .pdf-card,
+.gallery-pdfs .pdf-card{
+  background: linear-gradient(180deg,#1f2836,#1b2330);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--pg-radius);
+  display:flex; flex-direction:column; justify-content:flex-start;
+  height: var(--pg-card-h);
+  padding: 12px;
+  box-shadow: var(--pg-shadow);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  text-decoration:none; color:inherit;
+}
+.pdf-gallery-manager .pdf-card:hover,
+.pdf-gallery-browser .pdf-card:hover,
+.pdf-galleries .pdf-card:hover,
+.gallery-pdfs .pdf-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.18);
+  box-shadow: var(--pg-shadow-hover);
+}
+
+/* ===== ICON (Font Awesome file-pdf glyph) ===== */
+.pdf-gallery-manager .pdf-icon,
+.pdf-gallery-browser .pdf-icon,
+.pdf-galleries .pdf-icon,
+.gallery-pdfs .pdf-icon{
+  display:inline-block;
+  font-size: var(--pg-icon-size);
+  line-height: 1;
+  color: #e05252; /* manager red */
+  margin: 6px 0 12px 6px;
+  text-rendering:auto; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+
+/* ===== TITLE (filename on face; identical weights/spacing) ===== */
+.pdf-gallery-manager .pdf-title,
+.pdf-gallery-browser .pdf-title,
+.pdf-galleries .pdf-title,
+.gallery-pdfs .pdf-title,
+.gallery-pdfs .pt{
+  margin: 4px 10px 0;
+  font-size: var(--pg-title-size);
+  font-weight: var(--pg-title-weight);
+  color: var(--pg-title-color);
+  line-height: 1.25;
+  text-align: center;
+  letter-spacing: .2px;
+  text-shadow: var(--pg-title-shadow);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.25em * 2);
+}
+
+/* ===== TOUCH: no hover lift on coarse pointers ===== */
+@media (hover:none) and (pointer:coarse){
+  .pdf-gallery-manager .pdf-card:hover,
+  .pdf-gallery-browser .pdf-card:hover,
+  .pdf-galleries .pdf-card:hover,
+  .gallery-pdfs .pdf-card:hover{
+    transform:none; box-shadow: var(--pg-shadow);
+  }
+}

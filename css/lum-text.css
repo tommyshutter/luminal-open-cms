@@ -1,0 +1,61 @@
+/**
+ * lum-text.css — Luminal CMS base STRUCTURAL styles for text sections.
+ *
+ * Structural typography only (headings, paragraphs, lists, links, media, quotes) so a plain
+ * text Page Manager section reads well without per-page hand-styling — the way Content Stacks
+ * gives its blocks a consistent base. The reading SURFACE (background opacity / radius / shadow)
+ * is a SEPARATE layer (the Text Style controller). No colors are set here (text inherits the
+ * site's own color), and no !important — so widgets (stacks, galleries, panels, ytpl, article
+ * cards) keep their own styling via their higher-specificity classes, and per-page custom CSS
+ * always wins. Applied via the .lum-text class on the content columns; opt out with .lum-text-off.
+ */
+
+.lum-text { line-height: 1.7; }
+
+/* Headings — clear hierarchy, comfortable rhythm. */
+.lum-text h1, .lum-text h2, .lum-text h3, .lum-text h4, .lum-text h5, .lum-text h6 {
+    line-height: 1.2;
+    margin: 1.6em 0 0.5em;
+    font-weight: 700;
+}
+.lum-text h1 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); }
+.lum-text h2 { font-size: clamp(1.5rem, 3.2vw, 2rem); }
+.lum-text h3 { font-size: clamp(1.2rem, 2.4vw, 1.5rem); }
+.lum-text h4 { font-size: 1.12rem; }
+
+/* Body copy. */
+.lum-text p { margin: 0 0 1.4rem; line-height: 1.75; }
+
+/* Lists. */
+.lum-text ul, .lum-text ol { margin: 0 0 1.4rem; padding-left: 1.6em; line-height: 1.7; }
+.lum-text li { margin: 0.3em 0; }
+.lum-text li > ul, .lum-text li > ol { margin: 0.3em 0; }
+
+/* Links — accent color, hover underline (uses theme token when present). */
+.lum-text a { color: var(--lum-link, #5b9bff); text-decoration: none; }
+.lum-text a:hover { text-decoration: underline; }
+
+/* Media. */
+.lum-text img { max-width: 100%; height: auto; border-radius: 8px; }
+.lum-text figure { margin: 1.4rem 0; }
+.lum-text figcaption { font-size: 0.85em; opacity: 0.75; margin-top: 0.4em; }
+
+/* Quotes, rules, inline code. */
+.lum-text blockquote {
+    margin: 1.4rem 0;
+    padding: 0.4rem 0 0.4rem 1.1rem;
+    border-left: 3px solid var(--lum-accent, rgba(120, 160, 255, 0.6));
+    font-style: italic;
+    opacity: 0.92;
+}
+.lum-text hr { border: 0; border-top: 1px solid rgba(127, 127, 127, 0.3); margin: 2rem 0; }
+.lum-text code { background: rgba(127, 127, 127, 0.18); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.9em; }
+
+/* Trim outer margins so the surface padding controls the edges. */
+.lum-text > :first-child { margin-top: 0; }
+.lum-text > :last-child { margin-bottom: 0; }
+
+/* Section containers — the [[section]] shortcode wraps content in .lum-section. */
+.lum-section { display: block; margin: 0 0 1.6rem; }
+.lum-section > :first-child { margin-top: 0; }
+.lum-section > :last-child { margin-bottom: 0; }

@@ -1,0 +1,185 @@
+.am-wrap { max-width: 1400px; }
+
+.am-stats { display: flex; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.am-stat {
+  flex: 1 1 140px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 8px;
+  padding: .85rem 1rem;
+}
+.am-stat-value { display: block; font-size: 1.6rem; color: #f2f5fa; font-weight: 700; }
+.am-stat-label { display: block; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: #8b94a6; margin-top: .2rem; }
+
+.am-toolbar {
+  display: flex; gap: .7rem; align-items: center; margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.am-search, .am-select {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.14);
+  color: #e8edf5;
+  padding: .6rem .85rem;
+  border-radius: 6px;
+  font-size: .9rem;
+}
+.am-search { flex: 1 1 280px; min-width: 220px; }
+
+.am-btn {
+  padding: .6rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: #e8edf5;
+  font-size: .88rem;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.am-btn:hover { background: rgba(255,255,255,.12); }
+.am-btn--accent { background: rgba(255,208,128,.18); border-color: rgba(255,208,128,.45); color: #ffd080; }
+.am-btn--accent:hover { background: rgba(255,208,128,.28); }
+.am-btn--warn { background: rgba(255,175,64,.14); border-color: rgba(255,175,64,.38); color: #ffc070; }
+.am-btn--danger { background: rgba(220,38,58,.16); border-color: rgba(220,38,58,.42); color: #ff8b98; }
+.am-btn--ghost { background: transparent; }
+
+.am-grid-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.am-loading { grid-column: 1 / -1; color: #778499; font-style: italic; padding: 2rem; text-align: center; }
+
+.am-acard {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .15s, background .15s, border-color .15s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.am-acard:hover { background: rgba(255,255,255,.08); border-color: rgba(255,208,128,.3); transform: translateY(-2px); }
+
+.am-acard-hero {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #0c1018 center/cover no-repeat;
+  position: relative;
+}
+.am-acard-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.45), transparent 60%);
+}
+.am-acard-badges {
+  position: absolute;
+  top: .55rem; left: .55rem;
+  display: flex; gap: .35rem; z-index: 2;
+}
+.am-badge {
+  font-size: .65rem;
+  padding: .25rem .5rem;
+  border-radius: 4px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.am-badge--pub { background: rgba(34,197,94,.2); color: #86efac; border: 1px solid rgba(34,197,94,.3); }
+.am-badge--draft { background: rgba(148,163,184,.2); color: #cbd5e1; border: 1px solid rgba(148,163,184,.3); }
+.am-badge--pin { background: rgba(255,208,128,.22); color: #ffd080; border: 1px solid rgba(255,208,128,.4); }
+
+.am-acard-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .4rem; flex: 1; }
+.am-acard-eyebrow { font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: #ffd080; font-weight: 600; }
+
+.am-acard-slug { font-size: .72rem; color: #8b94a6; font-family: ui-monospace, Consolas, monospace; margin-top: .35rem; word-break: break-all; }
+.am-acard-title { font-size: 1rem; color: #f3f6fc; margin: 0; line-height: 1.3; font-weight: 600; }
+.am-acard-excerpt { font-size: .82rem; color: #c9d1e0; line-height: 1.5; margin: 0; flex: 1; }
+.am-acard-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .65rem 1rem .85rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: .72rem;
+  color: #8b94a6;
+}
+.am-acard-source { text-transform: uppercase; letter-spacing: .05em; font-weight: 600; opacity: .7; }
+
+/* Modal */
+.am-modal {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.78);
+  z-index: 9999;
+  align-items: flex-start; justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+.am-modal.open { display: flex; }
+.am-modal-inner {
+  width: 100%;
+  max-width: 880px;
+  background: #15181f;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.am-modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.am-modal-header h2 { margin: 0; color: #f3f6fc; font-size: 1.1rem; }
+
+.am-form { padding: 1.2rem 1.4rem 1.4rem; display: flex; flex-direction: column; gap: .85rem; }
+.am-form label { display: flex; flex-direction: column; gap: .3rem; font-size: .78rem; color: #b7c0cf; letter-spacing: .02em; }
+.am-form input[type="text"], .am-form textarea, .am-form input[type="search"] {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 6px;
+  padding: .55rem .75rem;
+  color: #e8edf5;
+  font-size: .9rem;
+  font-family: inherit;
+}
+.am-form textarea { resize: vertical; min-height: 60px; }
+.am-form textarea.am-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; min-height: 260px; }
+.am-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+.am-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .85rem; }
+.am-checkbox { flex-direction: row; align-items: center; gap: .5rem; font-size: .85rem; color: #e8edf5; }
+.am-checkbox input { width: 16px; height: 16px; }
+.am-form-actions { display: flex; justify-content: space-between; padding-top: .5rem; margin-top: .4rem; border-top: 1px solid rgba(255,255,255,.08); }
+.am-form-actions-right { display: flex; gap: .6rem; }
+
+@media (max-width: 720px) {
+  .am-row-2, .am-row-3 { grid-template-columns: 1fr; }
+}
+
+/* Pin toggle — the pinned badge is now a button; unpinned = ghost that
+   appears on card hover so the grid stays clean (2026-06-06). */
+.am-pin-toggle { cursor: pointer; font: inherit; }
+.am-pin-toggle:not(.is-pinned) {
+  background: rgba(148,163,184,.12);
+  color: #94a3b8;
+  border: 1px dashed rgba(148,163,184,.4);
+  opacity: 0;
+  transition: opacity .12s;
+}
+.am-acard:hover .am-pin-toggle:not(.is-pinned) { opacity: 1; }
+.am-pin-toggle:hover { filter: brightness(1.25); }
+.am-pin-toggle:disabled { opacity: .5; cursor: wait; }
+
+/* ── Universal Content (global article stack) modal ── */
+.am-modal-inner--narrow { max-width: 560px; }
+.am-universal-help { font-size: .88rem; line-height: 1.55; color: #b8c0cc; margin: 0 0 6px; }
+.am-universal-note { font-size: .78rem; line-height: 1.5; color: #8a93a1; margin: 4px 0 0; }
+.am-universal-status { font-size: .82rem; margin-top: 10px; min-height: 1.2em; }
+.am-universal-status.is-ok { color: #22c55e; }
+.am-universal-status.is-error { color: #f87171; }
+
+/* ── Per-card injection quick-toggle chips (🛒 affiliate / 🧩 UCS) + global defaults modal ── */
+.am-inject-chips { display: inline-flex; gap: 4px; margin-left: auto; }
+.am-inject-chip { border: 1px solid rgba(255,255,255,.18); background: transparent; border-radius: 5px; padding: 1px 6px; font-size: .8rem; line-height: 1.3; cursor: pointer; opacity: .35; filter: grayscale(1); }
+.am-inject-chip.is-on { opacity: 1; filter: none; border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.16); }
+.am-inject-chip:hover { opacity: .85; }
+.am-checkbox--wide { display: flex; align-items: center; gap: 8px; margin: 4px 0; }

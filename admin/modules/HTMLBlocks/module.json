@@ -1,0 +1,39 @@
+{
+    "name": "HTMLBlocks",
+    "version": "1.1.0",
+    "description": "First-class reusable HTML Blocks with per-block scoped CSS and JS. Shortcode: [[html-block:slug]]",
+    "author": "Luminal CMS",
+    "entry_point": "HTMLBlocks.php",
+    "api_endpoint": "api.php",
+    "requires_data_dirs": [
+        "html-blocks"
+    ],
+    "menu_entry": {
+        "key": "HTMLBlocks",
+        "title": "HTML Blocks",
+        "href": "HTMLBlocks.php",
+        "role": "admin",
+        "order": 40,
+        "icon": "🧩"
+    },
+    "dependencies": [],
+    "permissions": {
+        "admin": [
+            "read",
+            "write",
+            "create",
+            "delete"
+        ],
+        "staff": [
+            "read"
+        ]
+    },
+    "features": [
+        "Reusable HTML+CSS+JS snippets with stable slug identity",
+        "Per-block CSS auto-scoped to .hb-{id} wrapper",
+        "JS wrapped in IIFE with dedup guard (renders safely twice on one page)",
+        "Shortcode integration: [[html-block:slug]]",
+        "Shared renderer with content-stack per-item CSS/JS",
+        "XSS-safe against </style> / </script> breakouts"
+    ]
+}

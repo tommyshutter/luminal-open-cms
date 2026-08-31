@@ -1,0 +1,113 @@
+/**
+ * @file: /css/panel-media-gallery.css
+ * @description: Styles specifically for the Media Gallery panel.
+ * @author: Your Name Here
+ * @version: 9.0 (2025-07-15 16:32:00 EST)
+ */
+
+.media-gallery-panel .gallery {
+    margin-bottom: 3rem;
+}
+
+.media-gallery-panel .gallery h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+}
+
+.media-gallery-panel .gallery-grid {
+    column-count: 3;
+    column-gap: .41rem;
+border:0px solid ;padding:15px;box-shadow:-10px 10px 30px rgba(0,0,0,.21)
+
+}
+
+.media-gallery-panel .gallery-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;}
+
+}
+
+.media-gallery-panel .gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.media-gallery-panel .gallery-item img,
+.media-gallery-panel .gallery-item video {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.media-gallery-panel .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+aspect-ratio:9/16!important;
+min-height:400px}
+
+.media-gallery-panel .video-wrapper iframe,
+.media-gallery-panel .video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+
+/* Lightbox styles from your existing lightbox.css, included here for completeness */
+.lightbox {
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 800px;
+}
+
+.lightbox-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1200px) { .media-gallery-panel .gallery-grid { column-count: 3; } }
+@media (max-width: 992px) { .media-gallery-panel .gallery-grid { column-count: 2; } }
+@media (max-width: 576px) { .media-gallery-panel .gallery-grid { column-count: 1; } }

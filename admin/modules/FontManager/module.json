@@ -1,0 +1,27 @@
+{
+  "name": "FontManager",
+  "version": "1.1.0",
+  "description": "Custom font upload and management for web typography",
+  "author": "Luminal CMS",
+  "entry_point": "FontManager.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "FontManager",
+    "title": "Fonts",
+    "href": "FontManager.php",
+    "role": "admin",
+    "order": 43,
+    "icon": "🔤"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "upload",
+      "delete"
+    ],
+    "staff": []
+  }
+}

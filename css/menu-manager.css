@@ -1,0 +1,114 @@
+.mm-toolbar {
+  display:flex; gap:10px; align-items:center; margin: 12px 0 16px;
+}
+.mm-hint { opacity:.8; font-size:.9rem; }
+
+.mm-table { width:100%; border-collapse: collapse; }
+.mm-table th, .mm-table td { border:1px solid #333; padding:8px; }
+.mm-table thead th { background:#1a1a1a; text-align:left; }
+
+.col-drag   { width:34px; text-align:center; cursor:grab; }
+.col-on     { width:50px; text-align:center; }
+.col-title  { width:24%; }
+.col-slug   { width:18%; }
+.col-url    { width:34%; }
+.col-target { width:120px; }
+.col-actions{ width:200px; white-space: nowrap; }
+
+.mm-table input[type="text"], .mm-table select {
+  width: 100%;
+  box-sizing: border-box;
+  background:#0f0f0f; color:#eee; border:1px solid #333;
+  border-radius:6px; padding:6px 8px;
+}
+
+.mm-row.dragging { opacity:.5; }
+.mm-table button {
+  background:#242424; color:#eee; border:1px solid #444; border-radius:6px; padding:6px 8px; cursor:pointer;
+}
+.mm-table button:hover { background:#2b2b2b; }
+.mm-table button.primary { background:#2a4; border-color:#2a4; }
+.mm-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 8px;
+  border: 1px solid #2c2c2c;
+  border-radius: 8px;
+  background: #161616;
+  margin-bottom: 8px;
+}
+.mm-handle {
+  cursor: grab;
+  user-select: none;
+  line-height: 28px;
+  text-align: center;
+  opacity: .7;
+}
+.mm-row.mm-dragging .mm-handle { cursor: grabbing; opacity: 1; }
+.mm-row.mm-dragover-before { box-shadow: 0 -2px 0 0 #4da3ff inset; }
+.mm-row.mm-dragover-after  { box-shadow: 0  2px 0 0 #4da3ff inset; }
+
+.mm-fields { display: grid; grid-template-columns: 2fr 3fr 150px 110px; gap: 10px; }
+.mm-field { display: grid; gap: 6px; }
+.mm-field > span { font-size: 12px; opacity: .8; }
+.mm-field input[type="text"], .mm-field select {
+  width: 100%; padding: 8px; background: #0f0f0f; color: #eee; border: 1px solid #303030; border-radius: 6px;
+}
+.mm-actions { display:flex; gap:6px; }
+.mm-actions .mm-remove {
+  background:#3b0f0f; color:#fff; border:1px solid #5a1a1a; border-radius:6px; padding:6px 10px; cursor:pointer;
+}
+
+
+/* === Live Preview Scopes (non-invasive) — 2025.09.10.r2 === */
+.preview-scope {}
+
+/* Demo menu reads --menu-* only from its nearest scope */
+.preview-scope .mm-menu-preview{
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin:10px 0 6px; padding:10px;
+  border-radius:8px;
+  background: var(--menu-bar-bg, rgba(0,0,0,0));
+  list-style:none;
+}
+.preview-scope .mm-menu-preview > li { margin:0; padding:0; }
+.preview-scope .mm-menu-preview > li > a{
+  display:inline-block; padding:6px 10px; border-radius:8px; text-decoration:none;
+  font-family: var(--menu-font-family, system-ui);
+  font-size: var(--menu-font-size, 1rem);
+  color: var(--menu-font-color, #ddd);
+  text-transform: var(--menu-text-transform, inherit);
+  background: var(--menu-item-bg, rgba(0,0,0,0));
+}
+.preview-scope .mm-menu-preview > li > a:hover{
+  background: var(--menu-item-hover-bg, rgba(51,51,51,.2));
+}
+.preview-scope .mm-menu-preview > li.is-current > a{
+  background: var(--menu-current-bg, rgba(255,255,255,.1));
+  color: var(--menu-current-font-color, #fff);
+}
+
+/* Body preview reads --body-* only from its nearest scope */
+.preview-scope .body-preview{
+  font-family: var(--body-font-family, system-ui);
+  color: var(--body-color, #e6e6e6);
+  line-height: var(--body-line-height, 1.5);
+  text-transform: var(--body-text-transform, inherit);
+}
+.preview-scope .body-preview a{
+  color: var(--body-link-color, #8ad4ff);
+}
+.preview-scope .body-preview a:visited{
+  color: var(--body-visited-color, #b9c3ff);
+}
+
+/* Optional little echo line for current vars */
+.mm-var-echo{
+  font-family: monospace;
+  font-size: .85rem;
+  opacity: .8;
+  margin: 6px 0 2px;
+  word-break: break-word;
+}

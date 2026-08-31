@@ -1,0 +1,41 @@
+/* pdf-galleries.css — look/feel mirrored from Image Gallery Manager (scoped) */
+.pdfgm { --bg:#0e1216; --line:rgba(255,255,255,.12); --accent:#C7FF1A; --card:#121820; --ink:#e8e8e8; }
+.pdfgm .available-list, .pdfgm .tray {
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.16));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+}
+.pdfgm .grid { display:grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; }
+@media (max-width:1400px){ .pdfgm .grid{ grid-template-columns:repeat(4,1fr);} }
+@media (max-width:1100px){ .pdfgm .grid{ grid-template-columns:repeat(3,1fr);} }
+@media (max-width:820px){  .pdfgm .grid{ grid-template-columns:repeat(2,1fr);} }
+@media (max-width:520px){  .pdfgm .grid{ grid-template-columns:1fr;} }
+
+.pdfgm .card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .12s ease, box-shadow .15s ease;
+}
+.pdfgm .card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+
+.pdfgm .thumb {
+  position: relative; display:flex; align-items:center; justify-content:center;
+  aspect-ratio: 4 / 5; background: #0a0d10;
+}
+.pdfgm .thumb::after{
+  content: "PDF"; position: absolute; top: 8px; right: 8px;
+  background: var(--accent); color:#000; font-weight: 800; font-size: 11px;
+  padding: 2px 6px; border-radius: 999px;
+}
+.pdfgm .thumb img { max-width: 78%; max-height: 78%; object-fit: contain; opacity: .95; }
+
+.pdfgm .meta { padding: 10px 12px; color: var(--ink); display:flex; gap:8px; align-items:center; justify-content:space-between; }
+.pdfgm .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 75%; }
+
+.pdfgm .btn { border:1px solid var(--line); background:#0b0f13; color: var(--ink);
+  border-radius:6px; padding:6px 10px; text-decoration:none; font-size:13px; }
+.pdfgm .btn--accent { background: var(--accent); color:#000; border-color: rgba(0,0,0,.5); font-weight: 700; }

@@ -1,0 +1,112 @@
+{
+    "version": "1.0.0",
+    "description": "Luminal Open CMS module registry",
+    "core_modules": [
+        "AIResources",
+        "ArticlesManager",
+        "AudienceBuilder",
+        "BackgroundManager",
+        "BaseMenu",
+        "BlogManager",
+        "CommunityManager",
+        "ContentStacks",
+        "Dashboard",
+        "FileManager",
+        "FontManager",
+        "GalleryManager",
+        "GoogleAuth",
+        "HTMLBlocks",
+        "HTMLEditor",
+        "LogViewer",
+        "MDEditor",
+        "MailgunManager",
+        "MediaThumbs",
+        "MenuManager",
+        "PageManager",
+        "PrivacyPolicy",
+        "SiteSettings",
+        "SiteTextReceiver",
+        "SocialPublisher",
+        "Tools",
+        "UserManager",
+        "YouTubePlaylist"
+    ],
+    "optional_modules": [
+        "AffiliateProducts",
+        "EventsManagerPro",
+        "FacebookEvents",
+        "MyStore",
+        "PaymentProviders",
+        "PrintfulManager"
+    ],
+    "special_modules": [
+        "MembershipManager"
+    ],
+    "module_groups": {
+        "system": {
+            "label": "System Admin",
+            "color": "section-red",
+            "modules": [
+                "AIResources",
+                "AdminThemes",
+                "AudienceBuilder",
+                "BackgroundManager",
+                "Base",
+                "FileManager",
+                "FontManager",
+                "GoogleAuth",
+                "LogViewer",
+                "MailgunManager",
+                "MediaThumbs",
+                "PrivacyPolicy",
+                "SiteSettings",
+                "TechSupport",
+                "Tools",
+                "UserManager"
+            ],
+            "description": "Core site administration modules",
+            "always_included": true
+        },
+        "content": {
+            "label": "Content",
+            "color": "section-green",
+            "modules": [
+                "ArticlesManager",
+                "BlogManager",
+                "CommunityManager",
+                "ContentStacks",
+                "GalleryManager",
+                "HTMLBlocks",
+                "HTMLEditor",
+                "MDEditor",
+                "MembershipManager",
+                "MenuManager",
+                "PageManager",
+                "SiteTextReceiver",
+                "SocialPublisher",
+                "YouTubePlaylist"
+            ],
+            "description": "Page, gallery, and content management"
+        },
+        "ecommerce": {
+            "label": "Ecommerce",
+            "color": "section-purple",
+            "modules": [
+                "AffiliateProducts",
+                "MyStore",
+                "PaymentProviders",
+                "PrintfulManager"
+            ],
+            "description": "Print-on-demand, payment processing, and affiliate products"
+        },
+        "events": {
+            "label": "Events Management",
+            "color": "section-amber",
+            "modules": [
+                "EventsManagerPro",
+                "FacebookEvents"
+            ],
+            "description": "Event management and Facebook event integration"
+        }
+    }
+}

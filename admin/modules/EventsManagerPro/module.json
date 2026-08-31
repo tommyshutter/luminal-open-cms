@@ -1,0 +1,17 @@
+{
+  "name": "EventsManagerPro",
+  "version": "1.1.0",
+  "description": "Full-featured event management with calendar views, social posting, and email sharing",
+  "author": "Luminal CMS",
+  "entry_point": "EventsManagerPro.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "EventsManagerPro",
+    "title": "Events Mgr",
+    "href": "EventsManagerPro.php",
+    "role": "admin",
+    "order": 40,
+    "icon": "📅"
+  },
+  "dependencies": []
+}

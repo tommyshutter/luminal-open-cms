@@ -1,0 +1,65 @@
+/**
+ * @file SITE-ROOT/admin/image-gallery-manager.css
+ * @version 2025.08.29.fix-500-work-controls-auto-title
+ */
+
+.two-col{display:grid;
+         grid-template-columns:1fr 2fr;
+         gap:20px;background:transparent}
+
+@media (max-width: 992px){ .two-col{grid-template-columns:1fr} }
+.thumbs{
+        display:grid;
+        grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+        gap: 9px;
+        line-height:12px;
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,.37);
+        height: auto!important;
+        }
+
+.card{border:1px solid rgba(255,255,255,.1);border-radius:8px;
+overflow:hidden;background:transparent;
+cursor:grab;
+  ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.37);
+
+}
+
+.card img{width:100%;height:120px;object-fit:cover;display:block
+  ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.37);
+
+}
+.meta{padding:6px 8px;font-size:.8rem;opacity:.9}
+/* tray reflects controls */
+#img-tray{--cols:3;--rowh:240px;min-height:560px;border:2px dashed #2b3b45;border-radius:10px;background:rgba(10,16,20,.45);padding:12px;display:grid;grid-template-columns:repeat(var(--cols), minmax(0,1fr));gap:12px}
+#img-tray .tile{position:relative;border:1px solid #23343e;border-radius:8px;overflow:hidden;background:#10171c}
+#img-tray .tile img{width:100%;display:block}
+#img-tray.rows .tile img{height:var(--rowh);object-fit:cover}
+#img-tray.masonry .tile img{height:auto}
+#img-tray.square .tile img{aspect-ratio:1/1;object-fit:cover;height:auto}
+#img-tray .tile .rm{position:absolute;top:6px;right:6px;background:#000c;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #345;cursor:pointer}
+#img-tray .tile[draggable="true"]{cursor:grab}
+#img-tray .ghost{outline:2px dashed #5cf; outline-offset:-4px}
+.drop-hint{border:2px dashed #5cf !important}
+.controls-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.controls-row label{border:none;padding:0;background:none;margin:0;color:#cfe8b0}
+
+
+.saved-wrap{margin-top:16px;border-top:1px solid rgba(255,255,255,.12);padding-top:10px;max-height:vh;overflow:auto}
+
+
+.rowline{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);padding:6px 0}
+
+
+.rowline_slug {font-size:1.5rem;font-family:monospace;font-weight:100;text-transform:uppercase}
+
+.img_gal_slug_code {   display:none}
+
+.thumbs .card {border:2px solid green!important;padding:0;aspect-ratio:auto;max-width:99%}
+
+.img_gal_mgr { }
+
+.form-section.img_gal_mgr_left_column {position:sticky;overflow-y:auto;height:80vh}
+
+.form-section.img_gal_mgr_right_column {posit ion:sticky;overflow-y:auto;height:80vh}
+
+.form-group.tray_drag {position:sticky;height:45vh;border:px solid;overflow:auto}

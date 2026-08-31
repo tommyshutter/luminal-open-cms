@@ -1,0 +1,6 @@
+{
+    "name": "BaseMenu",
+    "version": "1.0.0",
+    "description": "Base site admin menu — defines menu sections for all sites (content, ecommerce, events, system admin). This module is the menu source of truth for base-tier sites.",
+    "menu_provider": true
+}

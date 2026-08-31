@@ -1,0 +1,491 @@
+/* ═══════════════════════════════════════════
+   AudienceBuilder — Form Builder Admin Styles
+   ═══════════════════════════════════════════ */
+
+/* ── Forms grid ── */
+.ab-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.ab-form-card {
+    background: rgba(255,255,255,.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color .2s, box-shadow .2s;
+}
+.ab-form-card:hover {
+    border-color: rgba(79,195,247,.3);
+    box-shadow: 0 0 16px rgba(79,195,247,.08);
+}
+
+.ab-form-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e0e0e0;
+    margin: 0 0 8px;
+}
+
+.ab-form-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,.4);
+}
+.ab-form-card-badge {
+    background: rgba(79,195,247,.15);
+    color: #4fc3f7;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.ab-form-card-shortcode {
+    background: rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px;
+    color: #a5d6a7;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background .2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ab-form-card-shortcode:hover { background: rgba(0,0,0,.4); }
+.ab-form-card-shortcode .copy-icon { color: rgba(255,255,255,.3); font-size: 11px; }
+
+.ab-form-card-actions {
+    display: flex;
+    gap: 8px;
+}
+.ab-form-card-actions button {
+    flex: 1;
+    padding: 7px 0;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.7);
+    transition: background .2s, color .2s;
+}
+.ab-form-card-actions button:hover {
+    background: rgba(79,195,247,.12);
+    color: #4fc3f7;
+}
+.ab-form-card-actions .ab-fca-delete:hover {
+    background: rgba(244,67,54,.12);
+    color: #ef5350;
+}
+
+/* New form card */
+.ab-form-card-new {
+    border: 2px dashed rgba(255,255,255,.12);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+}
+.ab-form-card-new:hover {
+    border-color: rgba(79,195,247,.4);
+    background: rgba(79,195,247,.04);
+}
+.ab-form-card-new-inner {
+    text-align: center;
+    color: rgba(255,255,255,.4);
+}
+.ab-form-card-new-inner i {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+}
+.ab-form-card-new-inner span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ── Form editor overlay ── */
+.ab-form-editor-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
+.ab-form-editor-overlay.active { display: flex; }
+
+.ab-form-editor {
+    background: #121a28;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    width: 96vw;
+    max-width: 1100px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,.5);
+}
+
+/* Header */
+.ab-form-editor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.ab-form-editor-header input {
+    flex: 1;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #e0e0e0;
+}
+.ab-form-editor-header .ab-slug-field {
+    font-size: 13px;
+    font-weight: 400;
+    max-width: 200px;
+    color: rgba(255,255,255,.5);
+}
+.ab-form-editor-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.5);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+.ab-form-editor-close:hover { color: #fff; }
+
+/* Body — two columns */
+.ab-form-editor-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ab-form-settings {
+    width: 35%;
+    border-right: 1px solid rgba(255,255,255,.06);
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ab-form-field-list-wrap {
+    width: 65%;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+/* Settings cards */
+.ab-fe-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 8px;
+    padding: 14px;
+}
+.ab-fe-card-head {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 10px;
+}
+.ab-fe-card label {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.ab-fe-card input[type="text"],
+.ab-fe-card textarea {
+    width: 100%;
+    background: rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: #ccc;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+.ab-fe-card textarea { resize: vertical; min-height: 50px; }
+.ab-fe-card input:focus,
+.ab-fe-card textarea:focus {
+    outline: none;
+    border-color: rgba(79,195,247,.4);
+}
+.ab-fe-field-gap { margin-bottom: 10px; }
+
+/* Tracking card — coming soon */
+.ab-tracking-card {
+    opacity: .5;
+    pointer-events: none;
+}
+.ab-tracking-badge {
+    display: inline-block;
+    background: rgba(255,193,7,.2);
+    color: #ffc107;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+/* ── Field list ── */
+.ab-form-field-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 120px;
+}
+
+.ab-form-field-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    position: relative;
+}
+.ab-form-field-card.sortable-ghost {
+    opacity: .4;
+    border-color: #4fc3f7;
+}
+
+.ab-ffc-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.ab-ffc-drag {
+    cursor: grab;
+    color: rgba(255,255,255,.25);
+    font-size: 14px;
+    padding: 0 4px;
+}
+.ab-ffc-drag:active { cursor: grabbing; }
+
+.ab-ffc-header select {
+    background: rgba(0,0,0,.3);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    color: #ccc;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.ab-ffc-header .ab-ffc-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 4px;
+}
+.ab-ffc-actions button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.35);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.ab-ffc-actions button:hover { color: #fff; background: rgba(255,255,255,.08); }
+.ab-ffc-actions .ab-ffc-del:hover { color: #ef5350; background: rgba(244,67,54,.12); }
+
+.ab-ffc-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.ab-ffc-body label {
+    font-size: 11px;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 2px;
+    display: block;
+}
+.ab-ffc-body input[type="text"] {
+    width: 100%;
+    background: rgba(0,0,0,.2);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: #ccc;
+    box-sizing: border-box;
+}
+.ab-ffc-body input:focus { outline: none; border-color: rgba(79,195,247,.3); }
+
+.ab-ffc-bottom {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+.ab-ffc-bottom label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+    font-size: 12px;
+}
+.ab-ffc-bottom input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+/* Options editor (for select/radio) */
+.ab-ffc-options {
+    margin-top: 8px;
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding-top: 8px;
+}
+.ab-ffc-options-title {
+    font-size: 11px;
+    color: rgba(255,255,255,.35);
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.ab-ffc-option-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.ab-ffc-option-row input {
+    flex: 1;
+    background: rgba(0,0,0,.2);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #ccc;
+}
+.ab-ffc-option-row button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.3);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+}
+.ab-ffc-option-row button:hover { color: #ef5350; }
+.ab-ffc-add-option {
+    background: none;
+    border: 1px dashed rgba(255,255,255,.12);
+    border-radius: 4px;
+    color: rgba(255,255,255,.4);
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+.ab-ffc-add-option:hover { border-color: rgba(79,195,247,.3); color: #4fc3f7; }
+
+/* Add field button */
+.ab-form-add-field-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    border: 2px dashed rgba(255,255,255,.1);
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255,255,255,.4);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+    width: 100%;
+    margin-top: 4px;
+}
+.ab-form-add-field-btn:hover {
+    border-color: rgba(79,195,247,.4);
+    color: #4fc3f7;
+}
+
+/* Footer */
+.ab-form-editor-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.ab-form-editor-footer .ab-fe-status {
+    flex: 1;
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+}
+.ab-fe-btn {
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s;
+}
+.ab-fe-btn-save {
+    background: #1976d2;
+    color: #fff;
+}
+.ab-fe-btn-save:hover { background: #1565c0; }
+.ab-fe-btn-cancel {
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.6);
+}
+.ab-fe-btn-cancel:hover { background: rgba(255,255,255,.1); }
+.ab-fe-btn-delete {
+    background: rgba(244,67,54,.12);
+    color: #ef5350;
+}
+.ab-fe-btn-delete:hover { background: rgba(244,67,54,.2); }
+
+/* ── Empty state ── */
+.ab-forms-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255,255,255,.35);
+    font-size: 14px;
+}
+.ab-forms-empty i {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 12px;
+    opacity: .4;
+}

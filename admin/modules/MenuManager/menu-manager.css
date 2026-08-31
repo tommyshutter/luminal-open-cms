@@ -1,0 +1,125 @@
+/**
+ * @appname  Earl's / RI Admin
+ * @file     /admin/menu-manager/menu-manager.css
+ * @version  2025.10.02.2006.00-EST r1202
+ * @scope    Only affects .admin-menu-manager page
+ */
+
+/* Grid */
+.admin-menu-manager .menu-manager-grid{
+  display:grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap:20px !important;
+  padding:16px !important;
+}
+
+/* Panels */
+.admin-menu-manager .mm-panel{
+  background: rgba(20,20,20,0.65) !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  border-radius:12px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25) !important;
+  padding:16px !important;
+  color:#fff !important;
+}
+.admin-menu-manager h2{
+  margin:0 0 12px 0 !important;
+  font-size:14px !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  background:#3547d6 !important;
+  color:#fff !important;
+  padding:10px 12px !important;
+  border-radius:8px !important;
+  text-align:center !important;
+}
+
+/* Header row with Save */
+.admin-menu-manager .mm-header{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  margin-bottom:10px !important;
+}
+
+/* Buttons */
+.admin-menu-manager .mm-btn{
+  appearance:none !important;
+  border:none !important;
+  border-radius:8px !important;
+  padding:8px 12px !important;
+  font-weight:700 !important;
+  cursor:pointer !important;
+}
+.admin-menu-manager .mm-btn-primary{ background:#3547d6 !important; color:#fff !important; }
+.admin-menu-manager .mm-btn-primary:hover{ background:#2c3dc0 !important; }
+.admin-menu-manager .mm-btn-danger{ background:#912727 !important; color:#fff !important; }
+.admin-menu-manager .mm-btn-danger:hover{ background:#7a1f1f !important; }
+
+/* List */
+.admin-menu-manager .mm-list{
+  list-style:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  min-height:60px !important;
+}
+.admin-menu-manager .mm-item{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:10px !important;
+  margin-bottom:8px !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  border-radius:10px !important;
+  background:rgba(255,255,255,0.06) !important;
+}
+.admin-menu-manager .mm-item.dragging{
+  opacity:.6 !important;
+  outline:2px dashed #49f !important;
+}
+.admin-menu-manager .mm-drag-handle{
+  cursor:grab !important;
+  user-select:none !important;
+}
+.admin-menu-manager .mm-item-title{
+  color:#fff !important;
+  text-decoration:none !important;
+  flex:1 !important;
+}
+.admin-menu-manager .mm-item-title:hover{ text-decoration:underline !important; }
+.admin-menu-manager .mm-item-slug{
+  opacity:.7 !important;
+}
+
+/* Pills */
+.admin-menu-manager .mm-pills{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:8px !important;
+}
+.admin-menu-manager .mm-pill{
+  background:#222 !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  color:#eee !important;
+  border-radius:999px !important;
+  padding:6px 10px !important;
+  cursor:pointer !important;
+}
+.admin-menu-manager .mm-pill:hover{ background:#2a2a2a !important; }
+
+/* Status */
+.admin-menu-manager .mm-status{
+  margin-top:10px !important;
+  min-height:20px !important;
+  font-size:13px !important;
+  color:#ddd !important;
+}
+.admin-menu-manager .mm-status.success{ color:#7efc9a !important; }
+.admin-menu-manager .mm-status.error{ color:#ff8f8f !important; }
+.admin-menu-manager .mm-status.warn{ color:#ffd37a !important; }
+.admin-menu-manager .mm-empty{ opacity:.8 !important; padding:10px !important; }
+
+/* Responsive */
+@media (max-width: 980px){
+  .admin-menu-manager .menu-manager-grid{ grid-template-columns: 1fr !important; }
+}

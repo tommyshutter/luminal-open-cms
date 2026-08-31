@@ -1,0 +1,90 @@
+/**
+ * Luminal CMS — Admin idle auto-logout modal styling.
+ * Glassy card on a dim scrim; transparent surfaces only (BackgroundManager rules).
+ * @file /admin/shared/idle-logout/idle-logout.css
+ */
+#lum-idle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483600;            /* above everything, incl. the upload meter */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 18, .58);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+#lum-idle-overlay.show { display: flex; animation: lum-idle-fade .2s ease; }
+
+@keyframes lum-idle-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.lum-idle-card {
+  width: 380px;
+  max-width: calc(100vw - 40px);
+  background: rgba(22, 26, 40, .92);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  padding: 28px 26px 24px;
+  text-align: center;
+  color: #fff;
+  animation: lum-idle-pop .22s ease;
+}
+@keyframes lum-idle-pop { from { transform: scale(.94); opacity: .4; } to { transform: none; opacity: 1; } }
+
+.lum-idle-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.lum-idle-msg {
+  margin: 0 0 14px;
+  font-size: .9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .72);
+}
+.lum-idle-count {
+  margin: 4px 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.lum-idle-count span {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffd66b;
+  font-variant-numeric: tabular-nums;
+}
+.lum-idle-count small {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(255, 255, 255, .5);
+}
+.lum-idle-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.lum-idle-btn {
+  flex: 1 1 0;
+  padding: 11px 16px;
+  border-radius: 9px;
+  font-size: .9rem;
+  cursor: pointer;
+  color: #eaf1ff;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .2);
+  transition: background .15s ease;
+}
+.lum-idle-btn:hover { background: rgba(255, 255, 255, .16); }
+.lum-idle-btn.primary {
+  background: rgba(120, 170, 255, .28);
+  border-color: rgba(120, 170, 255, .6);
+}
+.lum-idle-btn.primary:hover { background: rgba(120, 170, 255, .42); }

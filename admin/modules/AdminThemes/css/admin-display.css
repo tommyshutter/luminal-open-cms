@@ -1,0 +1,293 @@
+/* =====================================================================
+ * AdminThemes — Display & Accessibility engine
+ * Loaded on EVERY admin page (incl. the default "luminal" look) by
+ * theme_head.inc.php. Driven entirely by <html> attributes + CSS vars set
+ * pre-paint (FOUC-free):
+ *   --admin-fscale  0.85..1.6   (text/zoom magnification)
+ *   --admin-accent  #rrggbb     (set only when an accent is chosen)
+ *   data-admin-contrast  normal|high
+ *   data-admin-tactile   on|off       (drop shadows + bold hovers)
+ *   data-admin-density   compact|cozy|roomy
+ *   data-admin-accent    on|off
+ *   data-admin-palette   <slug>       (identity color wash)
+ *
+ * ADDITIVE BY DESIGN: at defaults (scale 1, normal, off, cozy, no accent/
+ * palette) NOTHING below matches → the baseline look is 100% untouched.
+ * Surface tints stay rgba/translucent (transparent-pages rule).
+ * ===================================================================== */
+
+:root { --admin-fscale: 1; }
+
+/* ── Luminal semantic color tokens ──────────────────────────────────────
+   Brand-level design tokens consumed by shared components (.lum-pill, the
+   Dashboard range pills, …). User/site overrides arrive as inline vars from
+   theme_head (--lum-go / --lum-warn / --lum-danger / --lum-surface); the
+   values here are the fallbacks when nothing is chosen. */
+:root{
+  --lum-go:#22c55e;                     /* success · confirm · active */
+  --lum-warn:#f5b301;                   /* caution · pending · unsaved */
+  --lum-danger:#dc2626;                 /* destructive · stop · delete */
+  --lum-surface:rgba(255,255,255,0.03); /* panel surface tint */
+}
+
+/* ── .lum-pill — the compact house button standard ──────────────────────
+   Distinct, legible on every theme. Add a semantic class to tint by role. */
+.lum-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.10);color:#cbd2dd;padding:4px 11px;border-radius:6px;font:600 .72rem/1 system-ui,sans-serif;letter-spacing:.2px;white-space:nowrap;cursor:pointer;text-decoration:none;transition:all .15s;}
+.lum-pill:hover{border-color:rgba(255,255,255,0.22);color:#fff;}
+.lum-pill.active,.lum-pill.is-go{background:color-mix(in srgb,var(--lum-go) 15%,transparent);border-color:color-mix(in srgb,var(--lum-go) 55%,transparent);color:var(--lum-go);font-weight:700;}
+.lum-pill.is-warn{background:color-mix(in srgb,var(--lum-warn) 15%,transparent);border-color:color-mix(in srgb,var(--lum-warn) 55%,transparent);color:var(--lum-warn);}
+.lum-pill.is-danger{background:color-mix(in srgb,var(--lum-danger) 15%,transparent);border-color:color-mix(in srgb,var(--lum-danger) 55%,transparent);color:var(--lum-danger);}
+.lum-pill.is-go:hover{border-color:var(--lum-go);}
+.lum-pill.is-warn:hover{border-color:var(--lum-warn);}
+.lum-pill.is-danger:hover{border-color:var(--lum-danger);}
+
+/* ---- TEXT SIZE — magnify the ENTIRE admin (menu + content) ----------- */
+/* zoom scales px AND rem uniformly; at scale 1 it is a no-op. Applied to
+   <body> so the WHOLE admin scales together — the fixed rail AND the content
+   right-panel AND the body-margin scale uniformly, so they stay aligned. */
+body { zoom: var(--admin-fscale, 1); }
+
+/* ---- CONTRAST: high — sharper text, real borders, separated surfaces -- */
+html[data-admin-contrast][data-admin-contrast="high"] body,
+html[data-admin-contrast][data-admin-contrast="high"] .content-area,
+html[data-admin-contrast][data-admin-contrast="high"] p,
+html[data-admin-contrast][data-admin-contrast="high"] label,
+html[data-admin-contrast][data-admin-contrast="high"] td,
+html[data-admin-contrast][data-admin-contrast="high"] li { color: #ffffff !important; }
+
+html[data-admin-contrast][data-admin-contrast="high"] .panel,
+html[data-admin-contrast][data-admin-contrast="high"] .card,
+html[data-admin-contrast][data-admin-contrast="high"] .dashboard-card,
+html[data-admin-contrast][data-admin-contrast="high"] .fm-card {
+  background: rgba(0, 0, 0, .55) !important;
+  border: 1px solid rgba(255, 255, 255, .45) !important;
+}
+html[data-admin-contrast][data-admin-contrast="high"] .text-input,
+html[data-admin-contrast][data-admin-contrast="high"] input,
+html[data-admin-contrast][data-admin-contrast="high"] select,
+html[data-admin-contrast][data-admin-contrast="high"] textarea {
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, .6) !important;
+}
+html[data-admin-contrast][data-admin-contrast="high"] .btn,
+html[data-admin-contrast][data-admin-contrast="high"] .button-primary,
+html[data-admin-contrast][data-admin-contrast="high"] .submit-button,
+html[data-admin-contrast][data-admin-contrast="high"] .btn-primary,
+html[data-admin-contrast][data-admin-contrast="high"] .btn-warn,
+html[data-admin-contrast][data-admin-contrast="high"] .delete-button {
+  border: 1px solid rgba(255, 255, 255, .5) !important;
+}
+html[data-admin-contrast][data-admin-contrast="high"] a { color: #b6ff00 !important; }
+html[data-admin-contrast][data-admin-contrast="high"] a:hover { color: #eaff66 !important; }
+
+/* ---- TACTILE: drop shadows + hover that actually shifts -------------- */
+html[data-admin-tactile][data-admin-tactile="on"] .btn,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-small,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-primary,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-warn,
+html[data-admin-tactile][data-admin-tactile="on"] .button-primary,
+html[data-admin-tactile][data-admin-tactile="on"] .submit-button,
+html[data-admin-tactile][data-admin-tactile="on"] .delete-button,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-view {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .09) !important;
+  transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease, filter .12s ease !important;
+}
+html[data-admin-tactile][data-admin-tactile="on"] .btn:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-small:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-primary:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-warn:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .button-primary:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .submit-button:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .delete-button:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .btn-view:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .14) !important;
+  filter: brightness(1.13);
+}
+html[data-admin-tactile][data-admin-tactile="on"] .btn:active,
+html[data-admin-tactile][data-admin-tactile="on"] .button-primary:active,
+html[data-admin-tactile][data-admin-tactile="on"] .submit-button:active { transform: translateY(0); filter: brightness(.93); }
+
+html[data-admin-tactile][data-admin-tactile="on"] .panel,
+html[data-admin-tactile][data-admin-tactile="on"] .card,
+html[data-admin-tactile][data-admin-tactile="on"] .dashboard-card,
+html[data-admin-tactile][data-admin-tactile="on"] .fm-card {
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .42) !important;
+}
+/* menu/links earn a visible hover */
+html[data-admin-tactile][data-admin-tactile="on"] .admin-aside a:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .admin-nav a:hover,
+html[data-admin-tactile][data-admin-tactile="on"] .top-links a:hover { background: rgba(255, 255, 255, .11); border-radius: 6px; }
+
+/* ---- DENSITY -------------------------------------------------------- */
+html[data-admin-density][data-admin-density="roomy"] .btn,
+html[data-admin-density][data-admin-density="roomy"] .btn-small,
+html[data-admin-density][data-admin-density="roomy"] .button-primary,
+html[data-admin-density][data-admin-density="roomy"] .submit-button { padding: 10px 18px !important; }
+html[data-admin-density][data-admin-density="roomy"] .panel,
+html[data-admin-density][data-admin-density="roomy"] .card,
+html[data-admin-density][data-admin-density="roomy"] .dashboard-card { padding: 22px !important; }
+html[data-admin-density][data-admin-density="roomy"] body { line-height: 1.7; }
+
+html[data-admin-density][data-admin-density="compact"] .btn,
+html[data-admin-density][data-admin-density="compact"] .btn-small,
+html[data-admin-density][data-admin-density="compact"] .button-primary,
+html[data-admin-density][data-admin-density="compact"] .submit-button { padding: 4px 10px !important; }
+html[data-admin-density][data-admin-density="compact"] .panel,
+html[data-admin-density][data-admin-density="compact"] .card,
+html[data-admin-density][data-admin-density="compact"] .dashboard-card { padding: 10px !important; }
+html[data-admin-density][data-admin-density="compact"] body { line-height: 1.35; }
+
+/* ---- ACCENT — the theme's signature colour, applied PERVASIVELY ------
+   active tabs, the selected menu item, primary/+Add/back buttons, selected
+   & highlighted states, focus rings, links, and native form controls.
+   Destructive (delete/warn/danger/cancel) buttons keep their own colour.
+   Engages only when the user picks an accent (data-admin-accent="on"). */
+html[data-admin-accent][data-admin-accent="on"] { accent-color: var(--admin-accent); }   /* checkboxes/radios/range/progress */
+
+/* ---- BUTTON COLOURS — dedicated background + text pickers, independent of the
+   accent. Covers global .btn, .button-primary, .submit-button + per-module
+   dash-btn classes, minus destructive (delete/warn keep their colour). */
+html[data-admin-btn][data-admin-btn="on"] .button-primary,
+html[data-admin-btn][data-admin-btn="on"] .submit-button,
+html[data-admin-btn][data-admin-btn="on"] [class~="btn"]:not([class*="warn"]):not([class*="delete"]):not([class*="danger"]):not([class*="cancel"]):not([class*="secondary"]):not([class*="ghost"]):not([class*="muted"]):not([class*="outline"]),
+html[data-admin-btn][data-admin-btn="on"] [class*="-btn"]:not([class*="warn"]):not([class*="delete"]):not([class*="danger"]):not([class*="cancel"]):not([class*="secondary"]):not([class*="ghost"]):not([class*="muted"]):not([class*="outline"]) {
+  background: var(--admin-btnbg) !important;
+  border-color: var(--admin-btnbg) !important;
+  color: var(--admin-btntext, #fff) !important;
+}
+
+/* RAIL MENU — the COHESIVE path: drive the rail through its OWN design tokens so
+   the accent IS the rail, not a second layer fighting it with !important. The
+   rail's native rules (admin_menu.css: .am-row.active{background:var(--pill-solid)},
+   .am-row:hover{background:var(--am-bg-hover)=var(--pill-hover-bg)}) then paint
+   accented pills automatically — one cascade. Per-item .am-skin-* rows set their
+   own --am-bg and are deliberately left alone. Gated on accent="on" so the
+   default rail is 100% untouched. */
+html[data-admin-accent][data-admin-accent="on"] {
+  --pill-solid:         var(--admin-accent);
+  --pill-solid-border:  color-mix(in srgb, var(--admin-accent) 65%, #ffffff);
+  --pill-solid-text:    var(--admin-btntext, #fff);
+  --pill-hover-bg:      color-mix(in srgb, var(--admin-accent) 18%, transparent);
+  --pill-outline-hover: color-mix(in srgb, var(--admin-accent) 45%, transparent);
+}
+/* active row also earns a brighter accent left-bar for at-a-glance "you are here" */
+html[data-admin-accent][data-admin-accent="on"] .am-row.active {
+  box-shadow: inset 3px 0 0 0 color-mix(in srgb, var(--admin-accent) 80%, #ffffff) !important;
+}
+html[data-admin-accent][data-admin-accent="on"] .am-row.active .am-row-icon,
+html[data-admin-accent][data-admin-accent="on"] .am-row:hover .am-row-icon { opacity: 1 !important; }
+
+/* active TAB in any module — accent text + tinted bg + underline */
+html[data-admin-accent][data-admin-accent="on"] [class*="tab"].active,
+html[data-admin-accent][data-admin-accent="on"] [class*="tab"].on,
+html[data-admin-accent][data-admin-accent="on"] [class*="tab"].selected,
+html[data-admin-accent][data-admin-accent="on"] [class*="tab"][aria-selected="true"],
+html[data-admin-accent][data-admin-accent="on"] [role="tab"][aria-selected="true"] {
+  color: #fff !important;
+  background: color-mix(in srgb, var(--admin-accent) 28%, transparent) !important;
+  border-bottom: 2px solid var(--admin-accent) !important;
+}
+
+/* selected / highlighted rows, cards, list items (real tinted background) */
+html[data-admin-accent][data-admin-accent="on"] .selected:not(button):not(.am-row),
+html[data-admin-accent][data-admin-accent="on"] .is-selected,
+html[data-admin-accent][data-admin-accent="on"] .is-active:not(.am-row),
+html[data-admin-accent][data-admin-accent="on"] tr.active,
+html[data-admin-accent][data-admin-accent="on"] li.active {
+  background: color-mix(in srgb, var(--admin-accent) 16%, transparent) !important;
+  border-color: var(--admin-accent) !important;
+}
+
+/* content-area links + focus ring */
+html[data-admin-accent][data-admin-accent="on"] .content-area a:not([class*="btn"]) { color: var(--admin-accent); }
+html[data-admin-accent][data-admin-accent="on"] :focus-visible { outline: 2px solid var(--admin-accent) !important; outline-offset: 2px; }
+
+/* ---- BACKGROUND — soft glassmorphic palette presets (admin only) ----
+   Sets a soft fixed gradient on <body> + frosts the surfaces so the backdrop
+   shows through. Admin-only (this sheet loads only in /admin); opt-in. */
+html[data-admin-palette][data-admin-palette="manila"]   body { background: linear-gradient(165deg,#2a2418,#16120b) fixed !important; }
+html[data-admin-palette][data-admin-palette="slate"]    body { background: linear-gradient(165deg,#1b2230,#0d1219) fixed !important; }
+html[data-admin-palette][data-admin-palette="aqua"]     body { background: linear-gradient(165deg,#0e2730,#08161d) fixed !important; }
+html[data-admin-palette][data-admin-palette="oracle"]   body { background: linear-gradient(165deg,#2a1517,#16090b) fixed !important; }
+html[data-admin-palette][data-admin-palette="emerald"]  body { background: linear-gradient(165deg,#13241a,#0a1410) fixed !important; }
+html[data-admin-palette][data-admin-palette="amethyst"] body { background: linear-gradient(165deg,#221a33,#120d1d) fixed !important; }
+html[data-admin-palette][data-admin-palette="ember"]    body { background: linear-gradient(165deg,#2a1d10,#160f08) fixed !important; }
+
+/* frost the surfaces so the soft background reads through (glassmorphism) */
+html[data-admin-palette]:not([data-admin-palette=""]) .panel,
+html[data-admin-palette]:not([data-admin-palette=""]) .card,
+html[data-admin-palette]:not([data-admin-palette=""]) .dashboard-card,
+html[data-admin-palette]:not([data-admin-palette=""]) .content-area,
+html[data-admin-palette]:not([data-admin-palette=""]) .fm-card {
+  background: rgba(255,255,255,.055) !important;
+  -webkit-backdrop-filter: blur(13px) saturate(125%);
+  backdrop-filter: blur(13px) saturate(125%);
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* ---- TYPEFACE — additive; default ("") leaves the admin font untouched. */
+/* Doubled [data-admin-font] bumps specificity so a chosen font also wins over
+   an OS theme's --at-font. Form controls don't inherit font-family → listed. */
+html[data-admin-font="sans"]    { --admin-fontstack: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+html[data-admin-font="serif"]   { --admin-fontstack: Georgia, "Times New Roman", serif; }
+html[data-admin-font="rounded"] { --admin-fontstack: ui-rounded, "Segoe UI", "Trebuchet MS", sans-serif; }
+html[data-admin-font="mono"]    { --admin-fontstack: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace; }
+html[data-admin-font="legible"] { --admin-fontstack: Verdana, Tahoma, "DejaVu Sans", sans-serif; }
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) body,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) h1,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) h2,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) h3,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) p,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) a,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) label,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) button,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) input,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) select,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) textarea,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .content-area,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .admin-aside {
+  font-family: var(--admin-fontstack) !important;
+}
+
+/* ---- RAIL — extend the relevant D&A settings to the admin sidebar too --
+   (contrast text, typeface, and the glass background reach .admin-aside/.am-row,
+   which the content-area rules above don't cover). */
+html[data-admin-contrast][data-admin-contrast="high"] .admin-aside,
+html[data-admin-contrast][data-admin-contrast="high"] .am-row,
+html[data-admin-contrast][data-admin-contrast="high"] .am-row .label,
+html[data-admin-contrast][data-admin-contrast="high"] .am-row .count { color: #ffffff !important; }
+
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .am-row,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .am-row .label,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .brand,
+html[data-admin-font][data-admin-font]:not([data-admin-font=""]) .rail-site-name { font-family: var(--admin-fontstack) !important; }
+
+html[data-admin-palette]:not([data-admin-palette=""]) .admin-aside {
+  background: rgba(255, 255, 255, .04) !important;
+  -webkit-backdrop-filter: blur(13px) saturate(125%);
+  backdrop-filter: blur(13px) saturate(125%);
+}
+
+/* ---- Header quick control (A− / A+) injected by admin-themes.js ------ */
+#admin-fscale-quick {
+  /* sit below the OS top-bar (macOS/GNOME set --at-topbar-h; default is 0) and
+     above all theme chrome so it never hides behind the bar/dock. */
+  position: fixed; top: calc(var(--at-topbar-h, 0px) + 10px); right: 16px; z-index: 2147483000;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 8px; border-radius: 11px;
+  background: rgba(18, 26, 38, .82); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, .42);
+}
+#admin-fscale-quick button {
+  width: 26px; height: 24px; line-height: 1;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(255, 255, 255, .08);
+  color: inherit; border-radius: 5px; cursor: pointer;
+  font-weight: 700; font-size: 13px;
+}
+#admin-fscale-quick button:hover { background: rgba(255, 255, 255, .18); box-shadow: 0 2px 6px rgba(0,0,0,.4); }
+#admin-fscale-quick .afq-a-small { font-size: 10px; }
+#admin-fscale-quick .afq-a-big   { font-size: 15px; }
+#admin-fscale-quick .afq-val { font-size: 11px; opacity: .75; min-width: 34px; text-align: center; }

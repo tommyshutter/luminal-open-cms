@@ -1,0 +1,332 @@
+/*
+ * File: /css/footer.css
+ * Description: Luminal CMS footer — renders from site-settings.json footer config
+ * Matches classes in footer.php: .footer-content, .footer-contact,
+ * .footer-social, .footer-affiliates, .footer-credits
+ */
+
+/* Footer Variables */
+:root {
+    --footer-bg: transparent;
+    --footer-text: #ffffff;
+    --footer-link-color: rgba(255, 255, 255, 0.85);
+    --footer-link-hover: #ffd700;
+}
+
+/* Main Footer */
+.site-footer {
+    color: var(--footer-text);
+    padding: 20px 0 12px;
+    position: relative;
+    background: rgba(0, 0, 0, 0.52);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Container */
+.footer-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Content wrapper — centered column layout */
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+/* Contact section */
+.footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 20px;
+}
+
+.footer-contact p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.footer-contact strong {
+    font-weight: 600;
+    opacity: 0.7;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.footer-contact a {
+    color: var(--footer-link-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-contact a:hover {
+    color: var(--footer-link-hover);
+}
+
+/* Social links row */
+.footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    padding: 6px 0;
+}
+
+.footer-social a {
+    color: var(--footer-link-color);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: var(--footer-link-hover);
+    border-color: var(--footer-link-hover);
+    background: rgba(255, 215, 0, 0.08);
+}
+
+/* Affiliate links row */
+.footer-affiliates {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 20px;
+    padding: 4px 0;
+}
+
+.footer-affiliates a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 11px;
+    transition: color 0.2s ease;
+}
+
+.footer-affiliates a:hover {
+    color: var(--footer-link-hover);
+}
+
+/* Partner logos in footer */
+.footer-partner-link {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Partner logos are real brand artwork (sponsors).
+   `brightness(0) invert(1)` flattened every one of them to a white silhouette,
+   which is fine for a wordmark and wrong for a colour logo — so the mono
+   treatment is now opt-in per link via .is-mono instead of the default.
+   object-fit:contain, never cover (feedback_contain_dont_crop_logos). */
+.footer-partner-logo {
+    height: 28px;
+    width: auto;
+    max-width: 110px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+    object-fit: contain;
+    display: block;
+}
+
+.footer-partner-link.is-mono .footer-partner-logo {
+    filter: brightness(0) invert(1);
+    opacity: 0.65;
+}
+
+.footer-partner-link:hover .footer-partner-logo {
+    opacity: 1;
+}
+
+/* Credits / copyright */
+.footer-credits {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+    .site-footer {
+        padding: 14px 0 8px;
+    }
+
+    .footer-contact {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .footer-contact p {
+        font-size: 12px;
+    }
+
+    .footer-social a {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .footer-container {
+        padding: 0 12px;
+    }
+
+    .footer-social {
+        gap: 6px 10px;
+    }
+
+    .footer-credits {
+        font-size: 11px;
+    }
+}
+
+/* Print */
+@media print {
+    .site-footer {
+        background: white;
+        color: black;
+        border-top: 2px solid black;
+    }
+
+    .footer-contact a,
+    .footer-social a,
+    .footer-affiliates a {
+        color: black;
+    }
+
+    .footer-credits {
+        color: #666;
+        border-top-color: #ccc;
+    }
+}
+/* ── Static footer_content.html classes ───── */
+.footer-business-info { text-align:center; padding:16px 0 12px; }
+.footer-title { font-size:20px; font-weight:700; color:#fff; margin:0 0 10px; letter-spacing:.5px; }
+.contact-info { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 24px; font-size:13px; }
+.contact-info a { color:rgba(255,255,255,.85); text-decoration:none; transition:color .2s; }
+.contact-info a:hover { color:#ffd700; }
+.address { text-align:center; }
+.address-line, .city-state { display:block; line-height:1.5; }
+.footer-sponsors { padding:16px 0; }
+.sponsors-row { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:16px 24px; }
+.sponsor-item { display:flex; align-items:center; gap:8px; }
+.sponsor-item a { display:flex; align-items:center; gap:8px; text-decoration:none; color:#fff; }
+.sponsor-logo { max-height:60px; width:auto; border-radius:6px; }
+.roof-sign img { max-height:80px; width:auto; }
+.facebook-promo { display:flex; align-items:center; gap:8px; }
+.facebook-promo a { display:flex; align-items:center; gap:8px; text-decoration:none; color:#fff; }
+.facebook-icon { width:40px; height:40px; }
+.facebook-text { display:flex; flex-direction:column; font-size:11px; font-weight:700; line-height:1.3; text-transform:uppercase; letter-spacing:.5px; }
+.youtube-promo { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.youtube-icon { max-height:40px; width:auto; }
+.youtube-text { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,.7); }
+.footer-bottom { text-align:center; padding:12px 0 8px; border-top:1px solid rgba(255,255,255,.1); margin-top:8px; }
+.copyright { font-size:12px; color:rgba(255,255,255,.5); margin:0 0 4px; }
+.tagline { font-size:11px; color:rgba(255,255,255,.4); margin:0; font-style:italic; }
+@media(max-width:640px){
+  .sponsors-row { gap:12px 16px; }
+  .sponsor-logo { max-height:45px; }
+  .roof-sign img { max-height:60px; }
+  .footer-title { font-size:17px; }
+  .contact-info { flex-direction:column; gap:4px; text-align:center; }
+}
+
+/* ── Form-based footer: icon social row, title, tagline, legal ─────
+   Added 2026-08-17 with the custom_html → Site Settings conversion. The
+   classes above (.sponsors-row, .sponsor-logo, .facebook-promo …) stay put:
+   they still style whatever custom_html a site keeps, and a converted site
+   simply stops emitting them. Nothing here needs a per-site stylesheet. */
+
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 4px;
+    transition: transform .18s ease, background .18s ease;
+}
+
+.footer-social-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* CONTAIN, NEVER COVER — a cropped logo is a broken logo
+   (feedback_contain_dont_crop_logos). Square box, letterboxed artwork. */
+.footer-social-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+}
+
+/* Platforms with no shipped icon fall back to a readable pill rather than a
+   wrong-looking glyph. Inherits the existing .footer-social a treatment. */
+.footer-social-link.is-text {
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: var(--footer-link-color);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.footer-social-link.is-text:hover {
+    color: var(--footer-link-hover);
+    border-color: var(--footer-link-hover);
+    background: rgba(255, 215, 0, 0.08);
+}
+
+.footer-content > .footer-title {
+    text-align: center;
+    width: 100%;
+}
+
+.footer-address, .footer-phone, .footer-email { margin: 0; }
+
+.footer-tagline {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    font-style: italic;
+    margin: 2px 0 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Was three inline style="" attributes in footer.php — moved here so the
+   markup carries classes only (feedback_never_unnamed_divs / page CSS rule). */
+.footer-legal {
+    font-size: .78rem;
+    color: #8899aa;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.footer-legal a { color: #a8b1bc; text-decoration: none; }
+.footer-legal a:hover { color: var(--footer-link-hover); }
+
+@media screen and (max-width: 640px) {
+    .footer-social-icon { width: 34px; height: 34px; }
+}
