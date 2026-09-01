@@ -1,7 +1,7 @@
 <?php
 /**
  * Image Gallery Renderer — pure JSON/opts (no fallbacks)
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/renderers/image_gallery.renderer.php
  * @version   2025.09.28.1419.20-EST — r1207 (no defaults, no sidecars) // r1207
  * @author    ChatGPT

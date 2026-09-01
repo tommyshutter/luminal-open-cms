@@ -16,6 +16,7 @@
  */
 declare(strict_types=1);
 
+require_once __DIR__ . '/../../config/hub.php';
 /* ---------- paths ---------- */
 if (!defined('SITE_ROOT')) {
   define('SITE_ROOT', realpath(dirname(__DIR__, 3)) ?: dirname(__DIR__, 3));
@@ -42,7 +43,7 @@ if (!function_exists('ts_get_support_server')) {
         return rtrim($cfg['deploy_server'], '/');
       }
     }
-    return '';
+    return lm_hub_url();
   }
 }
 

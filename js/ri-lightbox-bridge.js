@@ -1,6 +1,6 @@
 /**
  * ---------------------------------------------------------------------------------------
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /js/ri-lightbox-bridge.js
  * @version   2025.09.25.1426.00-EST (overlay enforcement + coexistence)
  * @author    ChatGPT
@@ -74,7 +74,7 @@
 
     if (!href) return;
 
-    // If a first-party core registered its own lightbox-core, it likely also intercepts.
+    // If a first-party core registered (e.g., Mayorga’s lightbox-core), it likely also intercepts.
     // We only take over when it doesn’t prevent default.
     e.preventDefault();
     openLightbox(type, href, group, {});

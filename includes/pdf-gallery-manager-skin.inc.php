@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/pdf-gallery-manager-skin.inc.php
  * @version   2025.09.25.2039.00-EST
  * @author    ChatGPT

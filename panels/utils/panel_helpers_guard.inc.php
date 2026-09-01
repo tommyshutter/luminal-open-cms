@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname     Luminal Open CMS
+ * @appname     Luminal CMS
  * @file        SITE_ROOT/panels/panel-helpers-guard.inc.php
  * @version     2025.09.21.1734.00-EST
  * @author      ChatGPT 

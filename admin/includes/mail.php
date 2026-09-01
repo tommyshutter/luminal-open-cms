@@ -75,7 +75,7 @@ function luminal_mail_config(): array {
      *
      * Credentials in this codebase may be stored sealed ("ENC:v1:…") and are un-sealed at
      * load by cred_load_json(). This file used a plain json_decode, so a sealed value was
-     * handed on as the credential itself. Observed in practice: a Mailgun
+     * handed on as the credential itself. Measured 2026-08-15: one site's Mailgun
      * api_key is sealed, so this resolved to transport=mailgun with a 127-char ciphertext as
      * the API key — every send there got a 401, and because a forced/selected mailgun
      * transport does not fall back, the mail was simply lost. SMTP passwords will be sealed
@@ -111,8 +111,8 @@ function luminal_mail_config(): array {
     // MailgunManager has TWO config filenames in the wild and different code read different
     // ones — the same split-brain shape as the FacebookEvents bug. CardManager reads
     // config.json; this file has only ever read mailgun-config.json. Measured 2026-08-15:
-    // Some sites have ONLY config.json, so mail.php saw no Mailgun
-    // there at all; others have both. Read the older config.json first
+    // One site had ONLY config.json, holding a live key, so mail.php saw no Mailgun
+    // there at all; musiciansadvocate.org/.store have both. Read the older config.json first
     // and let mailgun-config.json win key-by-key, so sites that have both keep exactly the
     // behaviour they have today and sites that have only the old one stop being invisible.
     foreach (['config.json', 'mailgun-config.json'] as $mgName) {

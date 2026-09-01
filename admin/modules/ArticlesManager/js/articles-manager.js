@@ -103,6 +103,82 @@
     });
   }
 
+
+  /* ---- List mode + bulk selection -------------------------------------
+     Sites are heading past 30 articles; a grid of cards cannot be scanned or
+     acted on in bulk. List mode is the same data as a table, with selection.
+     Selection survives filtering (it is keyed by slug), so you can search,
+     tick, search again, and delete the union. */
+  let viewMode  = (function () { try { return localStorage.getItem('amViewMode') || 'grid'; } catch (e) { return 'grid'; } })();
+  let lastItems = [];
+  const selected = new Set();
+
+  function renderList(items) {
+    const grid = $('amGrid');
+    if (!items.length) {
+      grid.innerHTML = '<div class="am-loading">No articles match the current filter.</div>';
+      return;
+    }
+    const rows = items.map(a => {
+      const sl = escapeHtml(a.slug);
+      const on = selected.has(a.slug);
+      return `
+        <tr data-slug="${sl}"${on ? ' class="is-selected"' : ''}>
+          <td class="am-l-check"><input type="checkbox" class="am-l-cb" data-slug="${sl}"${on ? ' checked' : ''}></td>
+          <td><span class="am-l-title" data-slug="${sl}">${escapeHtml(a.title || '(untitled)')}</span>
+              <div class="am-l-slug">/${sl}</div></td>
+          <td class="am-l-status">${a.published
+              ? '<span class="am-badge am-badge--pub">live</span>'
+              : '<span class="am-badge am-badge--draft">draft</span>'}${a.pinned ? ' \u{1F4CC}' : ''}</td>
+          <td class="am-l-date">${fmtDate(a.date)}</td>
+        </tr>`;
+    }).join('');
+    grid.innerHTML = `<table class="am-list">
+        <thead><tr><th class="am-l-check"></th><th>Title</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>${rows}</tbody></table>`;
+  }
+
+  function syncBulkBar() {
+    const bar = $('amBulkBar');
+    if (!bar) return;
+    bar.hidden = (viewMode !== 'list');
+    const n = selected.size;
+    const c = $('amBulkCount'); if (c) c.textContent = n + ' selected';
+    const b = $('amBulkDelete'); if (b) b.disabled = (n === 0);
+    const all = $('amSelectAll');
+    if (all) all.checked = lastItems.length > 0 && lastItems.every(a => selected.has(a.slug));
+  }
+
+  function setViewMode(mode) {
+    viewMode = mode;
+    try { localStorage.setItem('amViewMode', mode); } catch (e) {}
+    const g = $('amViewGrid'), l = $('amViewList');
+    if (g && l) {
+      g.classList.toggle('is-active', mode === 'grid');
+      l.classList.toggle('is-active', mode === 'list');
+      g.setAttribute('aria-pressed', mode === 'grid');
+      l.setAttribute('aria-pressed', mode === 'list');
+    }
+    applyFilter();
+  }
+
+  async function bulkDelete() {
+    const slugs = [...selected];
+    if (!slugs.length) return;
+    if (!confirm(`Delete ${slugs.length} article${slugs.length === 1 ? '' : 's'}?\n\n`
+               + `They are archived, not permanently removed.`)) return;
+    try {
+      const r = await call('delete_bulk', { slugs: slugs.join(',') });
+      selected.clear();
+      if (r && r.not_found && r.not_found.length) {
+        alert(`Deleted ${r.count}. Not found: ${r.not_found.join(', ')}`);
+      }
+      await loadAll();
+    } catch (e) {
+      alert('Bulk delete failed: ' + e.message);
+    }
+  }
+
   function applyFilter() {
     const q = $('amSearch').value.toLowerCase();
     const status = $('amFilterStatus').value;
@@ -117,7 +193,9 @@
         (a.tags || []).some(t => (t || '').toLowerCase().includes(q))
       );
     }
-    renderGrid(items);
+    lastItems = items;
+    if (viewMode === 'list') renderList(items); else renderGrid(items);
+    syncBulkBar();
   }
 
   async function loadAll() {
@@ -252,3 +330,31 @@
     loadAll();
   });
 })();
+
+  // list-mode wiring
+  (function () {
+    const g = $('amViewGrid'), l = $('amViewList');
+    if (g) g.addEventListener('click', () => setViewMode('grid'));
+    if (l) l.addEventListener('click', () => setViewMode('list'));
+    const bd = $('amBulkDelete'); if (bd) bd.addEventListener('click', bulkDelete);
+    const bc = $('amBulkClear');  if (bc) bc.addEventListener('click', () => { selected.clear(); applyFilter(); });
+    const sa = $('amSelectAll');
+    if (sa) sa.addEventListener('change', () => {
+      if (sa.checked) lastItems.forEach(a => selected.add(a.slug));
+      else lastItems.forEach(a => selected.delete(a.slug));
+      applyFilter();
+    });
+    const grid = $('amGrid');
+    if (grid) grid.addEventListener('click', (ev) => {
+      const cb = ev.target.closest('.am-l-cb');
+      if (cb) {
+        if (cb.checked) selected.add(cb.dataset.slug); else selected.delete(cb.dataset.slug);
+        const tr = cb.closest('tr'); if (tr) tr.classList.toggle('is-selected', cb.checked);
+        syncBulkBar();
+        return;
+      }
+      const t = ev.target.closest('.am-l-title');
+      if (t) openEdit(t.dataset.slug);
+    });
+    setViewMode(viewMode);
+  })();

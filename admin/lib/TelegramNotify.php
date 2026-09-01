@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/hub.php';
 /**
  * TelegramNotify — Alert system for Luminal CMS
  *
@@ -20,9 +21,11 @@
 
 function tg_load_config(): ?array
 {
+    // Config lives with the site. There is no shared fallback: a standalone
+    // install has no other site to borrow credentials from.
     $paths = [];
     $siteRoot = defined('SITE_ROOT') ? SITE_ROOT : '';
-    if ($siteRoot) array_unshift($paths, $siteRoot . '/admin/data/telegram/config.json');
+    if ($siteRoot) $paths[] = $siteRoot . '/admin/data/telegram/config.json';
 
     // Load through the credential vault where available so bot_token can be sealed
     // at rest. A cron chmods admin/data to 0777 every 5 minutes, so a plaintext
@@ -113,7 +116,7 @@ function tg_alert_deploy(string $commit, int $siteCount, string $buildTime): boo
     $body .= "Sites: {$siteCount} | Build: {$buildTime}";
 
     return tg_alert('green', 'DEPLOY COMPLETE', $body, [
-        'Admin' => '/admin/',
+        'Hub' => lm_hub_url() . '/admin/',
     ]);
 }
 
@@ -127,6 +130,7 @@ function tg_alert_unreachable(string $serverName, string $ip, string $checkType 
     $body .= "Self-mitigated — will retry next cycle";
 
     return tg_alert('yellow', 'SERVER UNREACHABLE', $body, [
+        'ServerMonitor' => lm_hub_url() . '/admin/modules/ServerMonitor/ServerMonitor.php',
     ]);
 }
 
@@ -223,6 +227,7 @@ function tg_notify_agent_failure(
     $body .= "\n<b>Error:</b>\n<code>" . htmlspecialchars($errClipped, ENT_QUOTES, 'UTF-8') . "</code>";
 
     return tg_alert($severity, $title, $body, [
+        'AgentScheduler' => lm_hub_url() . '/admin/modules/AgentScheduler/AgentScheduler.php',
     ]);
 }
 
@@ -278,7 +283,9 @@ function tg_send(string $message, string $parseMode = 'text'): bool
     $body = curl_exec($ch);
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-    // Append to a local JSONL archive of sent notifications.
+    // Append to local JSONL archive — synced to gdrive:LUMINAL/SYSTEM_LOGS/ by cron
+    // Archive locally. Previously hardcoded to the hub's own filesystem path,
+    // which silently failed on every site that is not the hub.
     $archivePath = (defined('SITE_ROOT') ? SITE_ROOT : dirname(__DIR__, 2)) . '/admin/data/telegram/archive.jsonl';
     $entry = json_encode([
         'ts'      => date('c'),

@@ -15,6 +15,7 @@
  */
 declare(strict_types=1);
 
+require_once __DIR__ . '/../../config/hub.php';
 if (!defined('SITE_ROOT')) {
     define('SITE_ROOT', realpath(__DIR__ . '/../../..') ?: dirname(__DIR__, 3));
 }
@@ -84,7 +85,7 @@ function mm_save_config(array $config): bool {
 /**
  * Resolve this site's brand/identity for member-facing output (invite emails, disclaimers,
  * invite-code prefix, anon handles, hub-forwarding). Precedence: MembershipManager/config.json
- * → site-settings.json → request host. De-branded 2026-06-04;
+ * → site-settings.json → request host. De-branded 2026-06-04 (was hardcoded to Brightborn);
  * any site overrides via config.json keys: brand_name, source_domain, join_url, email_from_name,
  * email_tagline, anon_salt, code_prefix, form_slug.
  */
@@ -649,7 +650,7 @@ if ($action === 'redeem_invite') {
     ];
     mm_save_json('referral_ledger.json', $ledger);
 
-    // Forward to an AudienceBuilder hub, if one is configured
+    // Forward to AudienceBuilder on the configured collector site
     mm_forward_to_hub([
         'type' => 'invite_redemption',
         'member_id' => $memberId,
@@ -671,8 +672,8 @@ if ($action === 'redeem_invite') {
 
 /* ── Hub Forwarding (AudienceBuilder pipeline) ───── */
 function mm_forward_to_hub(array $data): void {
-    // Forward invite/referral data to a configured collector endpoint
-    $hubUrl = $cfg['hub_forwarding']['url'] ?? '';
+    // Forward invite/referral data to the configured AudienceCollector
+    $hubUrl = ($cfg['hub_forwarding']['url'] ?? '') ?: (lm_hub_url() ? lm_hub_url() . '/panels/ab-submit.php' : '');
     $payload = [
         'form_slug' => mm_brand()['form_slug'],
         'name' => $data['name'] ?? '',

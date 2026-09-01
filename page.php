@@ -93,6 +93,25 @@ if (!defined('RI_TOASTER')) {
 $PAGE_DIR  = SITE_ROOT . '/admin/data/pages/' . $requested;
 $PAGE_JSON = $PAGE_DIR . '/' . $requested . '.json';
 
+/* ---------- Live docs mirror ----------
+   Docs are authored in the admin at admin/data/docs/{slug}/{slug}.json and use
+   the IDENTICAL schema to a PageManager page. So when a slug is not a page, fall
+   back to the docs tree and render it through this very pipeline — per-doc CSS
+   and JS included, because both derive from $PAGE_DIR.
+
+   This is a MIRROR, not a copy. Nothing is duplicated, so what is published can
+   never drift from what the admin shows, and doc updates arriving with a release
+   are live without anyone maintaining a second set.
+   $requested is pg_slug()'d to [a-z0-9_-], so no traversal is possible. */
+if (!is_file($PAGE_JSON)) {
+    $DOCS_DIR  = SITE_ROOT . '/admin/data/docs/' . $requested;
+    $DOCS_JSON = $DOCS_DIR . '/' . $requested . '.json';
+    if (is_file($DOCS_JSON)) {
+        $PAGE_DIR  = $DOCS_DIR;
+        $PAGE_JSON = $DOCS_JSON;
+    }
+}
+
 /* ---------- Product-specific OG tags (for social sharing) ----------
    Goal: a shared product link shows the PRODUCT (name + image + price CTA) on
    Facebook/etc. so people click back to buy — not a generic store banner.

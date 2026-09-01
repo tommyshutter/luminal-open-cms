@@ -1,7 +1,7 @@
 <?php
 /**
  * ---------------------------------------------------------------------------------------
- * @appname     Luminal Open CMS
+ * @appname     Luminal CMS
  * @file        /includes/lightbox-bootstrap.inc.php
  * @version     2025.09.25.1426.00-EST
  * @author      ChatGPT

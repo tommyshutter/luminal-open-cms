@@ -125,7 +125,7 @@
     align-items: center;
 }
 
-/* Partner logos are real brand artwork (sponsors).
+/* Partner logos are real brand artwork (BrightBorn, Tommy Shutter, sponsors).
    `brightness(0) invert(1)` flattened every one of them to a white silhouette,
    which is fine for a wordmark and wrong for a colour logo — so the mono
    treatment is now opt-in per link via .is-mono instead of the default.

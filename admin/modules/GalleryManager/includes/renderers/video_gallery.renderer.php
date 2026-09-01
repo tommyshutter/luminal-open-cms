@@ -1,7 +1,7 @@
 <?php
 /**
  * Video Gallery Renderer — JSON/opts with Lightbox & Layout Fixes
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/renderers/video_gallery.renderer.php
  * @version   2025.10.13.17.00.00-EST — Fixed ghost placeholders, lightbox, layout, duplicates
  * @author    Claude (Anthropic)

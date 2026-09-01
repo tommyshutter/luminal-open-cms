@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/shortcodes.php
  * @version   2025.09.23.12:55-EST
  * @author    ChatGPT
@@ -325,6 +325,13 @@ if (!function_exists('apply_shortcodes')) {
           $stackSlug = trim(preg_split('/\s+/', trim($stackSlug), 2)[0] ?? '');
           $stackCols = (int)($attrs['cols'] ?? $attrs['columns'] ?? 0);
           $replacement = sc_render_named_stack($stackSlug, $stackCols);
+          break;
+
+        /* ── live docs index ─────────────────────────────────────────
+           Enumerates admin/data/docs/ at render time. Derived, never authored,
+           so the index cannot fall out of step with the docs themselves. */
+        case 'docs-index': case 'docsindex':
+          $replacement = sc_render_docs_index();
           break;
 
         /* ── named HTML blocks (first-class reusable HTML+CSS+JS atoms) ── */
@@ -889,4 +896,43 @@ if (!function_exists('apply_shortcodes')) {
     return $out;
   }
 }
+
+/**
+ * Render a live index of the admin docs tree.
+ *
+ * Reads admin/data/docs/{slug}/{slug}.json and lists what is actually there.
+ * Nothing is cached or copied: add a doc with a release and it appears here.
+ */
+function sc_render_docs_index(): string {
+    $root = SITE_ROOT . '/admin/data/docs';
+    if (!is_dir($root)) return '<!-- docs-index: no docs tree on this site -->';
+
+    $items = [];
+    foreach ((glob($root . '/*', GLOB_ONLYDIR) ?: []) as $dir) {
+        $slug = basename($dir);
+        if ($slug === 'docs') continue;                 // the index itself
+        $json = $dir . '/' . $slug . '.json';
+        if (!is_file($json)) continue;
+        $d = json_decode((string)@file_get_contents($json), true);
+        if (!is_array($d)) continue;
+        $title = trim((string)($d['page_title'] ?? '')) ?: ucwords(str_replace(['docs-', '-'], ['', ' '], $slug));
+        $desc  = trim((string)($d['meta_description'] ?? ''));
+        $items[] = ['slug' => $slug, 'title' => $title, 'desc' => $desc];
+    }
+    if (!$items) return '<!-- docs-index: docs tree is empty -->';
+
+    usort($items, fn($a, $b) => strcasecmp($a['title'], $b['title']));
+
+    $out = '<div class="lm-docs-index">';
+    foreach ($items as $it) {
+        $out .= '<a class="lm-docs-card" href="/page.php?p=' . rawurlencode($it['slug']) . '">'
+              . '<span class="lm-docs-title">' . htmlspecialchars($it['title'], ENT_QUOTES, 'UTF-8') . '</span>';
+        if ($it['desc'] !== '') {
+            $out .= '<span class="lm-docs-desc">' . htmlspecialchars($it['desc'], ENT_QUOTES, 'UTF-8') . '</span>';
+        }
+        $out .= '</a>';
+    }
+    return $out . '</div>';
+}
+
 ?>

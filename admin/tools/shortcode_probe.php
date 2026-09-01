@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /admin/probes/shortcode_probe.php
  * @version   2025.09.22.1912.40-EST
  * @author    ChatGPT

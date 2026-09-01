@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/hub.php';
 /**
  * Luminal CMS — Documentation API
  * Serves docs index and individual doc pages as JSON.
@@ -163,7 +164,7 @@ if ($slug) {
         'slug'    => $slug,
         'title'   => $title,
         'content' => $content,
-        'url'     => '/page.php?p=' . $slug,
+        'url'     => lm_hub_url() . '/page.php?p=' . $slug,
     ], JSON_UNESCAPED_SLASHES);
     exit;
 }
@@ -184,7 +185,7 @@ foreach ($DOC_INDEX as $s => $meta) {
         'group'       => $g,
         'group_order' => $DOC_GROUPS[$g]['order'] ?? 99,
         'order'       => $meta['order'],
-        'url'         => '/page.php?p=' . $s,
+        'url'         => lm_hub_url() . '/page.php?p=' . $s,
     ];
 }
 

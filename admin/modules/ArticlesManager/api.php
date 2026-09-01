@@ -87,6 +87,22 @@ function dispatch(\ArticlesManager\ArticleStore $store, string $action)
             if ($slug === '') throw new \InvalidArgumentException('slug required');
             return ['deleted' => $store->delete($slug), 'slug' => $slug];
 
+        /* Bulk delete. Loops the SAME ArticleStore::delete() as the single
+           case, so every article is still archived to _archive/ before removal
+           — a bulk action must not be a shortcut past the safety net. */
+        case 'delete_bulk':
+            $raw   = $_REQUEST['slugs'] ?? '';
+            $slugs = is_array($raw) ? $raw : array_filter(array_map('trim', explode(',', (string)$raw)));
+            if (!$slugs) throw new \InvalidArgumentException('slugs required');
+            $deleted = [];
+            $missing = [];
+            foreach ($slugs as $s) {
+                $s = trim((string)$s);
+                if ($s === '') continue;
+                if ($store->delete($s)) { $deleted[] = $s; } else { $missing[] = $s; }
+            }
+            return ['deleted' => $deleted, 'not_found' => $missing, 'count' => count($deleted)];
+
         case 'publish':
             $slug = (string)($_REQUEST['slug'] ?? '');
             $pub  = !empty($_REQUEST['published']) && $_REQUEST['published'] !== 'false';

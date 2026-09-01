@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /admin/probes/shortcode_report.php
  * @version   2025.09.22.1912.10-EST
  * @author    ChatGPT
@@ -188,7 +188,7 @@ foreach ($pages_list as $f) {
 }
 
 /* ── Output report ───────────────────────────────────────────────────────── */
-echo "=== Luminal Open CMS — Shortcode Diagnostics Report ===\n";
+echo "=== Luminal CMS — Shortcode Diagnostics Report ===\n";
 echo "Generated: ".$NOW->format('Y-m-d H:i:s T')."\n";
 echo "Version:   /admin/probes/shortcode_report.php @ 2025.09.22.1912.10-EST\n";
 echo "=====================================================================\n\n";

@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/renderers/pdf_gallery.renderer.php
  * @version   2025.09.26.0006.00-EST (admin DOM + admin CSS + FA CDN; no inventions)
  * @author    ChatGPT

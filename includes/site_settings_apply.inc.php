@@ -1,6 +1,6 @@
 <?php
 /**
- * @appname   luminal-open-cms
+ * @appname   luminal-cms
  * @file      /includes/site_settings_apply.inc.php
  * @version   2025.09.27.1018.10-EST | include-safe, no side effects if files missing
  * @author    ChatGPT

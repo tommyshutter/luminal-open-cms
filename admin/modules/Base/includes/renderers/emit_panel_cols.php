@@ -1,7 +1,7 @@
 <?php
 /**
  * Emit Panel Column CSS Vars (Left/Right) from Home _manager settings
- * @appname   Luminal Open CMS
+ * @appname   Luminal CMS
  * @file      /includes/ri/emit_panel_cols.php
  * @version   2025.09.28.1138.40-EST — r1205
  * @author    ChatGPT

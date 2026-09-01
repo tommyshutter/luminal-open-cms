@@ -183,3 +183,29 @@
 .am-inject-chip.is-on { opacity: 1; filter: none; border-color: rgba(34,197,94,.55); background: rgba(34,197,94,.16); }
 .am-inject-chip:hover { opacity: .85; }
 .am-checkbox--wide { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+
+
+/* ===== List mode + bulk selection ===== */
+.am-viewbar{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin:0 0 14px; }
+.am-viewtoggle{ display:inline-flex; border:1px solid rgba(255,255,255,.18); border-radius:8px; overflow:hidden; }
+.am-vt-btn{ background:transparent; border:0; color:rgba(255,255,255,.7); padding:7px 14px; cursor:pointer; font-size:.86rem; }
+.am-vt-btn.is-active{ background:rgba(108,99,255,.28); color:#fff; }
+.am-vt-btn:hover:not(.is-active){ background:rgba(255,255,255,.07); color:#fff; }
+
+.am-bulkbar{ display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:8px 14px; border:1px solid rgba(108,99,255,.4); background:rgba(108,99,255,.12); border-radius:8px; }
+.am-bulk-all{ font-size:.85rem; color:#fff; display:inline-flex; align-items:center; gap:7px; cursor:pointer; }
+.am-bulk-count{ font-size:.82rem; color:rgba(255,255,255,.7); font-variant-numeric:tabular-nums; }
+
+.am-list{ width:100%; border-collapse:collapse; }
+.am-list th{ text-align:left; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+  color:rgba(255,255,255,.5); padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.16); white-space:nowrap; }
+.am-list td{ padding:9px 10px; border-bottom:1px solid rgba(255,255,255,.08); font-size:.88rem; vertical-align:middle; }
+.am-list tr:hover td{ background:rgba(255,255,255,.04); }
+.am-list tr.is-selected td{ background:rgba(108,99,255,.14); }
+.am-list .am-l-title{ color:#fff; font-weight:600; cursor:pointer; }
+.am-list .am-l-title:hover{ text-decoration:underline; }
+.am-list .am-l-slug{ color:rgba(255,255,255,.45); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.78rem; }
+.am-list .am-l-date{ color:rgba(255,255,255,.6); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.am-list .am-l-check{ width:34px; }
+.am-list .am-l-status{ white-space:nowrap; }

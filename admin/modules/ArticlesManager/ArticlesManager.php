@@ -55,6 +55,19 @@ require_once SITE_ROOT . '/admin/admin_header.php';
     <?php endif; ?>
   </div>
 
+  <div class="am-viewbar">
+    <div class="am-viewtoggle" role="group" aria-label="View mode">
+      <button type="button" class="am-vt-btn is-active" id="amViewGrid" aria-pressed="true">▦ Grid</button>
+      <button type="button" class="am-vt-btn" id="amViewList" aria-pressed="false">☰ List</button>
+    </div>
+    <div class="am-bulkbar" id="amBulkBar" hidden>
+      <label class="am-bulk-all"><input type="checkbox" id="amSelectAll"> Select all shown</label>
+      <span class="am-bulk-count" id="amBulkCount">0 selected</span>
+      <button type="button" class="am-btn am-btn--warn" id="amBulkDelete" disabled>🗑 Delete selected</button>
+      <button type="button" class="am-btn am-btn--ghost" id="amBulkClear">Clear</button>
+    </div>
+  </div>
+
   <div class="am-grid-admin" id="amGrid">
     <div class="am-loading">Loading…</div>
   </div>
