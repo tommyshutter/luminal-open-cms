@@ -76,3 +76,8 @@
    GLASS SHELL — reusable rounded-corner translucent wrapper
    ========================================================================== */
 @import url("/css/glass-shell.css?v=1");
+
+/* ==========================================================================
+   DOCUMENTATION (reading layout for pages served from admin/data/docs/)
+   ========================================================================== */
+@import url("/css/docs.css?v=1");

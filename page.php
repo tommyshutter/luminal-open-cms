@@ -109,6 +109,7 @@ if (!is_file($PAGE_JSON)) {
     if (is_file($DOCS_JSON)) {
         $PAGE_DIR  = $DOCS_DIR;
         $PAGE_JSON = $DOCS_JSON;
+        $IS_DOC_PAGE = true;
     }
 }
 
@@ -170,6 +171,26 @@ $FOOTER_FILE = SITE_ROOT . '/footer.php'; // NOTE: your footer lives at SITE-ROO
 
 /* ---------- Load page data ---------- */
 $PAGE_DATA = pg_json($PAGE_JSON);
+
+/* ---------- Docs reading layout ----------
+   Docs read better as a sidebar of links beside the page than as a wall of
+   cards. The doc files are the MIRROR of the admin documentation, so the layout
+   is applied HERE at render time rather than written into them — a doc that
+   ships with a release must stay byte-identical to what the admin shows.
+
+   main_content is the left column and right_column the right, so the nav goes
+   in main_content and the doc's own content moves across. */
+if (!empty($IS_DOC_PAGE) && is_array($PAGE_DATA)) {
+    $__docBody = $PAGE_DATA['components']['main_content']['content'] ?? '';
+    $PAGE_DATA['right_column_enabled'] = true;
+    $PAGE_DATA['left_width']  = 23;
+    $PAGE_DATA['right_width'] = 77;
+    $PAGE_DATA['use_wrapper'] = false;
+    $PAGE_DATA['components']['main_content']['content'] = '[[docs-nav]]';
+    $PAGE_DATA['components']['right_column']['content'] =
+        '<div class="lm-doc-pane">' . $__docBody . '</div>';
+    unset($__docBody);
+}
 
 /* Title */
 $artistName = isset($GLOBALS['artistName']) ? (string)$GLOBALS['artistName'] : ($_SERVER['HTTP_HOST'] ?? 'Site');

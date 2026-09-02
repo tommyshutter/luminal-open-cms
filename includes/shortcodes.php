@@ -334,6 +334,11 @@ if (!function_exists('apply_shortcodes')) {
           $replacement = sc_render_docs_index();
           break;
 
+        /* ── docs sidebar — same live tree, rendered as a nav ── */
+        case 'docs-nav': case 'docsnav':
+          $replacement = sc_render_docs_nav();
+          break;
+
         /* ── named HTML blocks (first-class reusable HTML+CSS+JS atoms) ── */
         case 'html-block': case 'htmlblock': case 'block':
           $hbSlug = (string)($attrs[0] ?? $attrs['name'] ?? $attrs['slug'] ?? $attrs['id'] ?? '');
@@ -933,6 +938,43 @@ function sc_render_docs_index(): string {
         $out .= '</a>';
     }
     return $out . '</div>';
+}
+
+/**
+ * Render the docs sidebar: every doc in the tree, current one marked.
+ *
+ * Reads the same live directory as sc_render_docs_index(), so adding a doc with
+ * a release puts it in the sidebar with no edit anywhere.
+ */
+function sc_render_docs_nav(): string {
+    $root = SITE_ROOT . '/admin/data/docs';
+    if (!is_dir($root)) return '';
+    $here = isset($_GET['p']) ? preg_replace('/[^a-z0-9_\-]/', '', strtolower((string)$_GET['p'])) : '';
+
+    $items = [];
+    foreach ((glob($root . '/*', GLOB_ONLYDIR) ?: []) as $dir) {
+        $slug = basename($dir);
+        if ($slug === 'docs') continue;
+        $json = $dir . '/' . $slug . '.json';
+        if (!is_file($json)) continue;
+        $d = json_decode((string)@file_get_contents($json), true);
+        if (!is_array($d)) continue;
+        $title = trim((string)($d['page_title'] ?? '')) ?: ucwords(str_replace(['docs-', '-'], ['', ' '], $slug));
+        $title = preg_replace('/\s*Documentation$/i', '', $title);
+        $items[$slug] = $title;
+    }
+    if (!$items) return '';
+    uasort($items, 'strcasecmp');
+
+    $out  = '<nav class="lm-docs-nav" aria-label="Documentation">';
+    $out .= '<a class="lm-docs-nav-home' . ($here === 'docs' ? ' is-current' : '') . '" href="/page.php?p=docs">All documentation</a>';
+    $out .= '<ul>';
+    foreach ($items as $slug => $title) {
+        $cur = ($slug === $here) ? ' class="is-current"' : '';
+        $out .= '<li' . $cur . '><a href="/page.php?p=' . rawurlencode($slug) . '">'
+              . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</a></li>';
+    }
+    return $out . '</ul></nav>';
 }
 
 ?>
