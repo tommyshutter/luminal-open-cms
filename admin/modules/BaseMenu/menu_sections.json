@@ -21,7 +21,8 @@
                 "HTMLEditor",
                 "MDEditor",
                 "FontManager",
-                "SiteTextReceiver"
+                "SiteTextReceiver",
+                "YouTubePlaylist"
             ]
         },
         {
@@ -37,9 +38,7 @@
             "id": "podcasting",
             "title": "Podcasting",
             "color": "section-goldenrod",
-            "modules": [
-                "YouTubePlaylist"
-            ]
+            "modules": []
         },
         {
             "id": "events-management",
