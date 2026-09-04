@@ -72,6 +72,13 @@ require_once SITE_ROOT . '/admin/admin_header.php';
 
       <div id="admin-message-panel" class="admin-message-panel"></div>
 
+      <!-- =================  SPLIT: Master (left) | Active Mode (right)  =================
+           Master holds the cross-cutting settings and stays put; the right column
+           is whatever Active Mode currently is. The divider is draggable and the
+           position persists per browser. -->
+      <div class="bgm-split" id="bgm-split">
+        <div class="bgm-split-left">
+
       <!-- ============= MASTER (always visible) ============= -->
       <section class="bgm-tab-panel is-active" id="bgm-panel-master" data-bgm-panel="master">
         <div class="bgm-section-head">
@@ -131,12 +138,23 @@ require_once SITE_ROOT . '/admin/admin_header.php';
         </div>
       </section>
 
+        </div><!-- /.bgm-split-left -->
+
+        <div class="bgm-split-gutter" id="bgm-split-gutter" role="separator"
+             aria-orientation="vertical" tabindex="0" aria-label="Resize columns"
+             title="Drag to resize — double-click to reset"><span></span></div>
+
+        <div class="bgm-split-right">
+
       <!-- ============= VIDEO (inlines when Active Mode = video) ============= -->
       <section class="bgm-tab-panel bgm-mode-panel" id="bgm-panel-video" data-bgm-panel="video" data-bgm-mode="video" hidden>
         <div class="bgm-section-head">
           <h2>Video Gallery</h2>
           <p class="bgm-section-sub">Pick a video to use as your background, or drop in new ones. YouTube URLs added above show up here too. When a thumb is selected, hit <em>Save Master Settings</em> to apply it.</p>
         </div>
+        <div class="bgm-ops-panel" data-ops="video">
+          <div class="bgm-ops-head">Video Ops</div>
+          <div class="bgm-ops-body">
         <div class="bgm-tab-toolbar" role="toolbar" aria-label="Video gallery filters">
           <label class="bgm-chooser">
             <span class="bgm-chooser-label">Show</span>
@@ -170,6 +188,8 @@ require_once SITE_ROOT . '/admin/admin_header.php';
             <span class="dropzone-progress-text">Uploading...</span>
           </div>
         </div>
+          </div>
+        </div>
         <div id="video-grid" class="media-grid"></div>
       </section>
 
@@ -179,6 +199,9 @@ require_once SITE_ROOT . '/admin/admin_header.php';
           <h2>Image Gallery</h2>
           <p class="bgm-section-sub">Pick an image to use as your background, or drop in new ones. When a thumb is selected, hit <em>Save Master Settings</em> to apply it.</p>
         </div>
+        <div class="bgm-ops-panel" data-ops="image">
+          <div class="bgm-ops-head">Image Ops</div>
+          <div class="bgm-ops-body">
         <div class="bgm-tab-toolbar" role="toolbar" aria-label="Image gallery filters">
           <label class="bgm-chooser">
             <span class="bgm-chooser-label">Sort</span>
@@ -204,6 +227,8 @@ require_once SITE_ROOT . '/admin/admin_header.php';
             <span class="dropzone-progress-text">Uploading...</span>
           </div>
         </div>
+          </div>
+        </div>
         <div id="image-grid" class="media-grid"></div>
       </section>
 
@@ -214,6 +239,9 @@ require_once SITE_ROOT . '/admin/admin_header.php';
           <p class="bgm-section-sub">Build a playlist from your galleries. Drag media into the tray, reorder, set slide duration. <em>Save Playlist</em> writes the playlist itself; <em>Save Master Settings</em> makes it the active background for the site.</p>
         </div>
 
+        <div class="bgm-ops-panel" data-ops="slideshow">
+          <div class="bgm-ops-head">Slideshow Ops</div>
+          <div class="bgm-ops-body">
         <div class="slideshow-controls-grid">
           <div class="form-group">
             <label for="playlist-select">Load Playlist to Edit:</label>
@@ -254,6 +282,8 @@ require_once SITE_ROOT . '/admin/admin_header.php';
           </div>
         </div>
 
+          </div>
+        </div>
         <!-- ───────────── Inline Media Library (slideshow-local) ─────────────
              Read-only copies of the Image + Video galleries so the user
              can drag into the tray without tab-hopping. CRUD still lives
@@ -273,7 +303,25 @@ require_once SITE_ROOT . '/admin/admin_header.php';
               </select>
             </label>
           </div>
-          <p class="bgm-library-hint">Drag any thumb into the tray above. Deleting or uploading happens on the Image and Video tabs — this library stays in sync after a refresh.</p>
+          <p class="bgm-library-hint">Drag any thumb into the tray above. Drop new images right here &mdash; they land in the gallery and appear below straight away.</p>
+
+          <!-- Upload without leaving the Slideshow panel. setupDropzones() binds
+               every .upload-dropzone generically off data-type, and uploadFiles()
+               already re-renders this library on completion, so this needs no JS
+               of its own. Images only: the drop target maps to one media type,
+               and video belongs on the Video panel where its filters live. -->
+          <div class="upload-dropzone bgm-library-dropzone" data-type="images" id="slideshow-image-dropzone">
+            <input type="file" class="dropzone-file-input" multiple accept="image/jpeg,image/png,image/gif,image/webp">
+            <div class="dropzone-content">
+              <span class="dropzone-icon">&#8679;</span>
+              <span class="dropzone-text">Drop images here or <strong>click to browse</strong></span>
+              <span class="dropzone-hint">JPG, PNG, GIF, WebP &mdash; they drop straight into the tray after upload</span>
+            </div>
+            <div class="dropzone-progress" style="display:none;">
+              <div class="dropzone-progress-bar"></div>
+              <span class="dropzone-progress-text">Uploading...</span>
+            </div>
+          </div>
 
           <div class="bgm-library-section" data-library-kind="videos">
             <div class="bgm-library-section-head"><span>Videos</span><span class="bgm-library-count" id="slideshow-lib-video-count">0</span></div>
@@ -290,6 +338,9 @@ require_once SITE_ROOT . '/admin/admin_header.php';
       <div class="bgm-workspace-footer">
         <button id="rescan-media-btn" class="admin-button">&#8635; Refresh Media Library</button>
       </div>
+
+        </div><!-- /.bgm-split-right -->
+      </div><!-- /.bgm-split -->
 
     </main>
 

@@ -66,7 +66,9 @@ function lm_discover_modules(): array {
     // ── Registry path ────────────────────────────────────────────────────────
     $siteDist = lm_get_site_distribution();
     if ($siteDist !== null) {
-        $modulePaths = lm_load_registry($siteDist['distribution']) ?? [];
+        $registryPaths = lm_load_registry($siteDist['distribution']);
+        $registryResolved = !empty($registryPaths);
+        $modulePaths = $registryPaths ?? [];
 
         // Merge per-site extension modules (e.g. financial_platform modules on hub)
         if (!empty($siteDist['extension_modules']) && is_array($siteDist['extension_modules'])) {
@@ -100,17 +102,33 @@ function lm_discover_modules(): array {
             }
         }
 
-        // Resilience (2026-07-06): a PRESENT site_distribution.json whose registry is
-        // missing/empty must NOT blank the rail. Return the registry result only if it
-        // actually produced modules; otherwise fall through to glob discovery so the rail
-        // self-composes from whatever is installed (a missing registry becomes a cache
-        // miss, not an empty menu; remove a module and glob drops it silently).
-        if (!empty($modules)) return $modules;
+        // Resilience: a PRESENT site_distribution.json whose registry is missing or
+        // empty must NOT blank the admin rail. Fall through to glob discovery so the
+        // menu self-composes from whatever is installed — a missing registry becomes a
+        // cache miss, not an empty menu.
+        //
+        // The test asks whether the REGISTRY resolved, not whether $modules ended up
+        // non-empty. extension_modules are merged in above, so a site declaring
+        // extensions with no readable registry would pass an "any modules?" test with
+        // only those a handful of entries and never reach the fallback — an admin rail
+        // showing three items while dozens of modules sat installed on disk.
+        if ($registryResolved && !empty($modules)) return $modules;
+        $modules = [];   // an extension-only partial is not a rail; rebuild by glob
     }
 
-    // ── Glob fallback (no site_distribution.json, OR registry yielded nothing) ──
+    // ── Glob fallback (no site_distribution.json, OR the registry did not resolve) ──
+    // Extension modules are covered here whenever they live under admin/modules/;
+    // one declared at some other path is merged in after the sweep so the fallback
+    // cannot lose it.
     $modulesDir = $siteRoot . '/admin/modules';
-    foreach (glob($modulesDir . '/*/module.json') ?: [] as $manifestPath) {
+    $globPaths  = glob($modulesDir . '/*/module.json') ?: [];
+    foreach (($siteDist['extension_modules'] ?? []) as $relPath) {
+        $extManifest = $siteRoot . '/' . $relPath . '/module.json';
+        if (is_file($extManifest) && !in_array($extManifest, $globPaths, true)) {
+            $globPaths[] = $extManifest;
+        }
+    }
+    foreach ($globPaths as $manifestPath) {
         $raw      = file_get_contents($manifestPath);
         $manifest = json_decode($raw, true);
         if (!is_array($manifest) || empty($manifest['name'])) continue;

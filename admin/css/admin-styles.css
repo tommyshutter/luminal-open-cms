@@ -211,6 +211,133 @@ h2, h3 {
 }
 .form-group small { display:block; margin-top:5px; color:#999; font-size:.85rem; }
 
+/* Control blocks — the classes the module markup actually emits.
+   .control-group and .form-control were reached for across the admin while being
+   defined in NO stylesheet on the system. Every control they marked fell back to
+   a native browser widget on a dark panel — BackgroundManager's Active Playlist
+   pulldown among them.
+   They take .form-group's treatment rather than a parallel one, so a form looks
+   the same whichever class its author reached for.
+
+   Three deliberate differences from .form-group:
+   · width 100%, not 40%. .form-control sits inside grid cells
+     (.slideshow-controls-grid is `1fr 1fr 160px`), where a 40% control floats
+     in the middle of its column.
+   · font-size 1rem, not 1.6rem. The root here is 16px, so .form-group's 1.6rem
+     renders at ~25px — that rule reads as though written for a 62.5% root.
+     Left alone rather than "fixed": every existing admin form is laid out
+     around it.
+   · compact vertical rhythm. These blocks stack in panels, not in long
+     single-column forms, so 20px of air between every control spreads a
+     six-control panel over a screen and a half. */
+.control-group { margin-bottom: 12px; }
+.control-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #9fb0c0;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control,
+.control-group input[type="text"],
+.control-group input[type="url"],
+.control-group input[type="number"],
+.control-group input[type="date"],
+.control-group textarea,
+.control-group select {
+  width: 100%;
+  padding: 7px 10px;
+  background: #23282f;
+  border: 1px solid #4a545f;
+  border-radius: 6px;
+  color: #e8edf2;
+  font-family: inherit;
+  font-size: .95rem;
+  line-height: 1.35;
+  box-sizing: border-box;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+/* Native pulldowns ship an OS arrow that ignores the dark ground — the single
+   biggest reason a select reads as a stray 1998 widget next to styled inputs.
+   Draw our own. */
+select.form-control,
+.control-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23aab4c0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 11px 7px;
+  cursor: pointer;
+}
+/* The option list is drawn by the OS, not by us — without this it renders as a
+   white sheet over a dark admin. */
+select.form-control option,
+.control-group select option { background: #23282f; color: #e8edf2; }
+
+input.form-control:hover,
+select.form-control:hover,
+.control-group select:hover { border-color: #5d6a78; }
+
+input.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus,
+.control-group input:focus,
+.control-group textarea:focus,
+.control-group select:focus {
+  outline: none;
+  background: #262c34;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, .28);
+}
+
+input.form-control::placeholder,
+textarea.form-control::placeholder,
+.control-group input::placeholder { color: #7c868f; opacity: 1; }
+
+input.form-control:disabled,
+select.form-control:disabled,
+.control-group select:disabled { opacity: .5; cursor: not-allowed; }
+
+/* A row of buttons under a form block. Buttons size to their label — a control
+   that spans the panel reads as a banner, not a thing you press. */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.button-group .full-width { flex: 0 0 auto; width: auto; }
+
+/* A colour swatch is not a text field — sized like one it becomes a slab of
+   colour. A range needs the full column or the thumb has nowhere to travel. */
+.control-group input[type="color"] {
+  width: 56px;
+  height: 32px;
+  padding: 2px;
+  background: #23282f;
+  border: 1px solid #4a545f;
+  border-radius: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.control-group input[type="range"] {
+  width: 100%;
+  accent-color: #3498db;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
 /* Buttons you use all over admin (not menu) */
 .pill,
 #btn-new,

@@ -96,10 +96,15 @@
     flex: 1;
 }
 
+/* The URL and its Add button belong on one line. Stacked (column) the input
+   took the full panel width for a value that is ~40 characters of visible text,
+   and the button below it read as a second, unrelated control. */
 .youtube-input-group {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 }
 
 /* --- ACCORDIONS --- */
@@ -221,12 +226,16 @@
 }
 
 /* --- SLIDESHOW EDITOR CONTROLS --- */
+/* Column weights follow what each control holds, not an even split. "Load
+   Playlist" shows a name you PICK — it never needs more room than the longest
+   one. "Playlist Name" is the field you TYPE a new name into, so it gets the
+   room. Duration is a fixed-width preset pulldown. */
 .slideshow-controls-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 160px;
-    gap: 16px;
+    grid-template-columns: minmax(150px, 0.72fr) minmax(240px, 1.5fr) 152px;
+    gap: 10px 12px;
     align-items: end;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .slideshow-controls-grid .form-group {
     margin-bottom: 0;
@@ -238,18 +247,30 @@
     padding-top: 16px;
 }
 .playlist-editor-hint {
-    color: #888;
-    font-size: 0.85rem;
+    color: #8a949e;
+    font-size: .82rem;
     font-style: italic;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
 }
 
 .slideshow-tray {
-    min-height: 120px;
-    border: 2px dashed #444;
-    background-color: #1a1a1a;
-    padding: 10px;
-    border-radius: 5px;
+    min-height: 104px;
+    border: 2px dashed #4a545f;
+    background-color: rgba(15, 18, 22, .6);
+    padding: 9px;
+    border-radius: 8px;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+/* A drop target should say so when you are over it. */
+.slideshow-tray:hover { border-color: #5d6a78; }
+.slideshow-tray:empty::before {
+    content: 'Drag media here from the library below — drag within the tray to reorder.';
+    display: block;
+    padding: 26px 10px;
+    text-align: center;
+    color: #7c868f;
+    font-style: italic;
+    font-size: .88rem;
 }
 
 .preview-content {
@@ -284,13 +305,14 @@
 
 /* --- INPUTS & BUTTONS --- */
 #youtube-url-input {
-    width: 100%;
-    padding: 12px;
-    background: #1a1a1a;
-    border: 1px solid #444;
-    color: #eee;
-    font-size: 1rem;
-    border-radius: 5px;
+    flex: 1 1 300px;
+    max-width: 420px;
+    padding: 7px 10px;
+    background: #23282f;
+    border: 1px solid #4a545f;
+    color: #e8edf2;
+    font-size: .95rem;
+    border-radius: 6px;
     box-sizing: border-box;
 }
 
@@ -298,29 +320,61 @@
     -webkit-appearance: none;
 }
 
+/* These four variants carried a border and a size but NO background-colour, so
+   every one of them rendered as the browser's default grey chrome — the reason
+   the panel read as unstyled. Colour is what separates a save from a delete at
+   a glance, so it is the one thing they most needed. */
 .admin-button, .admin-button-success, .admin-button-danger, .admin-button-sm {
-    font-size: 1rem;
-    padding: 12px 20px;
-    font-weight: bold;
+    font-size: .85rem;
+    padding: 8px 14px;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    border: 1px solid #555;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    background: #39424d;
+    color: #e8edf2;
+    border: 1px solid #55606d;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
+}
+.admin-button:hover, .admin-button-sm:hover { background: #454f5c; }
+
+/* Signals: the two buttons that change something you cannot undo by looking at
+   it. Colour is explicit rather than inherited so an admin theme cannot wash
+   the distinction out. */
+.admin-button-success {
+    background: linear-gradient(180deg, #2f9e52 0%, #24713c 100%);
+    border-color: #2b8a49;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 2px 6px rgba(0,0,0,.35);
+}
+.admin-button-success:hover {
+    background: linear-gradient(180deg, #35b25c 0%, #298146 100%);
+}
+.admin-button-danger {
+    background: linear-gradient(180deg, #b8402f 0%, #8c2c1f 100%);
+    border-color: #a63626;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.10) inset, 0 2px 6px rgba(0,0,0,.35);
+}
+.admin-button-danger:hover {
+    background: linear-gradient(180deg, #cc4a37 0%, #9c3223 100%);
 }
 
 .admin-button-sm {
-    padding: 10px 15px;
-    font-size: 0.9rem;
+    padding: 6px 11px;
+    font-size: .78rem;
 }
 
-#save-master-settings-btn,
-.admin-button.full-width {
-    width: 100%;
-    font-size: 1.1rem;
-    padding: 15px;
+/* Save Master Settings was pinned to width:100% at 15px padding — a banner
+   across the panel rather than a button. It keeps its emphasis through colour
+   and weight (above), not through width. */
+#save-master-settings-btn {
+    width: auto;
+    font-size: .9rem;
+    padding: 9px 20px;
 }
+.admin-button.full-width { width: auto; }
 
 #save-master-settings-btn:active {
     transform: translateY(2px);
@@ -743,3 +797,111 @@
   border-radius: 12px;
 }
 .bgm-toolbar-count span { color: #eee; font-weight: 700; }
+
+/* ── OPS PANELS ──────────────────────────────────────────────────────────────
+   Each mode's operations (filters, uploader, playlist controls) sit in their
+   own titled panel, separate from the gallery grid they act on. Before this
+   the toolbar, the dropzone and the grid were three loose siblings with no
+   edge between them, so nothing said where "the controls" ended and "the
+   content" began.
+
+   The header is a gradient street-sign with an explicit #fff: an admin theme
+   can repaint the panel ground underneath it without ever washing out the
+   label. */
+.bgm-ops-panel {
+    border: 1px solid #3a444f;
+    border-radius: 8px;
+    background: rgba(20, 24, 29, .55);
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+.bgm-ops-head {
+    background: linear-gradient(135deg, #2c5364 0%, #203a43 55%, #1a2a33 100%);
+    color: #fff !important;
+    font-size: .74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: 7px 12px;
+    border-bottom: 1px solid #3a444f;
+}
+.bgm-ops-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* The body already spaces its children; kill the rules that were adding a
+   second helping of air when these blocks stood alone. */
+.bgm-ops-body > .bgm-tab-toolbar,
+.bgm-ops-body > .slideshow-controls-grid,
+.bgm-ops-body > .playlist-editor-section { margin-bottom: 0; }
+.bgm-ops-body > .playlist-editor-section {
+    border-top: 1px solid #3a444f;
+    margin-top: 0;
+    padding-top: 12px;
+}
+.bgm-ops-body .upload-dropzone { margin: 0; }
+
+/* ── SPLIT WORKSPACE ─────────────────────────────────────────────────────────
+   Everything below the preview is two columns: Master on the left holding the
+   cross-cutting settings, and on the right whatever Active Mode is pointing at.
+   Previously all five sections stacked at full page width, so choosing a mode
+   scrolled you somewhere instead of changing what you were looking at.
+
+   The divider is a real grid track, not a border, so dragging it resizes both
+   columns without reflowing anything else. --bgm-split-left is set by the JS
+   and remembered per browser; 35% is the default. */
+.bgm-split {
+    display: grid;
+    grid-template-columns: var(--bgm-split-left, 35%) 10px minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
+}
+.bgm-split-left,
+.bgm-split-right {
+    min-width: 0;             /* without this a wide grid child refuses to shrink */
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.bgm-split-gutter {
+    align-self: stretch;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+}
+/* The grab line — a hairline at rest, brighter under the cursor, so the divider
+   is discoverable without drawing a wall down the middle of the panel. */
+.bgm-split-gutter span {
+    display: block;
+    width: 2px;
+    height: 100%;
+    min-height: 120px;
+    border-radius: 2px;
+    background: #3a444f;
+    transition: background-color .15s ease, width .15s ease;
+}
+.bgm-split-gutter:hover span,
+.bgm-split-gutter:focus-visible span,
+.bgm-split-gutter.is-dragging span { background: #3498db; width: 4px; }
+.bgm-split-gutter:focus-visible { outline: none; }
+body.bgm-splitting { cursor: col-resize; user-select: none; }
+
+/* One column on narrow screens — a 35% Master on a tablet is a sliver. */
+@media (max-width: 980px) {
+    .bgm-split { grid-template-columns: minmax(0, 1fr); }
+    .bgm-split-gutter { display: none; }
+    .bgm-split-left { margin-bottom: 18px; }
+}
+
+/* The slideshow library's own uploader. Shorter than the full-panel dropzones
+   on the Image and Video tabs — it is one control inside a stack, not the main
+   event of its own page. */
+.bgm-library-dropzone { margin: 0 0 12px; }
+.bgm-library-dropzone .dropzone-content { padding: 14px 12px; }
+.bgm-library-dropzone .dropzone-icon { font-size: 1.2rem; }

@@ -47,6 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.bgmSwitchTab = function(name) { bgmShowModePanel(name); };
 
     let previewSlideshowInterval = null;
+    /* The playlist currently LOADED IN THE EDITOR. Distinct from the Master
+     * panel's Active Playlist, which is what the SITE serves. Picking a
+     * playlist to edit used to touch neither the preview nor anything else
+     * visible, so the editor looked inert. */
+    let editingPlaylistName = '';
 
     function showMessage(type, message, permanent = false) {
         if (!elements.messagePanel) return;
@@ -125,7 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.addYoutubeBtn.addEventListener('click', addYoutubeToGallery);
         elements.modeRadios.forEach(radio => radio.addEventListener('change', handleModeChange));
         elements.sizingRadios.forEach(radio => radio.addEventListener('change', updatePreview));
-        elements.activePlaylistSelect.addEventListener('change', updatePreview);
+        elements.activePlaylistSelect.addEventListener('change', () => {
+            editingPlaylistName = '';   // Master pick wins once it is touched
+            updatePreview();
+        });
         elements.overlayColor.addEventListener('input', updatePreview);
         elements.overlayOpacity.addEventListener('input', () => {
             elements.opacityValueSpan.textContent = elements.overlayOpacity.value;
@@ -138,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.saveMasterBtn.addEventListener('click', saveMasterSettings);
         elements.savePlaylistBtn.addEventListener('click', () => savePlaylist('save'));
         elements.deletePlaylistBtn.addEventListener('click', () => savePlaylist('delete'));
-        elements.clearTrayBtn.addEventListener('click', () => { elements.slideshowTray.innerHTML = ''; });
+        elements.clearTrayBtn.addEventListener('click', () => { elements.slideshowTray.innerHTML = ''; updatePreview(); });
         elements.playlistSelect.addEventListener('change', loadPlaylistIntoTray);
         elements.youtubeInput.addEventListener('input', handleYoutubeInput);
 
@@ -217,6 +225,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             }
             case 'slideshow': {
+                /* Show what the operator is looking at. While a playlist is loaded in
+                 * the editor the TRAY is the live truth — it carries drags and
+                 * reorders that have not been saved yet — and the Master select
+                 * governs only what the site serves. Previewing the Master pick while
+                 * the operator edits a different playlist is what read as "the preview
+                 * is not working". */
+                if (editingPlaylistName) {
+                    const traySlides = slidesFromTray();
+                    if (traySlides.length) { startSlideshowPreview(traySlides, sizing); break; }
+                    createPlaceholder('Editing "' + editingPlaylistName + '" — tray is empty. Drag media in from the library below.');
+                    break;
+                }
                 const playlistName = elements.activePlaylistSelect.value;
                 if (!playlistName) {
                     createPlaceholder('Slide Show Error: No active playlist selected.');
@@ -347,11 +367,126 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(res => res.json())
         .then(data => {
-            showMessage(data.success ? 'success' : 'error', data.message);
-            if (data.success) {
-                setTimeout(() => location.reload(), 1500);
+            if (!data.success) { showMessage('error', data.message); return; }
+            if (action === 'delete') applyPlaylistDeleted(playlistName, data.message);
+            else                     applyPlaylistSaved(playlistName, payload, data.message);
+        })
+        .catch(() => showMessage('error', 'Network or server error.'));
+    }
+
+    /* ── Durability ──────────────────────────────────────────────────────────
+     * savePlaylist used to finish with location.reload(). That threw away every
+     * unsaved Master edit sitting beside it — overlay colour, opacity, sizing,
+     * the mode itself — so saving a playlist silently discarded your other work.
+     * It also meant the page had to round-trip before either pulldown showed the
+     * playlist you had just created. The three helpers below apply the result in
+     * place instead, and say plainly what IS and IS NOT the live background.
+     */
+
+    /* Rebuild both playlist pulldowns from state. They are separate controls with
+     * separate jobs: the editor's picks what you are EDITING, the Master's picks
+     * what the SITE SERVES. */
+    function refreshPlaylistSelects(editorName, activeName) {
+        const names = (initialBgData.playlists || []).map(p => p.name).filter(Boolean);
+        const fill = (sel, placeholder, want) => {
+            if (!sel) return;
+            sel.innerHTML = '';
+            const blank = document.createElement('option');
+            blank.value = '';
+            blank.textContent = placeholder;
+            sel.appendChild(blank);
+            names.forEach(n => {
+                const o = document.createElement('option');
+                o.value = n;
+                o.textContent = n;
+                sel.appendChild(o);
+            });
+            sel.value = names.indexOf(want) !== -1 ? want : '';
+        };
+        fill(elements.playlistSelect,       '-- Start a New Playlist --', editorName);
+        fill(elements.activePlaylistSelect, '-- None --',                 activeName);
+    }
+
+    /* Persist ONLY the active playlist. Sends the STORED sizing and overlay rather
+     * than whatever the Master inputs happen to show, so adopting a playlist can
+     * never quietly commit unsaved edits sitting in the panel beside it. */
+    function persistActivePlaylist(name, message) {
+        const stored = initialBgData.settings || {};
+        const durEl = document.getElementById('playlist-duration-select');
+        const body = {
+            active_mode: 'slideshow',
+            background_sizing: stored.background_sizing || 'cover',
+            overlay: stored.overlay || { color_rgba: 'rgba(0,0,0,0.5)' },
+            single: {}, video: {},
+            slideshow: {
+                playlist_name: name,
+                duration: parseInt((durEl && durEl.value) || '5000', 10),
+                transition: (stored.slideshow && stored.slideshow.transition) || 1500
             }
-        });
+        };
+        const fallback = message + ' Could not set it active — use Save Master Settings.';
+        fetch('/admin/modules/BackgroundManager/api/save_background_settings.php', {
+            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+        })
+        .then(r => r.json())
+        .then(d => {
+            if (d.success && d.new_settings) {
+                initialBgData.settings = d.new_settings;
+                showMessage('success', message + ' It is now the active background.');
+            } else {
+                showMessage('error', fallback);
+            }
+        })
+        .catch(() => showMessage('error', fallback));
+    }
+
+    function applyPlaylistSaved(name, payload, message) {
+        const list = initialBgData.playlists = initialBgData.playlists || [];
+        const idx = list.findIndex(p => p.name === name);
+        const record = { name: name, slides: payload.slides, images: payload.images, duration: payload.duration };
+        list[idx >= 0 ? idx : list.length] = idx >= 0 ? Object.assign({}, list[idx], record) : record;
+
+        editingPlaylistName = name;
+
+        const stored   = initialBgData.settings || {};
+        const liveName = (stored.slideshow && stored.slideshow.playlist_name) || '';
+        /* Adopt only when nothing is being taken away: the site is already in
+         * slideshow mode AND either has no playlist or already has this one.
+         * A different playlist that is live is never switched out from under
+         * the operator — they are told, and they decide. */
+        const adopt = (stored.active_mode === 'slideshow') && (!liveName || liveName === name);
+
+        refreshPlaylistSelects(name, adopt ? name : liveName);
+
+        if (adopt && liveName !== name) {
+            persistActivePlaylist(name, message);
+        } else if (!adopt && liveName && liveName !== name) {
+            showMessage('success', message + ' Note: "' + liveName + '" is still the site background — ' +
+                        'pick this one under Active Playlist and hit Save Master Settings to switch.', true);
+        } else if (!adopt) {
+            showMessage('success', message + ' Set Active Mode to Slideshow and Save Master Settings to use it.', true);
+        } else {
+            showMessage('success', message);
+        }
+        updatePreview();
+    }
+
+    function applyPlaylistDeleted(name, message) {
+        initialBgData.playlists = (initialBgData.playlists || []).filter(p => p.name !== name);
+        if (editingPlaylistName === name) {
+            editingPlaylistName = '';
+            elements.slideshowTray.innerHTML = '';
+            elements.playlistNameInput.value = '';
+        }
+        const stored   = initialBgData.settings || {};
+        const liveName = (stored.slideshow && stored.slideshow.playlist_name) || '';
+        const wasLive  = (liveName === name);
+        refreshPlaylistSelects('', wasLive ? '' : liveName);
+        showMessage(wasLive ? 'error' : 'success',
+            wasLive ? message + ' It WAS the site background — pick another under Active Playlist and Save Master Settings.'
+                    : message,
+            wasLive);
+        updatePreview();
     }
 
     function handleSelection(event) {
@@ -634,13 +769,24 @@ document.addEventListener('DOMContentLoaded', () => {
         new Sortable(elements.slideshowTray, { group: 'shared', animation: 150 });
     }
     
+    /* Slides as they stand in the tray right now, in tray order. Shares its shape
+     * with savePlaylist()'s payload so the preview shows what a save would write. */
+    function slidesFromTray() {
+        return Array.from(elements.slideshowTray.querySelectorAll('.media-thumb')).map(el => ({
+            type: (el.dataset.type === 'image') ? 'image' : 'video',
+            path: el.dataset.optimized || el.dataset.path,
+            source_path: el.dataset.path
+        }));
+    }
+
     function loadPlaylistIntoTray() {
         const playlistName = elements.playlistSelect.value;
         elements.slideshowTray.innerHTML = '';
         elements.playlistNameInput.value = playlistName;
-        if (!playlistName) return;
+        editingPlaylistName = playlistName;
+        if (!playlistName) { updatePreview(); return; }
         const playlist = initialBgData.playlists.find(p => p.name === playlistName);
-        if (!playlist) return;
+        if (!playlist) { updatePreview(); return; }
 
         if (playlist.duration) {
             const durSelect = document.getElementById('playlist-duration-select');
@@ -681,6 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             elements.slideshowTray.appendChild(thumb);
         });
+        updatePreview();
     }
     
     function renderPreviewElement(source, type, sizing) {
@@ -995,3 +1142,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initialize();
 });
+
+/* ─── Column splitter ────────────────────────────────────────────────────────
+ * Drag the divider between Master and the active-mode column. Self-contained
+ * and outside the main module closure: it touches layout only, so nothing here
+ * can affect saving or the preview. Width is stored per browser, clamped so a
+ * column can never be dragged away entirely, and double-click restores 35%.
+ */
+(function () {
+    'use strict';
+    var KEY = 'bgm.splitLeft', MIN = 22, MAX = 60, DEFAULT = '35%';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var split  = document.getElementById('bgm-split');
+        var gutter = document.getElementById('bgm-split-gutter');
+        if (!split || !gutter) return;
+
+        try {
+            var saved = localStorage.getItem(KEY);
+            if (saved) split.style.setProperty('--bgm-split-left', saved);
+        } catch (e) { /* private mode — the default in CSS still applies */ }
+
+        function apply(pct, persist) {
+            var v = Math.min(MAX, Math.max(MIN, pct)).toFixed(2) + '%';
+            split.style.setProperty('--bgm-split-left', v);
+            if (persist) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+        }
+
+        function pctFrom(clientX) {
+            var box = split.getBoundingClientRect();
+            if (!box.width) return null;
+            return ((clientX - box.left) / box.width) * 100;
+        }
+
+        var dragging = false;
+
+        function onMove(ev) {
+            if (!dragging) return;
+            var x = (ev.touches && ev.touches[0]) ? ev.touches[0].clientX : ev.clientX;
+            var pct = pctFrom(x);
+            if (pct !== null) apply(pct, false);
+            ev.preventDefault();
+        }
+
+        function onUp(ev) {
+            if (!dragging) return;
+            dragging = false;
+            gutter.classList.remove('is-dragging');
+            document.body.classList.remove('bgm-splitting');
+            var x = (ev.changedTouches && ev.changedTouches[0]) ? ev.changedTouches[0].clientX : ev.clientX;
+            var pct = pctFrom(x);
+            if (pct !== null) apply(pct, true);
+        }
+
+        function onDown(ev) {
+            dragging = true;
+            gutter.classList.add('is-dragging');
+            document.body.classList.add('bgm-splitting');
+            ev.preventDefault();
+        }
+
+        gutter.addEventListener('mousedown', onDown);
+        gutter.addEventListener('touchstart', onDown, { passive: false });
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchend', onUp);
+
+        gutter.addEventListener('dblclick', function () {
+            split.style.setProperty('--bgm-split-left', DEFAULT);
+            try { localStorage.setItem(KEY, DEFAULT); } catch (e) {}
+        });
+
+        /* Keyboard: the divider is focusable, so it should move. */
+        gutter.addEventListener('keydown', function (ev) {
+            var cur = parseFloat(getComputedStyle(split).getPropertyValue('--bgm-split-left')) || 35;
+            if (ev.key === 'ArrowLeft')       { apply(cur - 2, true); ev.preventDefault(); }
+            else if (ev.key === 'ArrowRight') { apply(cur + 2, true); ev.preventDefault(); }
+        });
+    });
+})();

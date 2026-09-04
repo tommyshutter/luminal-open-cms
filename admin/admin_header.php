@@ -64,9 +64,23 @@ $basename = strtolower(basename(parse_url($reqUri, PHP_URL_PATH) ?: ''));
     
     <title><?php echo htmlspecialchars($ADMIN_HOST, ENT_QUOTES); ?>  - Admin Utils </title>
     
-     <link rel="stylesheet" href="/admin/css/admin-styles.css">
+     <?php
+       /* These two shipped as bare hrefs with no version query, so a browser held
+          whatever it cached the first time it saw them. Every global admin CSS
+          change was invisible to returning users until a manual hard refresh --
+          including rules that had never existed before, which is the worst case:
+          the page looks unstyled and the stylesheet looks broken. Module assets
+          already went through sc_asset(); these did not.
+          Guarded two ways: admin_header.php is included by pages that may not
+          have loaded site_config.php yet, and a stylesheet that fails to link is
+          a far worse outcome than one that is stale. */
+       $__css = function (string $p): string {
+           return (function_exists('sc_asset') && defined('SITE_ROOT')) ? sc_asset($p) : $p;
+       };
+     ?>
+     <link rel="stylesheet" href="<?= htmlspecialchars($__css('/admin/css/admin-styles.css'), ENT_QUOTES) ?>">
      
-     <link rel="stylesheet" href="/admin/css/admin_menu.css">
+     <link rel="stylesheet" href="<?= htmlspecialchars($__css('/admin/css/admin_menu.css'), ENT_QUOTES) ?>">
 
    <?php /* AdminThemes — per-user admin theming. Guarded so sites without the module are unaffected. */
    $__at_hook = SITE_ROOT . '/admin/modules/AdminThemes/theme_head.inc.php';
