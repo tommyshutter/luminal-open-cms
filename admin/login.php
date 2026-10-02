@@ -49,6 +49,7 @@ login_debug("=== LOGIN PAGE LOADED === METHOD={$_SERVER['REQUEST_METHOD']} URI={
 
 // Include auth functions
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/includes/seal.php';   // an empty site is sealed
 login_debug("auth.php loaded. SITE_ROOT=" . (defined('SITE_ROOT') ? SITE_ROOT : 'NOT DEFINED'));
 
 // Check users.json status
@@ -83,6 +84,37 @@ $showSetup = !hasAnyUsers();
 $lockoutMinutes = 0;
 login_debug("hasAnyUsers()=" . ($showSetup ? 'NO (showSetup=true)' : 'YES (showSetup=false)'));
 
+// ── THE SEAL ──
+// A site with no admin account does not offer "create superadmin" to whoever arrives
+// first. It asks for an unseal key (admin/scripts/unseal.php, or the UNSEAL.txt file
+// proof) and accepts nothing else; the account form appears only after a right key,
+// for SEAL_UNSEALED_TTL, in that browser session. See admin/includes/seal.php.
+$unsealed = false;
+$sealLockMinutes = 0;
+if ($showSetup) {
+    $unsealedAt = (int)($_SESSION['unsealed_at'] ?? 0);
+    $unsealed = $unsealedAt > 0 && (time() - $unsealedAt) < SEAL_UNSEALED_TTL && seal_armed();
+    $sealLockMinutes = seal_locked_minutes();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unseal'])) {
+        if ($sealLockMinutes) {
+            http_response_code(429);
+            $error_message = "Too many wrong keys. Try again in {$sealLockMinutes} minute(s).";
+        } elseif (seal_verify((string)($_POST['unseal_key'] ?? ''))) {
+            session_regenerate_id(true);
+            $_SESSION['unsealed_at'] = time();
+            $unsealed = true;
+            login_debug("Unseal: key accepted");
+        } else {
+            seal_record_failure();
+            $sealLockMinutes = seal_locked_minutes();
+            http_response_code(403);
+            $error_message = seal_proof_problem() ?? 'That is not a valid unseal key.';
+            login_debug("Unseal: key refused");
+        }
+    }
+}
+
 // ── Mothership Provisioning Detection ──
 $provisionFile = (defined('SITE_ROOT') ? SITE_ROOT : realpath(__DIR__ . '/..')) . '/admin/data/.provision_reset';
 $showProvision = false;
@@ -90,12 +122,19 @@ $provisionToken = '';
 $provisionSource = '';
 $provisionHasUsers = hasAnyUsers();
 
+// The token is a SECRET the operator brings (the provision link carries it as
+// ?provision=<token>). It used to be written into this page for ANY visitor while the file
+// existed, so whoever loaded /admin/login.php in that 24h window could reset the superadmin.
+// Now the reset form appears only to someone whose URL (or re-submitted form) holds the token.
+$offeredToken = (string)($_GET['provision'] ?? $_POST['provision_token'] ?? '');
 if (is_file($provisionFile)) {
     $prov = json_decode(file_get_contents($provisionFile), true);
     if ($prov && !empty($prov['expires_at']) && strtotime($prov['expires_at']) > time()) {
-        $showProvision = true;
-        $provisionToken = $prov['token'] ?? '';
-        $provisionSource = $prov['source'] ?? 'unknown';
+        if ($offeredToken !== '' && !empty($prov['token']) && hash_equals($prov['token'], $offeredToken)) {
+            $showProvision = true;
+            $provisionToken = $offeredToken;
+            $provisionSource = $prov['source'] ?? 'unknown';
+        }
     } else {
         @unlink($provisionFile);
     }
@@ -206,6 +245,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['provision_reset'])) {
     }
 }
 
+// First-run setup is for a site with NO users, and only that. The handler below used
+// to trust the form's own 'setup' field, so one anonymous POST created a superadmin on any
+// live site (createUser() checks only email uniqueness and password strength). Refuse it here,
+// before anything is created, whatever the form says.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['setup']) && hasAnyUsers()) {
+    login_debug("Setup REFUSED: site already has users");
+    http_response_code(403);
+    $error_message = 'This site already has an admin account. Please sign in.';
+    unset($_POST['setup']);
+}
+// …and on an empty site, only after the seal is broken in this session.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['setup']) && !$unsealed) {
+    login_debug("Setup REFUSED: site is sealed");
+    http_response_code(403);
+    $error_message = 'This site is sealed. Enter the unseal key first.';
+    unset($_POST['setup']);
+}
+
 // Handle setup form submission (first-run)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['setup'])) {
     login_debug("SETUP FORM SUBMITTED");
@@ -236,7 +293,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['setup'])) {
         login_debug("createUser result: " . json_encode(['success' => $result['success'] ?? false, 'error' => $result['error'] ?? null]));
 
         if ($result['success']) {
-            // Auto-login after setup
+            // The seal is broken: remove every way back in (key, proof file, attempt counter).
+            seal_consume();
+            unset($_SESSION['unsealed_at']);
+
+            // Auto-login after setup (fresh session id, as the provision path already does)
+            session_regenerate_id(true);
             $_SESSION['user_id'] = $result['user']['id'];
             $_SESSION['user_role'] = $result['user']['role'];
             $_SESSION['user_email'] = $result['user']['email'];
@@ -736,6 +798,9 @@ if (is_file($googleAuthConfigFile)) {
             <?php if ($showProvision): ?>
                 <h1>Password Reset</h1>
                 <p>Provisioned by <?php echo htmlspecialchars($provisionSource); ?></p>
+            <?php elseif ($showSetup && !$unsealed): ?>
+                <h1>This site is sealed</h1>
+                <p>No admin account yet &mdash; enter the unseal key</p>
             <?php elseif ($showSetup): ?>
                 <h1>Welcome!</h1>
                 <p>Set up your admin account</p>
@@ -822,10 +887,39 @@ if (is_file($googleAuthConfigFile)) {
                 <button type="submit" class="login-button" style="background:#d97706">Set Password & Sign In</button>
             </form>
 
+        <?php elseif ($showSetup && !$unsealed): ?>
+            <!-- sealed — the only thing this page accepts is an unseal key -->
+            <form method="POST" action="" id="unsealForm">
+                <input type="hidden" name="unseal" value="1">
+                <div class="form-group">
+                    <label for="unseal_key">Unseal key</label>
+                    <input type="text" id="unseal_key" name="unseal_key" autocomplete="off" spellcheck="false"
+                           placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"
+                           required <?php echo $sealLockMinutes ? 'disabled' : 'autofocus'; ?>>
+                </div>
+                <button type="submit" class="login-button" <?php echo $sealLockMinutes ? 'disabled' : ''; ?>>
+                    <?php echo $sealLockMinutes ? "Paused ({$sealLockMinutes} min)" : 'Break the seal'; ?>
+                </button>
+            </form>
+
+            <div class="setup-step" style="margin-top:18px;font-size:13px;line-height:1.55">
+                <strong>Where the key comes from</strong> &mdash; only someone who controls this
+                site&rsquo;s server can make one:
+                <ul style="margin:8px 0 0 18px;padding:0">
+                    <li style="margin-bottom:6px"><strong>With a shell:</strong> in the site&rsquo;s folder run
+                        <code>php admin/scripts/unseal.php</code>. It prints a key that works once.</li>
+                    <li><strong>No shell</strong> (FTP or your host&rsquo;s File Manager): create the file
+                        <code>admin/data/UNSEAL.txt</code> containing a passphrase of at least
+                        <?php echo SEAL_PROOF_MIN_LEN; ?> characters, then enter that passphrase here.</li>
+                </ul>
+                <div style="margin-top:8px">Either way the key or file is deleted once your admin account exists.</div>
+            </div>
+
         <?php elseif ($showSetup): ?>
-            <!-- First-run setup form -->
+            <!-- First-run setup form (only after the seal is broken) -->
             <div class="setup-step">
-                No admin account found. Create your superadmin account to get started.
+                Seal broken. Create your superadmin account to finish &mdash; this page stays open for
+                <?php echo (int)(SEAL_UNSEALED_TTL / 60); ?> minutes.
             </div>
 
             <form method="POST" action="" id="setupForm">
