@@ -267,10 +267,19 @@ function luminal_send_mail(string $to, string $subject, string $html, string $te
     // which is what makes SPF line up. Silently ignored if the host disallows it.
     $ok = @mail($to, $subject, $body, implode("\r\n", $headers), '-f' . $fromEmail);
 
-    return $ok
-        ? ['ok' => true, 'transport' => 'local', 'error' => '']
-        : ['ok' => false, 'transport' => 'local',
-           'error' => 'PHP mail() returned false — the host MTA rejected or is unavailable.'];
+    if ($ok) return ['ok' => true, 'transport' => 'local', 'error' => ''];
+
+    // Say WHICH failure. "No mail program on this server" is a set-up fact with a clear
+    // fix; "the MTA rejected it" is not. Many small servers have no MTA at all, and every
+    // site without SMTP or Mailgun then falls through to here and loses its mail.
+    $bin = strtok(trim((string)ini_get('sendmail_path')), ' ');
+    if (PHP_OS_FAMILY !== 'Windows' && $bin !== false && $bin !== '' && !is_executable($bin)) {
+        return ['ok' => false, 'transport' => 'local',
+                'error' => "This server has no mail program ($bin is not installed), so it cannot send email. "
+                         . 'Set up SMTP or Mailgun for this site (admin/data/mail/mail-config.json).'];
+    }
+    return ['ok' => false, 'transport' => 'local',
+            'error' => 'PHP mail() returned false — the host MTA rejected the message.'];
 }
 
 

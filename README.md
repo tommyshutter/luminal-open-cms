@@ -1,4 +1,4 @@
-<!-- doc-version: 1.2.0 | cut: 2026-10-03T13:25Z | src-commit: 0f281f5 | doc: README -->
+<!-- doc-version: 1.3.0 | cut: 2026-10-03T19:15Z | src-commit: f327d03 | doc: README -->
 
 # Luminal Open CMS
 
@@ -8,7 +8,7 @@ It was built over two years to operate a working fleet of ~35 live sites from a 
 and it is released here under the Apache License 2.0. See [`NOTICE`](../NOTICE) for the origin
 story, and [`LICENSE`](../LICENSE) for your rights — which are broad.
 
-**Doc version 1.2.0 · cut 2026-10-03T13:25Z**
+**Doc version 1.3.0 · cut 2026-10-03T19:15Z**
 
 ---
 
@@ -87,7 +87,10 @@ seal for good: the key is used up and both files are deleted.
   another.
 - Ten wrong guesses pause the form for 15 minutes.
 - The seal only guards a site with **no** accounts. A forgotten password is not a seal case — use
-  "Forgot password?" on the sign-in page.
+  "Forgot password?" on the sign-in page. That sends its link by email (or Telegram), so it
+  needs SMTP, Mailgun or a working mail program on the server. If none is set up, make the
+  link from the shell instead: `php admin/scripts/reset-password.php` lists the accounts, and
+  `php admin/scripts/reset-password.php <email-or-username>` prints a one-hour reset link.
 
 ⚠️ **`admin/data/` must never be web-readable.** The shipped `.htaccess` files handle this, which
 is why `AllowOverride All` matters — without it, your settings and content are served to anyone

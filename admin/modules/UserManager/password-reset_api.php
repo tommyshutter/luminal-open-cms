@@ -168,10 +168,10 @@ switch ($action) {
 
         // Available delivery channels: Telegram (admin resets) and/or email.
         $tgCfg = load_telegram_config();
-        // Email is always deliverable: luminal_send_mail() falls back to the host's own
-        // MTA when Mailgun is not configured. This previously bailed out entirely, so a
-        // site without Mailgun could never reset an admin password — one forgotten
-        // password locked you out of your own CMS permanently.
+        // Email is NOT always deliverable. luminal_send_mail() falls back to the host's own
+        // MTA when neither SMTP nor Mailgun is configured — and a server may have no MTA at
+        // all. On such a site this request cannot deliver anything; the way back in is the
+        // shell:  php admin/scripts/reset-password.php
 
         // Generic success response (prevents account enumeration)
         $genericOk = ['ok' => true, 'message' => 'If an account with that email exists, a password reset link has been sent.'];
@@ -242,7 +242,13 @@ switch ($action) {
             }
             unset($u);
             saveUsersData($data);
-            json_out(['ok' => false, 'error' => 'Failed to send reset link. Please contact your administrator.'], 500);
+            // Same answer as every other outcome. A different reply here told a stranger
+            // that the address belongs to a real account. The reason goes to the server
+            // log, where the person who can fix it will look.
+            error_log('[password-reset] could not deliver a reset link on ' . basename(SITE_ROOT)
+                . ' via ' . $channel . ': ' . ($sendResult['error'] ?? 'unknown error')
+                . ' — use: php admin/scripts/reset-password.php');
+            json_out($genericOk);
         }
 
         json_out($genericOk);

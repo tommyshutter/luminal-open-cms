@@ -166,7 +166,7 @@ $mode = ($token !== '') ? 'reset' : 'request';
                 <p>If an account with that email exists, we've sent a password reset link to its recovery channel &mdash; check your email inbox (and spam folder), or the site administrator's Telegram.</p>
             </div>
             <div class="message info">
-                The link will expire in 1 hour. If it doesn't arrive within a few minutes, try again or contact your site administrator.
+                The link will expire in 1 hour. If it doesn't arrive within a few minutes, contact whoever runs this site &mdash; they can make a reset link on the server with <code>php admin/scripts/reset-password.php</code>.
             </div>
         </div>
 
