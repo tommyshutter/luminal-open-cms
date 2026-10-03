@@ -1,4 +1,4 @@
-<!-- doc-version: 1.1.0 | cut: 2026-08-31T00:29Z | src-commit: b87605e | doc: README -->
+<!-- doc-version: 1.2.0 | cut: 2026-10-03T13:25Z | src-commit: 0f281f5 | doc: README -->
 
 # Luminal Open CMS
 
@@ -8,7 +8,7 @@ It was built over two years to operate a working fleet of ~35 live sites from a 
 and it is released here under the Apache License 2.0. See [`NOTICE`](../NOTICE) for the origin
 story, and [`LICENSE`](../LICENSE) for your rights — which are broad.
 
-**Doc version 1.1.0 · cut 2026-08-31T00:29Z**
+**Doc version 1.2.0 · cut 2026-10-03T13:25Z**
 
 ---
 
@@ -61,7 +61,33 @@ chown -R www-data:www-data admin/data media
 #    then load the site in a browser
 ```
 
-The admin lives at `/admin/`. First load walks you through creating the initial user.
+The admin lives at `/admin/`.
+
+### First sign-in: break the seal
+
+A new install has no admin account, so it is **sealed**: `/admin/` asks for an unseal key and
+accepts nothing else. (Otherwise the "create the first admin" form belongs to whoever finds your
+site first — and scanners find a new site within the hour.) Only someone who controls the
+install can make a key. Pick whichever fits your hosting:
+
+```bash
+# You have a shell — run this in the site folder; it prints a one-time key
+php admin/scripts/unseal.php
+```
+
+**No shell** (FTP or a hosting File Manager): create the file `admin/data/UNSEAL.txt` containing
+a passphrase of your own, 20 characters or more.
+
+Then open `/admin/`, enter the key or passphrase, and create your admin account. That breaks the
+seal for good: the key is used up and both files are deleted.
+
+- A key does not expire, so a site can sit sealed until you are ready. It works once; running
+  `unseal.php` again replaces an unused key.
+- Only a hash of the shell key is stored (`admin/data/.unseal_key`) — if you lose the key, mint
+  another.
+- Ten wrong guesses pause the form for 15 minutes.
+- The seal only guards a site with **no** accounts. A forgotten password is not a seal case — use
+  "Forgot password?" on the sign-in page.
 
 ⚠️ **`admin/data/` must never be web-readable.** The shipped `.htaccess` files handle this, which
 is why `AllowOverride All` matters — without it, your settings and content are served to anyone

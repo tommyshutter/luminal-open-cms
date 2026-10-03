@@ -1,8 +1,8 @@
-<!-- doc-version: 1.0.0 | cut: 2026-08-31T00:25Z | src-commit: b87605e | doc: SECURITY -->
+<!-- doc-version: 1.1.0 | cut: 2026-10-03T13:25Z | src-commit: 0f281f5 | doc: SECURITY -->
 
 # Security Policy
 
-**Doc version 1.0.0 · cut 2026-08-31T00:25Z**
+**Doc version 1.1.0 · cut 2026-10-03T13:25Z**
 
 ## Reporting a vulnerability
 
@@ -39,3 +39,7 @@ A CMS cannot secure a server on its own. Two things matter most:
    server user, with the owner bit sufficient. `777` is never the right answer.
 2. **Keep backups off the web root.** A backup archive inside the served directory is a download
    link for anyone who guesses the filename.
+3. **Leave a new install sealed until you are ready to claim it.** A site with no admin account
+   accepts only an unseal key (see "First sign-in" in the README). Do not leave
+   `admin/data/UNSEAL.txt` lying around with a short or guessable passphrase, and do not share a
+   minted key over a channel you would not trust with a password — until it is used, it *is* one.
