@@ -1,0 +1,45 @@
+{
+    "name": "PageManager",
+    "version": "1.1.0",
+    "description": "Core content management system with card UI, modal editor, iframe preview, and revision history",
+    "author": "Luminal CMS",
+    "entry_point": "PageManager.php",
+    "api_endpoint": "api.php",
+    "requires_data_dirs": [
+        "pages"
+    ],
+    "menu_entry": {
+        "key": "PageManager",
+        "title": "Page Mgr",
+        "href": "PageManager.php",
+        "role": "admin",
+        "order": 4,
+        "icon": "📄",
+        "color": "orange"
+    },
+    "dependencies": [],
+    "permissions": {
+        "admin": [
+            "read",
+            "write",
+            "create",
+            "delete"
+        ],
+        "staff": [
+            "read",
+            "write"
+        ]
+    },
+    "features": [
+        "Card-based page browser",
+        "Modal-based page editor",
+        "Live iframe preview",
+        "Two-column layouts",
+        "Component-based content",
+        "Revision history",
+        "Shortcode support",
+        "Gallery/panel integration",
+        "Meta title/description",
+        "AIP page import"
+    ]
+}

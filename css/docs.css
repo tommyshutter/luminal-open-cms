@@ -1,0 +1,105 @@
+/**
+ * FILE LOCATION: SITE-ROOT/css/docs.css
+ *
+ * Documentation reading layout: a narrow sidebar of doc links beside the doc
+ * itself. Applied by page.php to pages served from admin/data/docs/ — the doc
+ * files are a mirror of the admin documentation and are never edited to carry
+ * layout.
+ *
+ * Deliberately theme-neutral. Colour is inherited from the page so a site with
+ * its own palette does not have to fight this layer; only structure, rhythm and
+ * low-opacity rules that work on either a light or a dark ground are set here.
+ */
+
+/* ---------- sidebar ---------- */
+.lm-docs-nav {
+    position: sticky;
+    top: 88px;
+    display: block;
+    font-size: .88rem;
+    line-height: 1.45;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 6px;
+}
+.lm-docs-nav ul { list-style: none; margin: 0; padding: 0; }
+.lm-docs-nav li { margin: 0; }
+
+.lm-docs-nav a {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    opacity: .72;
+    border-left: 2px solid transparent;
+}
+.lm-docs-nav a:hover {
+    opacity: 1;
+    background: rgba(127, 127, 127, .14);
+    text-decoration: none;
+}
+.lm-docs-nav li.is-current > a,
+.lm-docs-nav .lm-docs-nav-home.is-current {
+    opacity: 1;
+    font-weight: 700;
+    background: rgba(127, 127, 127, .18);
+    border-left-color: currentColor;
+}
+
+.lm-docs-nav-home {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(127, 127, 127, .25);
+    font-weight: 600;
+    opacity: .9;
+}
+
+/* ---------- the document pane ---------- */
+.lm-doc-pane { max-width: 78ch; }
+.lm-doc-pane > :first-child { margin-top: 0; }
+.lm-doc-pane h1 { font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.2; margin: 0 0 .5em; }
+.lm-doc-pane h2 { font-size: 1.35rem; margin: 1.8em 0 .5em; }
+.lm-doc-pane h3 { font-size: 1.1rem; margin: 1.5em 0 .4em; }
+.lm-doc-pane p,
+.lm-doc-pane li { line-height: 1.7; }
+.lm-doc-pane ul,
+.lm-doc-pane ol { padding-left: 1.3em; }
+.lm-doc-pane li { margin-bottom: .35em; }
+.lm-doc-pane code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: .86em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(127, 127, 127, .18);
+}
+.lm-doc-pane pre {
+    overflow-x: auto;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: rgba(127, 127, 127, .14);
+}
+.lm-doc-pane pre code { background: none; padding: 0; }
+.lm-doc-pane table { width: 100%; border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
+.lm-doc-pane th, .lm-doc-pane td { text-align: left; padding: 7px 10px; border-bottom: 1px solid rgba(127, 127, 127, .25); }
+
+/* ---------- index cards (the docs landing page) ---------- */
+.lm-docs-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+.lm-docs-card {
+    display: block;
+    padding: 14px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid rgba(127, 127, 127, .28);
+    background: rgba(127, 127, 127, .08);
+}
+.lm-docs-card:hover { background: rgba(127, 127, 127, .16); text-decoration: none; }
+.lm-docs-title { display: block; font-weight: 700; margin-bottom: 3px; }
+.lm-docs-desc  { display: block; font-size: .84rem; opacity: .72; line-height: 1.45; }
+
+/* ---------- narrow screens: the sidebar stops being a sidebar ---------- */
+@media (max-width: 900px) {
+    .lm-docs-nav { position: static; max-height: none; margin-bottom: 20px; }
+    .lm-doc-pane { max-width: none; }
+}

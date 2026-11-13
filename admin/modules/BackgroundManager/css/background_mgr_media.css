@@ -1,0 +1,231 @@
+/**
+ * Media Gallery Specific Styles for Background Manager.
+ * Organizes images and videos into small cached thumbs.
+ *
+ * @version         2025.07.10.1600.EDT (Fixed Video Grid Styling, Common Media Item Info)
+ * @filelocation    /admin/background_mgr/background_mgr_media.css
+ */
+
+/* Drag and Drop Zone */
+.drop-zone {
+    border: 2px dashed #555;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    transition: all 0.2s;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+.drop-zone.drag-over {
+    border-color: #edbc07;
+    background-color: rgba(237, 188, 7, 0.1);
+}
+
+/* Common Media Gallery Grid for both #image-pool and #video-pool */
+#image-pool, #video-pool {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid for thumbs */
+    gap: 10px; /* Space between items */
+    padding: 10px;
+    background-color: #1a1a1a; /* Darker background for gallery area */
+    border-radius: 5px;
+    max-height: 400px; /* Fixed height for scrollability */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #333;
+    margin-bottom: 15px;
+}
+
+/* Individual Media Item (Thumbnail) for both images and videos */
+#image-pool .media-item, #video-pool .media-item {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9; /* Set aspect ratio to 16:9 for consistency */
+    background-color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex; /* Use flexbox to center content */
+    align-items: center;
+    justify-content: center;
+    width: auto; /* Let grid control width */
+    height: auto; /* Let aspect-ratio control height */
+}
+#image-pool .media-item img, #video-pool .media-item img {
+    width: 100%; /* Ensure image/thumbnail fills item */
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the item, cropping if necessary */
+    display: block;
+}
+/* Fallback for missing/broken video thumbnails or image placeholders */
+#image-pool .media-item img.no-thumbnail, #video-pool .media-item img.no-thumbnail {
+    background-color: #555; /* Solid background for missing thumb */
+}
+/* Ensure the icon shows up for missing image/video thumbs */
+#image-pool .media-item img.no-thumbnail:not([src]):before,
+#image-pool .media-item img[src=""]:before,
+#image-pool .media-item img.error:before,
+#video-pool .media-item img.no-thumbnail:not([src]):before,
+#video-pool .media-item img[src=""]:before,
+#video-pool .media-item img.error:before {
+    content: "No Image"; /* Default text for missing image */
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #555;
+    color: #ccc;
+    text-align: center;
+    line-height: 100px; /* Rough vertical centering for 100px height base */
+    font-size: 0.8em;
+}
+
+/* Overlay for title/type on media items (especially videos without clear thumb) */
+.media-item-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 30px; /* Ensure space for text */
+    box-sizing: border-box;
+}
+.media-item-info strong {
+    font-weight: bold;
+    display: block; /* Ensure title is on its own line */
+}
+.media-item-info .video-type {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    color: #bbb;
+}
+.media-item-info .media-item-icon { /* Icon for videos without thumbs */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: #eee;
+    z-index: 1; /* Above background, below text */
+}
+
+/* Selected State */
+#image-pool .media-item.selected, #video-pool .media-item.selected {
+    border-color: #edbc07;
+    box-shadow: 0 0 8px rgba(237, 188, 7, 0.5);
+}
+
+/* Media Item Controls (checkbox, sort handle) */
+#image-pool .media-item-controls, #video-pool .media-item-controls {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+#image-pool .media-item:hover .media-item-controls,
+#video-pool .media-item:hover .media-item-controls {
+    opacity: 1;
+}
+.media-item-controls .sort-handle {
+    cursor: grab;
+    color: #fff;
+    padding: 0 5px;
+    font-size: 1.2em;
+}
+.media-item-checkbox {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 10;
+    margin: 0;
+}
+
+/* Pool Controls (Select All / Delete / Rescan) */
+.pool-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 0 5px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.pool-controls button {
+    background-color: #3a3a3a;
+    color: #eee;
+    border: 1px solid #555;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    flex-grow: 1;
+    min-width: 100px;
+}
+.pool-controls button:hover {
+    background-color: #4a4a4a;
+    border-color: #777;
+}
+.pool-controls .delete-button {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+.pool-controls .delete-button:hover {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+.pool-controls .select-all-button, .pool-controls .rescan-button {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+.pool-controls .select-all-button:hover, .pool-controls .rescan-button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Progress bars for uploads */
+.progress-bar-container {
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+}
+.progress-bar {
+    height: 8px;
+    background-color: #555;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    background-color: #2ecc71;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+.progress-bar-text {
+    color: #eee;
+    font-size: 0.7em;
+    text-align: center;
+    margin-top: 2px;
+}
+.progress-bar-wrapper.success .progress-bar-fill { background-color: #2ecc71; }
+.progress-bar-wrapper.error .progress-bar-fill { background-color: #e74c3c; }

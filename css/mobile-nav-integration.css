@@ -1,0 +1,271 @@
+/**
+ * @file SITE-ROOT/css/mobile-nav-integration.css
+ * @version 2025.08.08.FIXED
+ * @description Mobile navigation CSS.
+ * @change Removed 'overflow: hidden' from the body tag when the menu is active to allow the menu itself to scroll.
+ */
+
+/* --- Mobile Navigation Integration --- */
+@media screen and (max-width: 768px) {
+
+    /* This rule was preventing menu scrolling. It has been removed. */
+    /* body.mobile-menu-active { overflow: hidden; } */
+
+    .menu-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        margin-left: 15px;
+        z-index: 1001;
+        width: 44px;
+        height: 44px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        position: relative;
+    }
+
+    .menu-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-toggle:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+    }
+
+    .menu-toggle .hamburger {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background-color: currentColor;
+        position: relative;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .menu-toggle .hamburger::before,
+    .menu-toggle .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle .hamburger::before {
+        top: -7px;
+    }
+
+    .menu-toggle .hamburger::after {
+        top: 7px;
+    }
+
+    .main-navigation {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        overflow-y: auto; /* --- THIS IS THE FIX --- */
+    }
+
+    .main-navigation ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        list-style: none;
+        margin: 0;
+        padding: 20px;
+        gap: 5px;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .main-navigation li {
+        margin: 0;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+    }
+
+    .main-navigation a {
+        display: block;
+        padding: 16px 20px !important;
+        font-size: 1.2rem !important;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px !important;
+        margin: 3px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .main-navigation a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .main-navigation a:hover::before {
+        left: 100%;
+    }
+
+    .main-navigation a:hover,
+    .main-navigation a:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    body.mobile-menu-active .main-navigation {
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.mobile-menu-active .main-navigation li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    body.mobile-menu-active .main-navigation li:nth-child(1) { transition-delay: 0.1s; }
+    body.mobile-menu-active .main-navigation li:nth-child(2) { transition-delay: 0.15s; }
+    body.mobile-menu-active .main-navigation li:nth-child(3) { transition-delay: 0.2s; }
+    body.mobile-menu-active .main-navigation li:nth-child(4) { transition-delay: 0.25s; }
+    body.mobile-menu-active .main-navigation li:nth-child(5) { transition-delay: 0.3s; }
+    body.mobile-menu-active .main-navigation li:nth-child(6) { transition-delay: 0.35s; }
+    body.mobile-menu-active .main-navigation li:nth-child(7) { transition-delay: 0.4s; }
+    body.mobile-menu-active .main-navigation li:nth-child(8) { transition-delay: 0.45s; }
+    body.mobile-menu-active .main-navigation li:nth-child(9) { transition-delay: 0.5s; }
+    body.mobile-menu-active .main-navigation li:nth-child(10) { transition-delay: 0.55s; }
+
+    body.mobile-menu-active .menu-toggle .hamburger {
+        background-color: transparent;
+    }
+
+    body.mobile-menu-active .menu-toggle .hamburger::before {
+        top: 0;
+        transform: rotate(45deg);
+    }
+
+    body.mobile-menu-active .menu-toggle .hamburger::after {
+        top: 0;
+        transform: rotate(-45deg);
+    }
+
+    .site-header .header-container {
+        padding-left: 12px;
+        padding-right: 12px;
+        justify-content: space-between;
+    }
+
+    .site-title {
+        margin-left: 10px;
+        flex: 1;
+    }
+
+    .site-title, .site-title h1 {
+        font-size: 1.2rem !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .site-logo img {
+        max-width: 40px !important;
+        max-height: 40px !important;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+    .main-navigation ul {
+        gap: 3px;
+    }
+
+    .main-navigation a {
+        padding: 8px 12px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .site-header .header-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .site-header .header-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .site-title, .site-title h1 {
+        font-size: 1rem !important;
+        margin-left: 8px;
+    }
+
+    .main-navigation a {
+        font-size: 1.1rem !important;
+        padding: 14px 18px !important;
+    }
+
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+        margin-left: 10px;
+    }
+
+    .menu-toggle .hamburger {
+        width: 20px;
+    }
+
+    .site-logo img {
+        max-width: 35px !important;
+        max-height: 35px !important;
+    }
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .main-navigation ul {
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .main-navigation a {
+        padding: 10px 15px !important;
+        font-size: 1rem !important;
+        margin: 2px 0;
+    }
+}

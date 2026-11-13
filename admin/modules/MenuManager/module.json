@@ -1,0 +1,31 @@
+{
+    "name": "MenuManager",
+    "version": "1.0.0",
+    "description": "Navigation menu editor — create, reorder, and style site menus",
+    "author": "Luminal CMS",
+    "entry_point": "menu-manager.php",
+    "api_endpoint": "handler.php",
+    "requires_data_dirs": [],
+    "menu_entry": {
+        "key": "MenuManager",
+        "title": "Menu Mgr",
+        "href": "menu-manager.php",
+        "role": "admin",
+        "order": 16,
+        "icon": "☰",
+        "color": "light"
+    },
+    "menu_group": "content",
+    "dependencies": [],
+    "permissions": {
+        "admin": [
+            "read",
+            "write",
+            "create",
+            "delete"
+        ],
+        "staff": [
+            "read"
+        ]
+    }
+}

@@ -1,0 +1,234 @@
+/**
+ * Luminal CMS — Universal Markdown Editor Styles
+ *
+ * @package    LuminalCMS
+ * @file       /admin/shared/markdown-editor.css
+ * @version    1.0.0
+ */
+
+/* ── Wrapper ───────────────────────────────────────────────── */
+.mde-wrap {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: rgba(15,15,20,0.85);
+}
+
+/* ── Toolbar ───────────────────────────────────────────────── */
+.mde-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 6px 8px;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.mde-tb-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #e0e0e0;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  transition: background 0.15s, border-color 0.15s;
+  min-width: 30px;
+  text-align: center;
+}
+.mde-tb-btn:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.25);
+}
+.mde-tb-btn:active {
+  background: rgba(139,92,246,0.3);
+}
+.mde-tb-toggle {
+  margin-left: auto;
+}
+
+/* ── Body (split pane) ─────────────────────────────────────── */
+.mde-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.mde-editor-pane {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.mde-textarea {
+  flex: 1;
+  background: transparent;
+  color: #e8e8e8;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 12px 14px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+  width: 100%;
+}
+.mde-textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+.mde-textarea:read-only {
+  opacity: 0.6;
+  cursor: default;
+}
+.mde-preview-pane {
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.02);
+}
+
+/* ── Preview content styling ───────────────────────────────── */
+.mde-preview-content {
+  color: #d4d4d8;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.mde-preview-content h1 { color: #a78bfa; font-size: 1.5rem; margin: 0 0 0.75rem; border-bottom: 1px solid rgba(167,139,250,0.2); padding-bottom: 0.4rem; }
+.mde-preview-content h2 { color: #c4b5fd; font-size: 1.25rem; margin: 1rem 0 0.5rem; }
+.mde-preview-content h3 { color: #ddd6fe; font-size: 1.1rem; margin: 0.75rem 0 0.4rem; }
+.mde-preview-content h4 { color: #e0e0e0; font-size: 1rem; margin: 0.5rem 0 0.3rem; }
+.mde-preview-content p { margin: 0 0 0.75rem; }
+.mde-preview-content a { color: #60a5fa; text-decoration: underline; }
+.mde-preview-content strong { color: #f0f0f0; }
+.mde-preview-content em { color: #d4d4d8; }
+.mde-preview-content code {
+  background: rgba(255,255,255,0.08);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  color: #fbbf24;
+}
+.mde-preview-content pre {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 0.5rem 0 1rem;
+}
+.mde-preview-content pre code {
+  background: none;
+  padding: 0;
+  color: #e8e8e8;
+}
+.mde-preview-content blockquote {
+  border-left: 3px solid rgba(167,139,250,0.4);
+  margin: 0.5rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+  color: #a8a8b0;
+}
+.mde-preview-content ul, .mde-preview-content ol {
+  margin: 0 0 0.75rem 1.5rem;
+  padding: 0;
+}
+.mde-preview-content li { margin-bottom: 0.25rem; }
+.mde-preview-content hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 1rem 0;
+}
+.mde-preview-content img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+.mde-preview-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+}
+.mde-preview-content th, .mde-preview-content td {
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 0.8125rem;
+}
+.mde-preview-content th {
+  background: rgba(255,255,255,0.06);
+  color: #e0e0e0;
+}
+
+/* ── Status bar ────────────────────────────────────────────── */
+.mde-status {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Light mode overrides ──────────────────────────────────── */
+.mde-light {
+  background: #fafafa;
+  border-color: #d4d4d4;
+}
+.mde-light .mde-toolbar {
+  background: #f0f0f0;
+  border-bottom-color: #d4d4d4;
+}
+.mde-light .mde-tb-btn {
+  background: #e8e8e8;
+  border-color: #ccc;
+  color: #333;
+}
+.mde-light .mde-tb-btn:hover {
+  background: #ddd;
+}
+.mde-light .mde-textarea {
+  color: #1a1a1a;
+}
+.mde-light .mde-textarea::placeholder {
+  color: rgba(0,0,0,0.3);
+}
+.mde-light .mde-editor-pane {
+  border-right-color: #d4d4d4;
+}
+.mde-light .mde-preview-pane {
+  background: #fff;
+}
+.mde-light .mde-preview-content { color: #333; }
+.mde-light .mde-preview-content h1 { color: #6d28d9; border-bottom-color: rgba(109,40,217,0.2); }
+.mde-light .mde-preview-content h2 { color: #7c3aed; }
+.mde-light .mde-preview-content h3 { color: #8b5cf6; }
+.mde-light .mde-preview-content code { background: #f3f3f3; color: #b45309; }
+.mde-light .mde-preview-content pre { background: #f5f5f5; border-color: #ddd; }
+.mde-light .mde-preview-content pre code { color: #333; }
+.mde-light .mde-preview-content a { color: #2563eb; }
+.mde-light .mde-preview-content blockquote { border-left-color: rgba(109,40,217,0.3); color: #666; }
+.mde-light .mde-preview-content th { background: #f0f0f0; color: #333; }
+.mde-light .mde-preview-content th, .mde-light .mde-preview-content td { border-color: #ddd; }
+.mde-light .mde-status {
+  color: rgba(0,0,0,0.4);
+  background: #f5f5f5;
+  border-top-color: #e0e0e0;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .mde-body {
+    flex-direction: column;
+  }
+  .mde-editor-pane {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .mde-editor-pane, .mde-preview-pane {
+    flex: none;
+    height: 50%;
+  }
+}

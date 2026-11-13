@@ -1,0 +1,57 @@
+/* ==========================================================================
+   MAIN CONTENT AREA & WRAPPER FOR BACKGROUND LAYERING
+   ========================================================================== */
+#main-content-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-content {
+    margin:0 auto;
+    border:0px solid red!important;
+    flex-grow: 1;
+    box-sizing: border-box;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.panel-box {
+    border-radius: 0px;
+    padding:0px;
+    margin-bottom: 25px;
+}
+
+/* REMOVED padding-top from #left-panel-container */
+#left-panel-container {
+    width:290px!important; 
+    border:0px solid red!important; 
+    margin:0 auto;
+    background: transparent!important;
+}
+
+.left-column-content img{
+    width:94%!important;
+    padding:0!important;
+    margin:0 auto; 
+    background-size:stretch!important;
+    border-radius:10px;
+}
+
+.left-column-content ul{
+    max-width:99%!important;
+    padding:0!important;
+    margin:0 auto;
+    list-style-type:none;
+}
+
+.video-info {
+    background-color:rgba(0,0,0,0.82)!important
+}
+
+#right-panel-container *{
+    background:rgba(0,0,0,0);
+    border-radius:5px
+}

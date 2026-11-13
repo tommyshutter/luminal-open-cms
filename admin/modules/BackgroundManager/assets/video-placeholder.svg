@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Video thumbnail placeholder — shown in the BGM media grid when a
+  server-side ffmpeg thumb is missing and the browser can't render a
+  frame (e.g. before metadata has loaded). Intentionally understated,
+  dark with a soft play glyph so it never screams "broken".
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" width="160" height="120" role="img" aria-label="Video placeholder">
+  <defs>
+    <linearGradient id="bgm-ph-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f2530"/>
+      <stop offset="1" stop-color="#11151c"/>
+    </linearGradient>
+    <linearGradient id="bgm-ph-triangle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b95a5" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#5f6a79" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <!-- card -->
+  <rect width="160" height="120" fill="url(#bgm-ph-grad)"/>
+  <!-- subtle inner border -->
+  <rect x="1.5" y="1.5" width="157" height="117" fill="none" stroke="#2a313d" stroke-width="1"/>
+  <!-- soft vignette -->
+  <circle cx="80" cy="60" r="70" fill="#000" opacity="0.18"/>
+  <!-- play glyph -->
+  <circle cx="80" cy="60" r="24" fill="#0b0e14" opacity="0.75"/>
+  <circle cx="80" cy="60" r="24" fill="none" stroke="#3d9fff" stroke-width="1.25" opacity="0.55"/>
+  <polygon points="74,50 74,70 92,60" fill="url(#bgm-ph-triangle)"/>
+  <!-- label -->
+  <text x="80" y="104" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" font-size="9" font-weight="600" letter-spacing="1.6" fill="#8b95a5" text-anchor="middle" opacity="0.75">VIDEO</text>
+</svg>

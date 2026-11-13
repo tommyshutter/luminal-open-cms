@@ -1,0 +1,115 @@
+/**
+ * ---------------------------------------------------------------------------------------
+ * @appname     Site UI
+ * @file        SITE-ROOT/css/lightbox.css
+ * @version     2025.09.05.0119-EST
+ * @author      ChatGPT
+ * @license     Business Source License
+ * @description Minimal styling for the unified lightbox shell.
+ * ---------------------------------------------------------------------------------------
+ */
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+}
+
+#lightbox.active { display: flex; }
+
+#lightbox-content {
+  max-width:99.99%;
+  max-height:99.99%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  background: #0e1116;
+  padding: 0;
+overflow:auto;
+margin:10px auto;
+}
+
+/* Scale the lightboxed media to fit the viewport with a little breathing room.
+   Without a cap on the <img> itself, oversized images (e.g. a full-res 2400px
+   graphic dropped into a page) render at natural size and the content box just
+   grows scrollbars instead of shrinking to fit. Viewport max-limits + contain
+   keep any image inside the screen; width/height:auto leave small images alone. */
+#lightbox-content img,
+#lightbox-content video {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 86vh;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* A manually-dropped video flagged for lightbox (via the Page Manager WYSIWYG
+   right-click toggle) renders as a click-to-open poster — the editor strips the
+   inline <video controls>, so we show a play affordance. Scoped to .pm-lightbox
+   so gallery/shortcode videos (which have their own chrome) are untouched. */
+a.pm-lightbox[data-lightbox="video"] {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+a.pm-lightbox[data-lightbox="video"] > video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  pointer-events: none;   /* clicks fall through to the anchor → lightbox */
+}
+a.pm-lightbox[data-lightbox="video"]::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 66px;
+  height: 66px;
+  padding-left: 6px;               /* optical-center the triangle */
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  pointer-events: none;
+}
+a.pm-lightbox[data-lightbox="video"]:hover::after {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+#lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
+  border: 1px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+}
+
+#lightbox-close:hover { background: rgba(255,255,255,0.18); }
+
+
+
+ /** lightbox-content iframe {width:99.99%!important;height:auto;} **/
+
+

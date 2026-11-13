@@ -1,0 +1,21 @@
+{
+  "name": "GoogleAuth",
+  "version": "1.0.0",
+  "description": "Google OAuth 2.0 sign-in — passwordless authentication via Google accounts",
+  "entry_point": "GoogleAuth.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "label": "Google Auth",
+    "icon": "🔑",
+    "section": "system_admin"
+  },
+  "permissions": {
+    "default_roles": [
+      "superadmin"
+    ]
+  },
+  "dependencies": [],
+  "requires_data_dirs": [
+    "GoogleAuth"
+  ]
+}

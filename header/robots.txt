@@ -1,0 +1,46 @@
+# File: /robots.txt
+# Version: 2025.07.12.15.00.00
+
+# Allow AI assistants for site review and assistance
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Allow all other search engines and crawlers
+User-agent: *
+Allow: /
+
+# Block access to sensitive directories
+Disallow: /admin/
+Disallow: /config/
+Disallow: /data/
+Disallow: /includes/
+Disallow: /logs/
+Disallow: /tmp/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /backup/
+Disallow: /utils.php
+Disallow: /panels/
+
+# Allow specific important files and directories
+Allow: /media/images/
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /pages/
+Allow: /media/videos/
+
+# Sitemap — dynamic, auto-generated from published pages
+Sitemap: /sitemap.xml
+
+# Crawl delay (optional - removes if you want faster crawling)
+# Crawl-delay: 1

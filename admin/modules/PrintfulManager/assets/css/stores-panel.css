@@ -1,0 +1,76 @@
+/* Stores Panel — Dark Admin Theme */
+
+.stores-panel {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stores-panel h3 {
+    margin: 0 0 15px 0;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-family: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    background: #2e4fd6 !important;
+    border-radius: 5px;
+    padding: 4px 10px;
+    text-align: center;
+}
+
+.stores-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.store-card {
+    background: rgba(255,255,255,0.03);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.store-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.store-card.active {
+    border-color: #d2ff06;
+    background: rgba(210, 255, 6, 0.05);
+    box-shadow: 0 0 12px rgba(210, 255, 6, 0.1);
+}
+
+.store-name {
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.store-id {
+    color: #999;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.store-currency {
+    color: chartreuse;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Button group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

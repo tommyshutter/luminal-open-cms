@@ -1,0 +1,22 @@
+{
+    "name": "ArticlesManager",
+    "version": "1.1.0",
+    "description": "Canonical article store + admin CRUD + public renderers. Unifies article-archive, Articles/index.json, and PageManager article pages into one backing store. All article producers (pipelines, hand-curation, imports) write here; all readers (shortcodes, home pages, search) read here.",
+    "author": "Luminal CMS",
+    "entry_point": "ArticlesManager.php",
+    "api_endpoint": "api.php",
+    "menu_entry": {
+        "key": "ArticlesManager",
+        "title": "Articles Manager",
+        "href": "ArticlesManager.php",
+        "role": "admin",
+        "order": 6,
+        "icon": "📰",
+        "color": "orange"
+    },
+    "requires_data_dirs": [
+        "ArticlesManager",
+        "ArticlesManager/_archive"
+    ],
+    "dependencies": []
+}

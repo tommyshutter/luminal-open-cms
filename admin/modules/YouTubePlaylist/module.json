@@ -1,0 +1,29 @@
+{
+  "name": "YouTubePlaylist",
+  "version": "1.0.0",
+  "description": "Multi-playlist YouTube manager with per-playlist API keys and shortcodes",
+  "author": "Luminal CMS",
+  "entry_point": "YouTubePlaylist.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "YouTubePlaylist",
+    "title": "YT Playlist Studio",
+    "href": "YouTubePlaylist.php",
+    "role": "admin",
+    "order": 25,
+    "icon": "▶️"
+  },
+  "menu_group": "content",
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete"
+    ],
+    "staff": [
+      "read"
+    ]
+  }
+}

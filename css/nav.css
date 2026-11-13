@@ -1,0 +1,63 @@
+/**
+ * @file SITE-ROOT/css/nav.css
+ * @version 2025.10.25 - Connected to Menu Manager Variables
+ */
+
+/* Main navigation container - consumes the menu bar background variable */
+.main-navigation {
+    background-color: var(--menu-bar-bg, transparent);
+    width: 100%;
+}
+
+.main-navigation ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 5px; 
+}
+
+/* Navigation Links - Consumes font and color variables */
+.main-navigation a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+
+    /* DYNAMIC VARIABLES FROM MENU MANAGER */
+    font-family: var(--menu-font-family, system-ui, sans-serif);
+    font-size: var(--menu-font-size, 1rem);
+    font-weight: var(--menu-font-weight, 500);
+    font-style: var(--menu-font-style, normal);
+    
+    color: var(--menu-font-color, #ffffff);
+    background-color: var(--menu-item-bg, transparent);
+}
+
+/* Hover States */
+.main-navigation a:hover {
+    color: var(--menu-font-hover-color, #ffffff);
+    background-color: var(--menu-item-hover-bg, rgba(255,255,255,0.1));
+}
+
+/* Active/Current Page State (if your HTML applies a 'current-menu-item' or 'active' class) */
+.main-navigation li.current-menu-item a,
+.main-navigation a.active {
+    background-color: var(--menu-current-bg, rgba(255,255,255,0.2));
+    color: var(--menu-current-font-color, #ffffff);
+}
+
+/* --- STICKY MENU STYLES --- */
+.sticky-menu {
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0;
+    z-index: 1020; 
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
+    /* Ensure the sticky header also gets the background color */
+    background-color: var(--menu-bar-bg, #000000); 
+}

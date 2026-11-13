@@ -1,0 +1,221 @@
+/**
+ * Luminal CMS — Admin PiP Framework Styles
+ * Launcher dock, panel indicators, animations
+ */
+
+/* ── PiP Launcher Bar (in sidebar) ── */
+.pip-launcher {
+    padding: 10px 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.pip-launcher-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.pip-launcher-title .pip-open-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: #0d9c5c;
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 800;
+}
+.pip-launcher-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+.pip-launcher-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 4px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+.pip-launcher-btn:hover {
+    background: rgba(201,169,98,0.15);
+    border-color: rgba(201,169,98,0.35);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.pip-launcher-btn.pip-active {
+    background: rgba(13,156,92,0.1);
+    border-color: rgba(13,156,92,0.3);
+    color: #0d9c5c;
+    box-shadow: 0 0 8px rgba(13,156,92,0.15);
+}
+.pip-launcher-btn.pip-active::after {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #0d9c5c;
+    margin-top: -1px;
+    animation: pipPulse 2s ease-in-out infinite;
+}
+.pip-launcher-label {
+    font-size: 0.52rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* ── Layout Controls ── */
+.pip-layout-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+}
+.pip-layout-btn {
+    flex: 1;
+    padding: 5px 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    background: none;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.6rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+}
+.pip-layout-btn:hover {
+    background: rgba(201,169,98,0.08);
+    border-color: rgba(201,169,98,0.2);
+    color: rgba(255,255,255,0.7);
+}
+.pip-layout-btn.pip-danger:hover {
+    background: rgba(217,43,43,0.1);
+    border-color: rgba(217,43,43,0.3);
+    color: #d92b2b;
+}
+
+/* ── Animations ── */
+@keyframes pipPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+@keyframes pipSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Save Layout Modal ── */
+.pip-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pipFadeIn 0.15s ease-out;
+}
+.pip-modal {
+    background: #1a2332;
+    border: 1px solid rgba(201,169,98,0.3);
+    border-radius: 12px;
+    padding: 24px;
+    min-width: 320px;
+    max-width: 420px;
+    color: #e8e2d6;
+    font-family: Inter, system-ui, sans-serif;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.pip-modal h3 {
+    font-size: 1rem;
+    margin: 0 0 12px;
+    color: #c9a962;
+}
+.pip-modal input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    color: #e8e2d6;
+    font-family: inherit;
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+}
+.pip-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+.pip-modal-actions button {
+    padding: 7px 18px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+@keyframes pipFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ── Inline PiP Popout Button (on module pages) ── */
+.pip-popout-btn {
+    appearance: none;
+    border: 1px solid rgba(201,169,98,0.3);
+    background: rgba(201,169,98,0.1);
+    color: #c9a962;
+    font-size: 0.85rem;
+    line-height: 1;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    flex-shrink: 0;
+}
+.pip-popout-btn:hover {
+    background: rgba(201,169,98,0.25);
+    border-color: rgba(201,169,98,0.5);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* ── PiP Rack Button (bottom-right corner) ── */
+/* pip-rack-btn removed — replaced by ? help button */
+
+/* ── Collapsed sidebar: hide labels ── */
+.admin-aside.collapsed .pip-launcher-label { display: none; }
+.admin-aside.collapsed .pip-launcher-grid { grid-template-columns: repeat(2, 1fr); }
+.admin-aside.collapsed .pip-launcher-title span:not(.pip-open-count) { display: none; }
+.admin-aside.collapsed .pip-layout-bar { flex-wrap: wrap; }

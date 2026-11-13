@@ -1,0 +1,847 @@
+/**
+ * AIResources — Card-Based Resource Management
+ * Version: 2026.02.20
+ */
+
+/* ── Variables ── */
+:root {
+    --air-bg: #0a0e17;
+    --air-surface: rgba(15, 23, 42, 0.8);
+    --air-border: rgba(99, 102, 241, 0.15);
+    --air-border-hover: rgba(99, 102, 241, 0.35);
+    --air-text: #e2e8f0;
+    --air-muted: #64748b;
+    --air-primary: #818cf8;
+    --air-primary-bg: rgba(99, 102, 241, 0.12);
+    --air-success: #34d399;
+    --air-warning: #fbbf24;
+    --air-danger: #f87171;
+    --air-anthropic: #d97706;
+    --air-openai: #10b981;
+    --air-google: #60a5fa;
+    --air-xai: #e5e5e5;
+    --air-zai: #06b6d4;
+    --air-radius: 12px;
+}
+
+/* ── Layout ── */
+.air-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px 60px;
+}
+
+/* ── Header ── */
+.air-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.air-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--air-text);
+    margin: 0 0 4px;
+    letter-spacing: -0.02em;
+}
+
+.air-subtitle {
+    color: var(--air-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.air-scope-note {
+    font-size: 11px;
+    color: var(--air-muted);
+    margin: 4px 0 0;
+}
+.air-scope-note strong {
+    color: var(--air-primary);
+}
+
+.air-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.air-btn-outline {
+    background: transparent;
+    border: 1px solid var(--air-border);
+    color: var(--air-muted);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+}
+.air-btn-outline:hover {
+    border-color: var(--air-primary);
+    color: var(--air-primary);
+    background: var(--air-primary-bg);
+}
+
+.air-health {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--air-surface);
+    border: 1px solid var(--air-border);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--air-muted);
+    white-space: nowrap;
+}
+
+.air-health-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--air-muted);
+    flex-shrink: 0;
+}
+
+.air-health-dot.active {
+    background: var(--air-success);
+    box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+}
+
+.air-health-dot.warning {
+    background: var(--air-warning);
+}
+
+.air-health-dot.error {
+    background: var(--air-danger);
+}
+
+/* ── Sections ── */
+.air-section {
+    margin-bottom: 36px;
+}
+
+.air-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.air-section-head h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--air-text);
+    margin: 0;
+}
+
+/* ── Card Grid ── */
+.air-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.air-loading {
+    color: var(--air-muted);
+    font-size: 13px;
+    font-style: italic;
+    padding: 20px 0;
+}
+
+/* ── Resource Card ── */
+.air-card {
+    position: relative;
+    background: var(--air-surface);
+    border: 1px solid var(--air-border);
+    border-radius: var(--air-radius);
+    padding: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(12px);
+}
+
+.air-card:hover {
+    border-color: var(--air-border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.air-card.active {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2), 0 4px 24px rgba(99, 102, 241, 0.1);
+}
+
+.air-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.air-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.air-card-icon.anthropic {
+    background: rgba(217, 119, 6, 0.15);
+    color: var(--air-anthropic);
+}
+
+.air-card-icon.openai {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--air-openai);
+}
+
+.air-card-icon.google {
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--air-google);
+}
+
+.air-card-icon.mcp-stdio {
+    background: rgba(167, 139, 250, 0.15);
+    color: #a78bfa;
+}
+
+.air-card-icon.mcp-http {
+    background: rgba(251, 191, 36, 0.15);
+    color: var(--air-warning);
+}
+
+.air-card-icon.flux {
+    background: rgba(244, 114, 182, 0.15);
+    color: #f472b6;
+}
+
+.air-card-icon.dalle {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--air-openai);
+}
+
+.air-card-icon.stability {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+}
+
+.air-card-icon.xai {
+    background: rgba(229, 229, 229, 0.12);
+    color: var(--air-xai);
+}
+
+.air-card-icon.zai {
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--air-zai);
+}
+
+.air-card-icon.custom {
+    background: rgba(167, 139, 250, 0.15);
+    color: #a78bfa;
+}
+
+.air-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--air-text);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.air-card-head-text {
+    min-width: 0;
+    flex: 1;
+}
+
+.air-card-type {
+    font-size: 11px;
+    color: var(--air-muted);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.air-card-status {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.air-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.air-status-dot.ok { background: var(--air-success); box-shadow: 0 0 4px rgba(52,211,153,0.5); }
+.air-status-dot.error { background: var(--air-danger); }
+.air-status-dot.untested { background: var(--air-muted); }
+.air-status-dot.testing { background: var(--air-warning); animation: air-pulse 1s ease infinite; }
+
+/* ── Card Body ── */
+.air-card-body {
+    margin-bottom: 14px;
+}
+
+.air-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.06);
+}
+
+.air-card-row:last-child {
+    border-bottom: 0;
+}
+
+.air-card-label {
+    color: var(--air-muted);
+}
+
+.air-card-value {
+    color: var(--air-text);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+}
+
+/* ── Tags / Pills ── */
+.air-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.air-tag-active {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--air-success);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.air-tag-enabled {
+    background: rgba(96, 165, 250, 0.12);
+    color: #93c5fd;
+}
+
+.air-tag-disabled {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--air-muted);
+}
+
+.air-tag-builtin {
+    background: rgba(167, 139, 250, 0.12);
+    color: #c4b5fd;
+}
+
+.air-role-pill {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--air-primary);
+    margin-right: 4px;
+}
+
+/* ── Card Actions ── */
+.air-card-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.air-card-actions .air-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+}
+
+/* ── Buttons ── */
+.air-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--air-border);
+    background: var(--air-surface);
+    color: var(--air-text);
+    border-radius: 6px;
+    font: 600 12px system-ui, -apple-system, sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.air-btn:hover {
+    border-color: var(--air-border-hover);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.air-btn-primary {
+    background: var(--air-primary-bg);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: var(--air-primary);
+}
+
+.air-btn-primary:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.air-btn-success {
+    background: rgba(52, 211, 153, 0.1);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: var(--air-success);
+}
+
+.air-btn-danger {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: var(--air-danger);
+}
+
+.air-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ── Modal ── */
+.air-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    padding: 20px;
+}
+
+.air-modal {
+    background: #111827;
+    border: 1px solid var(--air-border);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.air-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--air-border);
+}
+
+.air-modal-head h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--air-text);
+    margin: 0;
+}
+
+.air-modal-close {
+    background: none;
+    border: none;
+    color: var(--air-muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.air-modal-close:hover {
+    color: var(--air-text);
+}
+
+.air-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.air-modal-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--air-border);
+}
+
+/* ── Form Elements ── */
+.air-form-group {
+    margin-bottom: 14px;
+}
+
+.air-form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--air-muted);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.air-form-group input,
+.air-form-group select,
+.air-form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--air-border);
+    border-radius: 6px;
+    color: var(--air-text);
+    font: 13px system-ui, -apple-system, sans-serif;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+}
+
+.air-form-group input:focus,
+.air-form-group select:focus,
+.air-form-group textarea:focus {
+    outline: none;
+    border-color: var(--air-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+}
+
+.air-form-group small {
+    display: block;
+    font-size: 11px;
+    color: var(--air-muted);
+    margin-top: 4px;
+}
+
+.air-form-group textarea {
+    resize: vertical;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+}
+
+/* ── Model Combo (select + text toggle) ── */
+.air-model-combo {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+}
+
+.air-model-combo select,
+.air-model-combo input[type="text"] {
+    flex: 1;
+    min-width: 0;
+}
+
+.air-btn-small {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    min-width: 32px;
+    line-height: 1;
+}
+
+/* ── Activity Log Button ── */
+.air-log-btn {
+    position: relative;
+}
+.air-log-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+.air-log-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--air-danger);
+    color: #fff;
+    font: 700 9px system-ui;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* ── Activity Log Modal ── */
+.air-log-modal {
+    max-width: 640px;
+    max-height: 75vh;
+}
+.air-log-entries {
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 60vh;
+    font-size: 12px;
+}
+.air-log-empty {
+    text-align: center;
+    color: var(--air-muted);
+    padding: 40px 20px;
+    font-style: italic;
+}
+.air-log-entry {
+    display: flex;
+    gap: 10px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.06);
+    align-items: flex-start;
+    animation: air-log-flash 0.4s ease;
+}
+.air-log-entry:last-child {
+    border-bottom: none;
+}
+.air-log-entry.success .air-log-type { color: var(--air-success); }
+.air-log-entry.error .air-log-type { color: var(--air-danger); }
+.air-log-entry.info .air-log-type { color: var(--air-primary); }
+.air-log-entry.warning .air-log-type { color: var(--air-warning); }
+
+.air-log-type {
+    flex-shrink: 0;
+    width: 14px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.air-log-msg {
+    flex: 1;
+    color: var(--air-text);
+    line-height: 1.4;
+    word-break: break-word;
+}
+.air-log-time {
+    flex-shrink: 0;
+    color: var(--air-muted);
+    font: 10px 'SF Mono', 'Fira Code', monospace;
+    line-height: 1.4;
+    margin-top: 1px;
+}
+
+@keyframes air-log-flash {
+    0% { background: rgba(99, 102, 241, 0.12); }
+    100% { background: transparent; }
+}
+
+/* ── Brief notification banner (auto-hides) ── */
+.air-log-banner {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    max-width: 420px;
+    padding: 10px 16px;
+    background: #1e293b;
+    border: 1px solid var(--air-border);
+    border-radius: 8px;
+    color: var(--air-text);
+    font: 500 12px system-ui;
+    z-index: 10010;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+}
+.air-log-banner.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.air-log-banner.success { border-left: 3px solid var(--air-success); }
+.air-log-banner.error   { border-left: 3px solid var(--air-danger); }
+.air-log-banner.info    { border-left: 3px solid var(--air-primary); }
+.air-log-banner.warning { border-left: 3px solid var(--air-warning); }
+
+/* ── NotebookLM Card Icon ── */
+.air-card-icon.nlm {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+}
+
+/* ── NLM Badge ── */
+#airNlmBadge {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--air-muted);
+    border: 1px solid rgba(100, 116, 139, 0.2);
+}
+#airNlmBadge.enabled {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--air-success);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+/* ── NLM Status ── */
+#nlmStatus.success {
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    color: var(--air-success);
+}
+#nlmStatus.error {
+    background: rgba(248, 113, 113, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.2);
+    color: var(--air-danger);
+}
+
+/* ── NLM API Status Indicator ── */
+.nlm-api-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--air-surface);
+    border: 1px solid var(--air-border);
+    border-radius: 6px;
+    font: 600 11px system-ui;
+    color: var(--air-muted);
+    white-space: nowrap;
+}
+
+/* ── NLM Info Link ── */
+.nlm-info-link {
+    font: 600 11px system-ui;
+    color: var(--air-primary);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.nlm-info-link:hover {
+    text-decoration: underline;
+    color: #a5b4fc;
+}
+
+/* ── NLM Info Panel ── */
+.nlm-info-panel {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    background: rgba(99, 102, 241, 0.06);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 8px;
+    font: 12px/1.7 system-ui;
+    color: var(--air-muted);
+}
+.nlm-info-panel ol {
+    margin: 0;
+    padding-left: 20px;
+}
+.nlm-info-panel li {
+    margin-bottom: 2px;
+}
+.nlm-info-panel a {
+    color: var(--air-primary);
+}
+.nlm-info-panel strong {
+    color: var(--air-text);
+}
+
+/* ── NLM Active Account ── */
+.nlm-active-account {
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    background: rgba(139, 92, 246, 0.06);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 8px;
+}
+.nlm-account-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+    font-size: 12px;
+}
+.nlm-account-label {
+    color: var(--air-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+}
+.nlm-account-value {
+    color: var(--air-text);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+    white-space: nowrap;
+}
+
+/* ── NLM Hero Section ── */
+.nlm-hero-section {
+    border-top: 2px solid rgba(139, 92, 246, 0.3);
+    margin-top: 10px;
+    padding-top: 20px;
+}
+.nlm-section-head {
+    align-items: flex-start;
+}
+.nlm-section-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.nlm-logo {
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.4));
+}
+.nlm-section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--air-text);
+    margin: 0;
+    background: linear-gradient(135deg, #a78bfa, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.nlm-section-subtitle {
+    font: 12px system-ui;
+    color: var(--air-muted);
+    display: block;
+    margin-top: 2px;
+}
+
+/* ── Animations ── */
+@keyframes air-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .air-card-grid {
+        grid-template-columns: 1fr;
+    }
+    .air-header {
+        flex-direction: column;
+    }
+    .air-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .air-wrap {
+        padding: 16px 12px 40px;
+    }
+}

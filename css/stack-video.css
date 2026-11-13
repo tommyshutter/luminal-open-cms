@@ -1,0 +1,65 @@
+/**
+ * @appname     RI Stack Video
+ * @file        SITE-ROOT/css/stack-video.css
+ * @description Inline tile styles for MP4 and YouTube players.
+ */
+
+/* MP4 video tile — uses native aspect ratio so vertical videos display correctly */
+.ri-inline-video{
+  width:100%;
+  max-height:80vh;
+  display:block;
+  border-radius:8px;
+  object-fit:contain;
+  background:#000;
+}
+
+/* YouTube inline tile */
+.ri-inline-yt{
+  position:relative;
+  width:100%;
+  aspect-ratio: 16/9;
+  border-radius:8px;
+  overflow:hidden;
+  background:#000;
+  border:none;
+  outline:none;
+}
+
+.ri-inline-yt-frame{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+  outline:none;
+  transform: scale(var(--stack-yt-crop, 1.08));
+  transform-origin: center center;
+  pointer-events:none;
+}
+
+a .ri-inline-yt{
+  border:none;
+  outline:none;
+  text-decoration:none;
+}
+
+/* Hide broken <img> if swapped to player */
+.ri-thumb-missing{ display:none !important; }
+
+/* Fallback placeholder (rare) */
+.ri-video-ph{
+  display:grid; place-items:center;
+  width:100%;
+  aspect-ratio: 16/9;
+  background:#0f1620;
+  color:#9fb0c3;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;
+  font-weight:700; letter-spacing:.08em; font-size:12px;
+}
+
+/* Subtle outline when a real <video> is actively playing */
+.ri-video-playing{ outline:2px solid rgba(255,255,255,.12); outline-offset:0 }

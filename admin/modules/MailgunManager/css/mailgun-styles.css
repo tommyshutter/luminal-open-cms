@@ -1,0 +1,173 @@
+/* Mailgun Manager Styles */
+
+.mg-wrap {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 16px;
+}
+
+.mg-card {
+    background: #1e1e2e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.mg-card h3 {
+    margin: 0 0 14px;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+}
+
+.mg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.mg-form-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.mg-label {
+    width: 140px;
+    flex-shrink: 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #ccc;
+}
+.mg-input {
+    background: #2a2a3a;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+.mg-input:focus { outline: none; border-color: #3b82f6; }
+.mg-select {
+    background: #2a2a3a;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.mg-select:focus { outline: none; border-color: #3b82f6; }
+
+.mg-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+}
+
+.mg-hint {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* DNS Results */
+.mg-dns-results {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.mg-dns-empty {
+    padding: 16px;
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+}
+.mg-dns-record {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #2a2a3a;
+    font-size: 0.82rem;
+}
+.mg-dns-record:last-child { border-bottom: none; }
+.mg-dns-type {
+    flex-shrink: 0;
+    width: 50px;
+    font-weight: 700;
+    color: #60a5fa;
+    font-family: monospace;
+}
+.mg-dns-name {
+    flex: 1;
+    font-family: monospace;
+    color: #ccc;
+    word-break: break-all;
+}
+.mg-dns-value {
+    flex: 2;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #aaa;
+    word-break: break-all;
+}
+.mg-dns-ok { color: #4ade80; }
+.mg-dns-fail { color: #f87171; }
+
+/* Integration Status */
+.mg-integrations {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.mg-integration-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #252538;
+    border-radius: 6px;
+}
+.mg-integration-label {
+    color: #ccc;
+    font-size: 0.88rem;
+}
+.mg-integration-status {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+}
+.mg-status-active { background: #166534; color: #4ade80; }
+.mg-status-pending { background: #374151; color: #9ca3af; }
+.mg-status-error { background: #7f1d1d; color: #fca5a5; }
+
+/* Buttons — inherit from admin or define locally */
+.btn { padding: 8px 18px; border: none; border-radius: 5px; font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: opacity .2s, background .2s; }
+.btn:hover { opacity: .85; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primary { background: #3b82f6; color: #fff; }
+.btn-secondary { background: #555; color: #fff; }
+.btn-success { background: #16a34a; color: #fff; }
+.btn-sm { padding: 5px 12px; font-size: 0.78rem; }
+
+/* Toast */
+.mg-toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 12px 22px;
+    border-radius: 6px; color: #fff; font-size: 0.9rem; font-weight: 500;
+    z-index: 9999; opacity: 0; transition: opacity .3s; max-width: 420px;
+}
+.mg-toast.show { opacity: 1; }
+.mg-toast.success { background: #16a34a; }
+.mg-toast.error { background: #dc2626; }
+.mg-toast.info { background: #1e3a5f; }
+
+@media (max-width: 700px) {
+    .mg-form-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .mg-label { width: auto; }
+}

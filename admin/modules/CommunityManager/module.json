@@ -1,0 +1,19 @@
+{
+  "name": "CommunityManager",
+  "version": "1.0.0",
+  "description": "Public member community: signups, threaded comments, profiles, optional tiers, moderation.",
+  "entry_point": "CommunityManager.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "title": "Community",
+    "href": "CommunityManager.php",
+    "key": "CommunityManager",
+    "role": "editor",
+    "order": 56,
+    "icon": "💬"
+  },
+  "requires_data_dirs": [
+    "CommunityManager"
+  ],
+  "dependencies": []
+}

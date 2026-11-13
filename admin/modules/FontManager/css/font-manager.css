@@ -1,0 +1,147 @@
+/**
+ * @file    /admin/font-manager/css/font-manager.css
+ * @version 2025.10.02.1818.00-EST r1202
+ * @scope    Only affects .admin-font-manager page
+ */
+
+/* ---- Page grid ---- */
+.admin-font-manager .font-manager-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr; /* two equal columns */
+  gap:20px;
+  padding:16px;
+}
+
+/* Cards */
+.admin-font-manager .font-list-panel,
+.admin-font-manager .font-upload-panel{
+  background: rgba(20,20,20,0.65);
+  backdrop-filter: blur(6px);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  padding:16px;
+  color:#fff;
+}
+
+/* Titles */
+.admin-font-manager .font-list-panel h2,
+.admin-font-manager .font-upload-panel h2{
+  margin:0 0 10px 0;
+  font-weight:700;
+  letter-spacing:.04em;
+  font-size:14px;
+  text-transform:uppercase;
+  background:#3547d6;
+  color:#fff;
+  padding:10px 12px;
+  border-radius:8px;
+}
+
+/* Left column: list w/ 80vh scroll */
+.admin-font-manager .font-list-scroll{
+  max-height:80vh;
+  overflow:auto;
+  padding:6px 8px;
+}
+
+.admin-font-manager .font-list{
+  list-style: disc;
+  padding-left: 22px;
+  margin: 0;
+}
+
+.admin-font-manager .font-list li{
+  padding:6px 4px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  font-size:1.1rem; /* not huge; utilitarian */
+  line-height:1.4;
+  color:#eaeaea;
+}
+.admin-font-manager .font-list li:last-child{ border-bottom:none; }
+
+/* Right column: drop zone */
+.admin-font-manager .drop-zone{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:28px 16px;
+  margin-top:10px;
+  border:2px dashed rgba(255,255,255,0.25);
+  border-radius:12px;
+  background: rgba(255,255,255,0.04);
+  cursor:pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.admin-font-manager .drop-zone:hover{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.45);
+}
+.admin-font-manager .drop-zone-label{
+  color:#ddd;
+  font-size:14px;
+}
+
+/* Buttons */
+.admin-font-manager .btn-save{
+  display:inline-block;
+  background:#3547d6;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:10px 16px;
+  font-weight:700;
+  letter-spacing:.04em;
+  cursor:pointer;
+}
+.admin-font-manager .btn-save:hover{ background:#2c3dc0; }
+
+/* Messages */
+.admin-font-manager .empty-text{
+  color:#cfcfcf;
+  padding:10px 0;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 980px){
+  .admin-font-manager .font-manager-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ── Install a Google Font (self-hosted) ─────────────────────────────── */
+.admin-font-manager .fm-hint{
+  color:#9aa4b2; font-size:13px; line-height:1.5; margin:4px 0 12px;
+}
+.admin-font-manager .fm-hint code{
+  background:rgba(255,255,255,.07); padding:1px 5px; border-radius:4px; font-size:12px;
+}
+.admin-font-manager .fm-gf-row{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.admin-font-manager .fm-input{
+  flex:1 1 220px; min-width:180px; padding:9px 12px;
+  background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.18);
+  border-radius:6px; color:#e8e8e8; font:inherit; font-size:14px;
+}
+.admin-font-manager .fm-input:focus{
+  outline:none; border-color:rgba(167,139,250,.55); background:rgba(0,0,0,.5);
+}
+.admin-font-manager .fm-gf-italics{
+  color:#bbb; font-size:13px; display:flex; align-items:center; gap:5px; white-space:nowrap;
+}
+.admin-font-manager .fm-btn{
+  padding:9px 18px; border-radius:6px; cursor:pointer; font:inherit; font-size:14px;
+  background:rgba(167,139,250,.14); border:1px solid rgba(167,139,250,.35); color:#c4b5fd;
+  transition:background .15s, border-color .15s;
+}
+.admin-font-manager .fm-btn:hover:not(:disabled){
+  background:rgba(167,139,250,.24); border-color:rgba(167,139,250,.55);
+}
+.admin-font-manager .fm-btn:disabled{ opacity:.55; cursor:default; }
+.admin-font-manager .fm-status{
+  margin-top:10px; font-size:13px; color:#9aa4b2; min-height:1.2em;
+}

@@ -1,0 +1,39 @@
+{
+  "name": "MDEditor",
+  "version": "1.0.0",
+  "description": "Standalone Markdown editor with document save/load and export",
+  "author": "Luminal CMS",
+  "entry_point": "MDEditor.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [
+    "md-documents"
+  ],
+  "menu_entry": {
+    "key": "MDEditor",
+    "title": "MD Editor",
+    "href": "MDEditor.php",
+    "role": "admin",
+    "order": 42,
+    "icon": "✏️"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete"
+    ],
+    "staff": [
+      "read",
+      "write"
+    ]
+  },
+  "features": [
+    "Full-page markdown editor with live preview",
+    "Document save/load (JSON storage)",
+    "Export as .md or .html",
+    "Keyboard shortcuts (Ctrl+S save)",
+    "Dirty state indicator"
+  ]
+}

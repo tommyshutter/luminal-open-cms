@@ -1,0 +1,36 @@
+{
+    "name": "BackgroundManager",
+    "version": "1.1.0",
+    "description": "Luminal Background image/video manager with slideshow, upload pad, and live preview",
+    "author": "Luminal CMS",
+    "entry_point": "BackgroundManager.php",
+    "api_endpoint": "api.php",
+    "requires_data_dirs": [],
+    "menu_entry": {
+        "key": "BackgroundManager",
+        "title": "Backgrounds",
+        "href": "BackgroundManager.php",
+        "role": "admin",
+        "order": 21,
+        "icon": "🎨",
+        "color": "red"
+    },
+    "dependencies": [],
+    "permissions": {
+        "admin": [
+            "read",
+            "write",
+            "upload",
+            "delete"
+        ],
+        "staff": []
+    },
+    "features": [
+        "Image/Video/Slideshow modes",
+        "Drag-and-drop upload pad",
+        "SortableJS for playlist ordering",
+        "Live preview panel",
+        "Overlay controls (color, opacity)",
+        "Sizing controls (cover, contain, etc.)"
+    ]
+}

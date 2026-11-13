@@ -1,0 +1,140 @@
+/**
+ * FILE LOCATION: SITE-ROOT/css/backgrounds.css
+ * @version 2025.07.10.0900.EDT (Updated to fix video background alignment)
+ * @description Implemented a masonry layout for the photo gallery.
+ * Adjusted background styles to support PHP-driven dynamic backgrounds.
+ * @change Added .slide and .slide.active rules for the JavaScript slideshow.
+ * Author: Gemini (Updated by)
+ */
+
+/* ==========================================================================
+   DYNAMIC BACKGROUND & OVERLAY
+   
+   This section defines the core styling for the site-wide dynamic background system.
+   It handles positioning and initial styling for the main background container,
+   the dedicated local video element, and the dynamically injected YouTube iframes.
+   The goal is to ensure all background media fills the entire viewport and remains
+   behind the main content and its overlay.
+   
+   ========================================================================== */
+
+#background-container {
+    position: fixed; /* Fixes the background to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Place behind all main content and overlay */
+    overflow: hidden; /* Important: clips content (like videos/images) that extend beyond this container */
+    background-color: #000; /* Fallback background color if no media loads or is configured */
+    background-position: center center; /* Centers static background images */
+    background-repeat: no-repeat; /* Prevents tiling for single images */
+    /* background-size will be set dynamically by JavaScript (cover, contain, 100% 100%) */
+    transition: background-image 1s ease-in-out; /* Smooth transition for slideshow images */
+    display: flex; /* Use flexbox to help center child elements (like videos) if needed */
+    justify-content: center;
+
+    /**** AI Assistants please Note - this was broken to enable background MP4s to be full screen ****/
+
+    /** align-items: center; **/
+}
+
+/* --- NEW SLIDESHOW STYLES --- */
+#background-container .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 1;
+}
+
+#background-container .slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+#background-container .slide video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+#background-container .slide iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100%;
+    min-width: 177.77vh;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+    border: 0;
+}
+/* --- END NEW SLIDESHOW STYLES --- */
+
+
+/* Specific video element for local MP4s, controlled by JS in main.js */
+#background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%; /* Ensures the video is at least 100% of its parent's width */
+    min-height: 100%; /* Ensures the video is at least 100% of its parent's height */
+    width: auto; /* Allows the video to expand naturally to maintain aspect ratio */
+    height: auto; /* Allows the video to expand naturally to maintain aspect ratio */
+    z-index: -1; /* Behind overlay, but in front of container's default background-image */
+    transform: translate(-50%, -50%); /* Centers the video relative to its container */
+    object-fit: cover; /* Ensures the video covers the container, cropping if necessary */
+    display: none; /* Hidden by default, shown by JS if video mode is active */
+}
+
+/* Styles for YouTube iframes (dynamically created by JS in main.js) */
+#background-container iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /*
+     * To ensure the YouTube iframe always "covers" the entire #background-container (which is the viewport),
+     * we must make it large enough to span the shortest dimension while maintaining its 16:9 aspect ratio.
+     * Then, we expand the other dimension to ensure full coverage, allowing overflow to be clipped by the parent.
+     *
+     * 16:9 aspect ratio:
+     * If height is 100%, width must be 16/9 * 100% = 177.77%
+     * If width is 100%, height must be 9/16 * 100% = 56.25%
+     *
+     * We use a combination of viewport units (vh/vw) and min-properties to achieve this cover effect reliably
+     * across different screen aspect ratios. The width and height values set the base aspect ratio, and
+     * the min-width/min-height ensure it always covers the viewport's dimensions fully.
+     */
+    width: 100vw; /* Base width set to 100% of viewport width */
+    height: 56.25vw; /* Base height set to 56.25% of viewport width (maintains 16:9) */
+    min-height: 100vh; /* Ensures the video is at least 100% of viewport height */
+    min-width: 177.77vh; /* Ensures the video is at least 177.77% of viewport height (maintains 16:9 if height is 100vh) */
+    transform: translate(-50%, -50%); /* Centers the iframe horizontally and vertically */
+    pointer-events: none; /* Allows clicks to pass through to content below, making it truly a background */
+    z-index: -1; /* Place behind the overlay, but in front of the main background-container's color/image */
+}
+
+
+/* The main #background-overlay element */
+#background-overlay {
+    position: fixed; /* Fixes the overlay to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* On top of background media, behind main content */
+    pointer-events: none; /* Allows clicks to pass through */
+    /* background-color and opacity will be set dynamically by JavaScript */
+    display: none; /* Hidden by default, shown by JS if overlay settings exist */
+}

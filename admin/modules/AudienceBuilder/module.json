@@ -1,0 +1,24 @@
+{
+  "name": "AudienceBuilder",
+  "version": "1.0.0",
+  "description": "Audience lead collection — hub/node architecture with output connector ports",
+  "entry_point": "AudienceBuilder.php",
+  "api_endpoint": "api.php",
+  "menu_entry": {
+    "key": "AudienceBuilder",
+    "title": "Audience Leads",
+    "icon": "📣",
+    "href": "AudienceBuilder.php",
+    "role": "admin",
+    "order": 24
+  },
+  "permissions": {
+    "admin": [
+      "read",
+      "write"
+    ],
+    "staff": [
+      "read"
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+/**
+ * FILE LOCATION: SITE-ROOT/css/glass-shell.css
+ *
+ * Luminal Glass Shell — reusable rounded-corner wrapper with dark
+ * translucent background, soft inset highlights, and an ambient
+ * purple/cyan glow behind the glass.
+ *
+ * Usage: wrap any content in <div class="lm-glass-shell">…</div>.
+ * Tweak these four CSS variables to rebalance background, blur,
+ * border, and radius without touching the other properties.
+ */
+
+.lm-glass-shell {
+    --lm-glass-bg:     rgba(7, 7, 26, 0.94);   /* raise alpha to darken */
+    --lm-glass-blur:   26px;
+    --lm-glass-border: rgba(255, 255, 255, 0.14);
+    --lm-glass-radius: 28px;
+    --lm-glass-max:    1200px;
+
+    max-width: var(--lm-glass-max);
+    margin: 40px auto;
+    padding: 48px 40px 64px;
+    background: var(--lm-glass-bg);
+    backdrop-filter: blur(var(--lm-glass-blur)) saturate(130%);
+    -webkit-backdrop-filter: blur(var(--lm-glass-blur)) saturate(130%);
+    border: 1px solid var(--lm-glass-border);
+    border-radius: var(--lm-glass-radius);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.06) inset,
+        0 0 0 1px rgba(108, 99, 255, 0.05) inset,
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        0 14px 34px rgba(108, 99, 255, 0.10);
+    position: relative;
+    overflow: hidden;
+}
+
+.lm-glass-shell::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background:
+        radial-gradient(ellipse 60% 40% at 15% 0%, rgba(108, 99, 255, 0.14), transparent 60%),
+        radial-gradient(ellipse 50% 35% at 85% 100%, rgba(0, 242, 254, 0.09), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.lm-glass-shell > * {
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 1024px) {
+    .lm-glass-shell {
+        margin: 24px auto;
+        padding: 36px 26px 48px;
+        --lm-glass-radius: 22px;
+    }
+}
+
+@media (max-width: 640px) {
+    .lm-glass-shell {
+        margin: 14px 10px;
+        padding: 24px 16px 32px;
+        --lm-glass-radius: 18px;
+    }
+}

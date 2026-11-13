@@ -1,0 +1,46 @@
+{
+  "name": "GalleryManager",
+  "version": "1.1.0",
+  "description": "Unified gallery management for images, videos, PDFs, and combined galleries with live preview and drag-and-drop",
+  "author": "Luminal CMS",
+  "entry_point": "GalleryManager.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [
+    "galleries/images",
+    "galleries/videos",
+    "galleries/pdfs",
+    "galleries/combined"
+  ],
+  "menu_entry": {
+    "key": "GalleryManager",
+    "title": "Gallery Mgr",
+    "href": "GalleryManager.php",
+    "role": "admin",
+    "order": 12,
+    "icon": "🖼️"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete"
+    ],
+    "staff": [
+      "read",
+      "write"
+    ]
+  },
+  "features": [
+    "Unified gallery manager (images/videos/PDFs/combined)",
+    "Tab-based interface",
+    "Pill-based gallery browser",
+    "Live iframe preview",
+    "Drag-and-drop media selection",
+    "Layout controls (grid/masonry/rows)",
+    "Column configuration",
+    "Item reordering",
+    "Shortcode generation"
+  ]
+}

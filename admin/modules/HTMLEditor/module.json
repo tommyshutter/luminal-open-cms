@@ -1,0 +1,42 @@
+{
+  "name": "HTMLEditor",
+  "version": "1.0.0",
+  "description": "Native WYSIWYG HTML editor with full formatting toolbar, document management, and media integration",
+  "author": "Luminal CMS",
+  "entry_point": "HTMLEditor.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [
+    "html-documents"
+  ],
+  "menu_entry": {
+    "key": "HTMLEditor",
+    "title": "HTML Editor",
+    "href": "HTMLEditor.php",
+    "role": "admin",
+    "order": 41,
+    "icon": "🖊️"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "create",
+      "delete"
+    ],
+    "staff": [
+      "read",
+      "write"
+    ]
+  },
+  "features": [
+    "Native contenteditable WYSIWYG editor",
+    "Full formatting toolbar",
+    "Document save/load/export",
+    "Media browser integration",
+    "Font Awesome icon picker",
+    "Find & Replace",
+    "Source code view toggle",
+    "Auto-save and unsaved changes warning"
+  ]
+}

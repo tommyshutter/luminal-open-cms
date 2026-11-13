@@ -1,0 +1,978 @@
+/**
+ * @location    SITE-ROOT/admin/background_mgr/background_mgr.css
+ * @version     2025.07.30.5
+ * @description The complete, final, and de-duplicated stylesheet for the manager.
+ * It styles the layout, preview, accordions, controls, media galleries,
+ * and includes the button-press effect and the always-visible message panel.
+ */
+
+/* --- GENERAL & LAYOUT --- */
+.admin-container {
+    max-width: 1600px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.admin-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-header-bar h1 {
+    margin: 0;
+}
+
+.background-manager-layout {
+    display: flex;
+    gap: 20px;
+}
+
+.bm-left-column {
+    flex: 0 0 450px;
+}
+
+.bm-right-column {
+    flex: 1;
+    min-width: 0; /* Prevents flexbox overflow */
+}
+
+/* --- PANELS & WRAPPERS --- */
+.settings-panel,
+.control-panel,
+.preview-panel-wrapper {
+    background-color: #2a2a2e;
+    border: 1px solid #3a3a3c;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+ ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+#background-preview-panel {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 70vh;
+    background-color: #1a1a1a;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+  ;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+
+/* --- CONTROLS & FORMS --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.master-controls-wrapper {
+    display: flex;
+    gap: 20px;  
+;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+.master-controls-col {
+    flex: 1;
+}
+
+/* The URL and its Add button belong on one line. Stacked (column) the input
+   took the full panel width for a value that is ~40 characters of visible text,
+   and the button below it read as a second, unrelated control. */
+.youtube-input-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- ACCORDIONS --- */
+.accordion-item {
+    background: #2a2a2e;
+    border: 1px solid #3a3a3c;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.accordion-header {
+    background: #383838;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.accordion-item.open > .accordion-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #eee;
+    border: none;
+    padding: 0;
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-icon::before {
+    content: '▶';
+}
+
+.accordion-item.open > .accordion-header .accordion-icon {
+    transform: rotate(90deg);
+}
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #444;
+}
+
+.accordion-item.open > .accordion-content {
+    display: block;
+}
+
+/* --- MEDIA, PREVIEW & SLIDESHOW --- */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.media-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: #111;
+    transition: border-color 0.2s ease;
+}
+
+.thumb-delete-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.85);
+    color: white;
+    border: none;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    padding: 0;
+}
+
+.media-thumb:hover .thumb-delete-btn {
+    display: flex;
+}
+
+.thumb-delete-btn:hover {
+    background: #dc3545;
+    transform: scale(1.1);
+}
+
+.media-thumb:hover {
+    border-color: #00aaff;
+}
+
+.media-thumb.selected {
+    border-color: #00ff7f;
+    box-shadow: 0 0 10px rgba(0, 255, 127, 0.7);
+}
+
+.media-thumb img,
+.media-thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- SLIDESHOW EDITOR CONTROLS --- */
+/* Column weights follow what each control holds, not an even split. "Load
+   Playlist" shows a name you PICK — it never needs more room than the longest
+   one. "Playlist Name" is the field you TYPE a new name into, so it gets the
+   room. Duration is a fixed-width preset pulldown. */
+.slideshow-controls-grid {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.72fr) minmax(240px, 1.5fr) 152px;
+    gap: 10px 12px;
+    align-items: end;
+    margin-bottom: 12px;
+}
+.slideshow-controls-grid .form-group {
+    margin-bottom: 0;
+}
+
+.playlist-editor-section {
+    border-top: 2px solid #444;
+    margin-top: 8px;
+    padding-top: 16px;
+}
+.playlist-editor-hint {
+    color: #8a949e;
+    font-size: .82rem;
+    font-style: italic;
+    margin: 0 0 8px;
+}
+
+.slideshow-tray {
+    min-height: 104px;
+    border: 2px dashed #4a545f;
+    background-color: rgba(15, 18, 22, .6);
+    padding: 9px;
+    border-radius: 8px;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+/* A drop target should say so when you are over it. */
+.slideshow-tray:hover { border-color: #5d6a78; }
+.slideshow-tray:empty::before {
+    content: 'Drag media here from the library below — drag within the tray to reorder.';
+    display: block;
+    padding: 26px 10px;
+    text-align: center;
+    color: #7c868f;
+    font-style: italic;
+    font-size: .88rem;
+}
+
+.preview-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;;box-shadow: 10px 8px 32px 0 rgba(0,0,0,.837);
+}
+
+#preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.panel-placeholder-text {
+    color: #666;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+}
+
+/* --- INPUTS & BUTTONS --- */
+#youtube-url-input {
+    flex: 1 1 300px;
+    max-width: 420px;
+    padding: 7px 10px;
+    background: #23282f;
+    border: 1px solid #4a545f;
+    color: #e8edf2;
+    font-size: .95rem;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+#youtube-url-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+/* These four variants carried a border and a size but NO background-colour, so
+   every one of them rendered as the browser's default grey chrome — the reason
+   the panel read as unstyled. Colour is what separates a save from a delete at
+   a glance, so it is the one thing they most needed. */
+.admin-button, .admin-button-success, .admin-button-danger, .admin-button-sm {
+    font-size: .85rem;
+    padding: 8px 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #39424d;
+    color: #e8edf2;
+    border: 1px solid #55606d;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease;
+}
+.admin-button:hover, .admin-button-sm:hover { background: #454f5c; }
+
+/* Signals: the two buttons that change something you cannot undo by looking at
+   it. Colour is explicit rather than inherited so an admin theme cannot wash
+   the distinction out. */
+.admin-button-success {
+    background: linear-gradient(180deg, #2f9e52 0%, #24713c 100%);
+    border-color: #2b8a49;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.12) inset, 0 2px 6px rgba(0,0,0,.35);
+}
+.admin-button-success:hover {
+    background: linear-gradient(180deg, #35b25c 0%, #298146 100%);
+}
+.admin-button-danger {
+    background: linear-gradient(180deg, #b8402f 0%, #8c2c1f 100%);
+    border-color: #a63626;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.10) inset, 0 2px 6px rgba(0,0,0,.35);
+}
+.admin-button-danger:hover {
+    background: linear-gradient(180deg, #cc4a37 0%, #9c3223 100%);
+}
+
+.admin-button-sm {
+    padding: 6px 11px;
+    font-size: .78rem;
+}
+
+/* Save Master Settings was pinned to width:100% at 15px padding — a banner
+   across the panel rather than a button. It keeps its emphasis through colour
+   and weight (above), not through width. */
+#save-master-settings-btn {
+    width: auto;
+    font-size: .9rem;
+    padding: 9px 20px;
+}
+.admin-button.full-width { width: auto; }
+
+#save-master-settings-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+    background: #218838;
+}
+
+/* --- MESSAGE PANEL --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-message-panel {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    color: #333;
+    text-shadow: none;
+    background-color: #f8f9fa; /* Neutral background */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-message-panel.success,
+.admin-message-panel.error,
+.admin-message-panel.info {
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+.admin-message-panel.success {
+    background-color: rgba(40, 167, 69, 0.85);
+    border-color: #218838;
+}
+
+.admin-message-panel.error {
+    background-color: rgba(220, 53, 69, 0.85);
+    border-color: #c82333;
+}
+
+.admin-message-panel.info {
+    background-color: rgba(23, 162, 184, 0.85);
+    border-color: #138496;
+}
+
+/* --- UPLOAD DROPZONE --- */
+.upload-dropzone {
+    border: 2px dashed #555;
+    border-radius: 8px;
+    padding: 24px 16px;
+    margin-bottom: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+}
+
+.upload-dropzone:hover {
+    border-color: #00aaff;
+    background: rgba(0, 170, 255, 0.04);
+}
+
+.upload-dropzone.dragover {
+    border-color: #00ff7f;
+    background: rgba(0, 255, 127, 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 127, 0.15);
+}
+
+.dropzone-file-input {
+    display: none;
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    pointer-events: auto;
+}
+
+.dropzone-icon {
+    font-size: 2rem;
+    color: #666;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.upload-dropzone:hover .dropzone-icon,
+.upload-dropzone.dragover .dropzone-icon {
+    color: #00aaff;
+}
+
+.upload-dropzone.dragover .dropzone-icon {
+    color: #00ff7f;
+}
+
+.dropzone-text {
+    color: #999;
+    font-size: 0.95rem;
+}
+
+.dropzone-text strong {
+    color: #00aaff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.dropzone-hint {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.dropzone-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+.dropzone-progress-bar {
+    width: 0%;
+    height: 6px;
+    background: linear-gradient(90deg, #00aaff, #00ff7f);
+    border-radius: 3px;
+    transition: width 0.15s ease;
+    max-width: 100%;
+    align-self: stretch;
+}
+
+.dropzone-progress-text {
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.admin-message-panel.warning {
+    background-color: rgba(255, 193, 7, 0.85);
+    border-color: #e0a800;
+    color: #333;
+    text-shadow: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .background-manager-layout { flex-direction: column; }
+    .bm-left-column { flex: 1; }
+    .slideshow-controls-grid { grid-template-columns: 1fr; }
+    .master-controls-wrapper { flex-direction: column; }
+}
+/* ============================================================================
+ * Stage 2 · Phase 1 — Tabbed workspace + persistent preview rail
+ * Additive layer on top of the existing styles. The legacy
+ * .background-manager-layout / .bm-left-column / .bm-right-column and
+ * accordion classes are no longer emitted by BackgroundManager.php but
+ * their styles remain harmless. Remove in a later cleanup pass.
+ * ============================================================================ */
+
+/* Workspace is a vertical stack: preview bar at top, then the tabbed
+ * workspace below. Simpler than a two-column grid and puts the live
+ * preview at natural reading-first position. */
+.bgm-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bgm-main-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─────────────────────────  Utility bar button  ───────────────────────── */
+.bgm-utility-btn {
+  align-self: center;
+  margin-right: 8px;
+  padding: 6px 12px;
+  font: 700 11px/1.2 system-ui, sans-serif;
+  background: rgba(220,38,38,0.12);
+  color: #f87171;
+  border: 1px solid rgba(220,38,38,0.28);
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background .12s, border-color .12s;
+}
+.bgm-utility-btn:hover { background: rgba(220,38,38,0.2); border-color: rgba(220,38,38,0.5); }
+
+/* ─────────────────────────  Workspace panels  ───────────────────── */
+.bgm-tab-panel {
+  background: #2a2a2e;
+  border: 1px solid #3a3a3c;
+  border-radius: 10px;
+  padding: 22px 24px;
+  box-shadow: 10px 8px 32px 0 rgba(0,0,0,.55);
+  animation: bgm-panel-in 0.18s ease-out;
+}
+#bgm-panel-master { min-height: 0; }   /* compact master */
+.bgm-mode-panel { margin-top: 18px; min-height: 380px; }
+.bgm-tab-panel[hidden] { display: none; }
+
+/* Utility bar (replaces old tab nav — holds Clear Cache) */
+.bgm-utility-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.bgm-utility-bar-spacer { flex: 1 1 auto; }
+@keyframes bgm-panel-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bgm-section-head { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #3a3a3c; }
+.bgm-section-head h2 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.bgm-section-sub {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #8a8f97;
+  line-height: 1.55;
+  max-width: 72ch;
+}
+
+.bgm-panel-inset {
+  /* When we nest the legacy .control-panel inside a tab, kill the duplicate
+     background/border/shadow — the tab panel is the new frame. */
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.bgm-workspace-footer {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding-top: 4px;
+}
+
+/* ─────────────────────────  Preview bar (top of workspace)  ───
+ * Full-width panel above the tab chooser. Shorter than the old
+ * accordion version to keep the tab workspace above the fold on
+ * most monitors, but scaled via aspect-ratio so it still reads as
+ * the live preview it is. Not sticky — the workspace below is
+ * where the user spends time, they can scroll freely.
+ * ─────────────────────────────────────────────────────────────── */
+.bgm-preview-rail {
+  background: #2a2a2e;
+  border: 1px solid #3a3a3c;
+  border-radius: 10px;
+  padding: 14px 18px 18px;
+  box-shadow: 10px 8px 32px 0 rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bgm-preview-rail-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.bgm-preview-rail-head h2 {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+}
+.bgm-preview-rail-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.4px;
+  color: #8a8f97;
+  font-style: italic;
+}
+.bgm-preview-rail #background-preview-panel {
+  width: 100%;
+  aspect-ratio: 21 / 9;  /* cinemascope-ish; keeps the preview short at top */
+  max-height: 40vh;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #3a3a3c;
+}
+
+/* ─────────────────────────  Responsive  ────────────────────── */
+@media (max-width: 720px) {
+  .bgm-preview-rail #background-preview-panel { aspect-ratio: 16 / 9; max-height: 50vh; }
+}
+
+/* ============================================================================
+ * Phase 2 component catalog — opening member: fc-select
+ * Well-styled native <select>. No JS dependency, full keyboard support,
+ * accessible out of the box. Replaces any "pill" chip pattern for
+ * single-choice controls.
+ * ============================================================================ */
+.fc-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #1b1c1e;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #8a8f97 50%),
+    linear-gradient(135deg, #8a8f97 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) calc(1em + 2px),
+    calc(100% - 12px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  color: #eee;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+  padding: 8px 34px 8px 12px;
+  font: 600 13px/1.3 system-ui, sans-serif;
+  cursor: pointer;
+  transition: border-color .15s, background-color .15s;
+  min-width: 180px;
+}
+.fc-select:hover { border-color: #555; }
+.fc-select:focus { outline: none; border-color: #4a9eff; box-shadow: 0 0 0 2px rgba(74,158,255,0.2); }
+.fc-select option { background: #2a2a2e; color: #eee; }
+
+.bgm-chooser {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: #8a8f97;
+  font: 500 12px/1.3 system-ui, sans-serif;
+  letter-spacing: 0.4px;
+}
+.bgm-chooser-label { text-transform: uppercase; letter-spacing: 1.2px; }
+
+/* ─────────── Slideshow inline library ─────────── */
+.bgm-slideshow-library {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #3a3a3c;
+}
+.bgm-library-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.bgm-library-head h3 {
+  margin: 0;
+  font: 600 0.9rem/1.2 system-ui, sans-serif;
+  color: #fff;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.bgm-library-hint {
+  font-size: 0.78rem;
+  color: #8a8f97;
+  margin: 0 0 16px;
+  font-style: italic;
+}
+.bgm-library-section { margin-bottom: 18px; }
+.bgm-library-section:last-child { margin-bottom: 0; }
+.bgm-library-section-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 4px 0 8px;
+  color: #8a8f97;
+  font: 600 0.72rem/1.2 system-ui, sans-serif;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  border-bottom: 1px dashed #3a3a3c;
+  margin-bottom: 10px;
+}
+.bgm-library-count {
+  background: rgba(255,255,255,0.06);
+  padding: 1px 8px;
+  border-radius: 10px;
+  color: #aaa;
+  font-size: 0.68rem;
+  letter-spacing: 0.8px;
+}
+
+/* Read-only thumb visual cue — no hover-delete affordance */
+.media-thumb-readonly { cursor: grab; }
+.media-thumb-readonly:active { cursor: grabbing; }
+
+/* ─────────── Tab toolbar (filter / sort controls above each grid) ───
+ * One row, aligned with the dropzone below it. Uses the same .fc-select
+ * pulldown pattern as the slideshow library filter. Count readout on
+ * the right gives the user a live sense of "I'm seeing 7 of 23 items"
+ * — a quiet form of feedback that the filter is actually doing
+ * something. */
+.bgm-tab-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid #3a3a3c;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.bgm-toolbar-spacer { flex: 1 1 auto; }
+.bgm-toolbar-count {
+  font: 600 11px/1.2 system-ui, sans-serif;
+  color: #8a8f97;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid #3a3a3c;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+.bgm-toolbar-count span { color: #eee; font-weight: 700; }
+
+/* ── OPS PANELS ──────────────────────────────────────────────────────────────
+   Each mode's operations (filters, uploader, playlist controls) sit in their
+   own titled panel, separate from the gallery grid they act on. Before this
+   the toolbar, the dropzone and the grid were three loose siblings with no
+   edge between them, so nothing said where "the controls" ended and "the
+   content" began.
+
+   The header is a gradient street-sign with an explicit #fff: an admin theme
+   can repaint the panel ground underneath it without ever washing out the
+   label. */
+.bgm-ops-panel {
+    border: 1px solid #3a444f;
+    border-radius: 8px;
+    background: rgba(20, 24, 29, .55);
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+.bgm-ops-head {
+    background: linear-gradient(135deg, #2c5364 0%, #203a43 55%, #1a2a33 100%);
+    color: #fff !important;
+    font-size: .74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: 7px 12px;
+    border-bottom: 1px solid #3a444f;
+}
+.bgm-ops-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* The body already spaces its children; kill the rules that were adding a
+   second helping of air when these blocks stood alone. */
+.bgm-ops-body > .bgm-tab-toolbar,
+.bgm-ops-body > .slideshow-controls-grid,
+.bgm-ops-body > .playlist-editor-section { margin-bottom: 0; }
+.bgm-ops-body > .playlist-editor-section {
+    border-top: 1px solid #3a444f;
+    margin-top: 0;
+    padding-top: 12px;
+}
+.bgm-ops-body .upload-dropzone { margin: 0; }
+
+/* ── SPLIT WORKSPACE ─────────────────────────────────────────────────────────
+   Everything below the preview is two columns: Master on the left holding the
+   cross-cutting settings, and on the right whatever Active Mode is pointing at.
+   Previously all five sections stacked at full page width, so choosing a mode
+   scrolled you somewhere instead of changing what you were looking at.
+
+   The divider is a real grid track, not a border, so dragging it resizes both
+   columns without reflowing anything else. --bgm-split-left is set by the JS
+   and remembered per browser; 35% is the default. */
+.bgm-split {
+    display: grid;
+    grid-template-columns: var(--bgm-split-left, 35%) 10px minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
+}
+.bgm-split-left,
+.bgm-split-right {
+    min-width: 0;             /* without this a wide grid child refuses to shrink */
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.bgm-split-gutter {
+    align-self: stretch;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+}
+/* The grab line — a hairline at rest, brighter under the cursor, so the divider
+   is discoverable without drawing a wall down the middle of the panel. */
+.bgm-split-gutter span {
+    display: block;
+    width: 2px;
+    height: 100%;
+    min-height: 120px;
+    border-radius: 2px;
+    background: #3a444f;
+    transition: background-color .15s ease, width .15s ease;
+}
+.bgm-split-gutter:hover span,
+.bgm-split-gutter:focus-visible span,
+.bgm-split-gutter.is-dragging span { background: #3498db; width: 4px; }
+.bgm-split-gutter:focus-visible { outline: none; }
+body.bgm-splitting { cursor: col-resize; user-select: none; }
+
+/* One column on narrow screens — a 35% Master on a tablet is a sliver. */
+@media (max-width: 980px) {
+    .bgm-split { grid-template-columns: minmax(0, 1fr); }
+    .bgm-split-gutter { display: none; }
+    .bgm-split-left { margin-bottom: 18px; }
+}
+
+/* The slideshow library's own uploader. Shorter than the full-panel dropzones
+   on the Image and Video tabs — it is one control inside a stack, not the main
+   event of its own page. */
+.bgm-library-dropzone { margin: 0 0 12px; }
+.bgm-library-dropzone .dropzone-content { padding: 14px 12px; }
+.bgm-library-dropzone .dropzone-icon { font-size: 1.2rem; }
+
+/* ─────────── Slideshow Editor ───────────
+ * Callouts ask beside the control (no window.confirm). The library heading is
+ * a real toggle to the shared Media Explorer. Tray slides carry a remove-×
+ * that is always visible (it removes the slide, never the file). */
+.bgm-callout {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+  margin-top: 8px; padding: 9px 12px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.55);
+  border-radius: 6px;
+  color: #ece9f7;
+  font: 500 13px/1.4 system-ui, sans-serif;
+}
+.bgm-callout[hidden] { display: none; }
+.bgm-callout-danger { background: rgba(220, 53, 69, 0.10); border-color: rgba(220, 53, 69, 0.55); }
+.bgm-callout-text { flex: 1 1 220px; }
+.bgm-callout-actions { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.bgm-callout-btn {
+  border: 1px solid #4a4a50; background: #2a2a2e; color: #eee;
+  border-radius: 5px; padding: 5px 12px; cursor: pointer;
+  font: 600 12px/1.2 system-ui, sans-serif;
+}
+.bgm-callout-btn:hover { border-color: #777; }
+.bgm-callout-btn:focus-visible { outline: 2px solid #8b5cf6; outline-offset: 1px; }
+.bgm-callout-yes { background: #7c3aed; border-color: #7c3aed; color: #fff; }
+.bgm-callout-yes:hover { background: #8b5cf6; }
+.bgm-callout-danger.bgm-callout-btn, .bgm-callout-btn.bgm-callout-danger { background: #dc3545; border-color: #dc3545; color: #fff; }
+
+.bgm-library-toggle {
+  display: inline-flex; align-items: baseline; gap: 10px;
+  background: rgba(139, 92, 246, 0.14);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  border-radius: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color .15s, border-color .15s;
+}
+.bgm-library-toggle:hover { background: rgba(139, 92, 246, 0.26); border-color: #8b5cf6; }
+.bgm-library-toggle:focus-visible { outline: 2px solid #8b5cf6; outline-offset: 2px; }
+.bgm-library-toggle.is-open { background: rgba(139, 92, 246, 0.30); border-color: #a78bfa; }
+.bgm-library-toggle-name {
+  font: 600 0.9rem/1.2 system-ui, sans-serif;
+  letter-spacing: 0.6px; text-transform: uppercase;
+}
+.bgm-library-toggle-state { font: 500 0.74rem/1.2 system-ui, sans-serif; color: #c4b5fd; letter-spacing: 0.3px; }
+.bgm-chooser[hidden] { display: none; }
+
+.bgm-library-explorer[hidden] { display: none; }
+.bgm-library-explorer iframe {
+  display: block; width: 100%;
+  height: min(70vh, 640px); min-height: 380px;
+  border: 1px solid #3a3a3c; border-radius: 8px;
+  background: #1c1c1e;
+}
+
+.slideshow-tray.bgm-tray-armed { border-color: #8b5cf6; box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.35) inset; }
+
+.slideshow-tray .media-thumb { position: relative; }
+.tray-remove-btn {
+  position: absolute; top: 4px; right: 4px; z-index: 2;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff; font-size: 15px; line-height: 1; padding: 0;
+  cursor: pointer;
+  transition: background-color .15s, transform .15s;
+}
+.tray-remove-btn:hover, .tray-remove-btn:focus-visible { background: #dc3545; border-color: #dc3545; transform: scale(1.1); outline: none; }

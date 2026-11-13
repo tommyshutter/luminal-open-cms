@@ -1,0 +1,163 @@
+/**
+ * Auria Theme - Alternative Admin Theme
+ * @file SITE-ROOT/admin/css/admin-theme-auria.css
+ * Applied when body has class "theme-auria"
+ * Supports .dark (default) and .light modes
+ */
+
+/* ============ AURIA DARK (default) ============ */
+body.theme-auria {
+  --auria-bg: #0a0a12;
+  --auria-surface: rgba(16, 16, 28, 0.85);
+  --auria-surface-2: rgba(22, 22, 40, 0.9);
+  --auria-border: rgba(120, 100, 255, 0.15);
+  --auria-text: #d8d4e8;
+  --auria-text-muted: #8884a0;
+  --auria-accent: #9b7dff;
+  --auria-accent-2: #6c5ce7;
+  --auria-success: #55efc4;
+  --auria-danger: #ff6b6b;
+  --auria-heading-bg: linear-gradient(135deg, #6c5ce7, #9b7dff);
+  --auria-card-shadow: 0 4px 20px rgba(100, 80, 200, 0.12);
+  --auria-input-bg: #12121f;
+  --auria-input-border: #2a2845;
+  --auria-btn-bg: #6c5ce7;
+  --auria-btn-text: #fff;
+  --auria-btn-hover: #9b7dff;
+  --auria-link: #b8a9ff;
+  --auria-link-hover: #d4c8ff;
+  background-color: var(--auria-bg) !important;
+  color: var(--auria-text);
+}
+
+/* ============ AURIA LIGHT ============ */
+body.theme-auria.light {
+  --auria-bg: #f4f2fa;
+  --auria-surface: rgba(255, 255, 255, 0.92);
+  --auria-surface-2: rgba(245, 243, 252, 0.95);
+  --auria-border: rgba(120, 100, 255, 0.2);
+  --auria-text: #1a1630;
+  --auria-text-muted: #6b6580;
+  --auria-accent: #6c5ce7;
+  --auria-accent-2: #5a4bd6;
+  --auria-heading-bg: linear-gradient(135deg, #6c5ce7, #9b7dff);
+  --auria-card-shadow: 0 4px 20px rgba(100, 80, 200, 0.08);
+  --auria-input-bg: #fff;
+  --auria-input-border: #d0cce6;
+  --auria-link: #5a4bd6;
+  --auria-link-hover: #6c5ce7;
+  background-color: var(--auria-bg) !important;
+}
+
+/* ---- Apply variables to elements ---- */
+body.theme-auria .admin-container {
+  color: var(--auria-text);
+}
+body.theme-auria a {
+  color: var(--auria-link);
+}
+body.theme-auria a:hover {
+  color: var(--auria-link-hover);
+}
+
+/* Headings */
+body.theme-auria h1 {
+  color: var(--auria-accent);
+  background: transparent !important;
+}
+body.theme-auria h2,
+body.theme-auria h3 {
+  background: var(--auria-heading-bg) !important;
+  color: #fff;
+  border-bottom-color: var(--auria-border);
+  border-radius: 8px;
+}
+
+/* Cards & panels */
+body.theme-auria .content-area,
+body.theme-auria .card,
+body.theme-auria .panel,
+body.theme-auria .dock,
+body.theme-auria .dock-block,
+body.theme-auria .form-section {
+  background: var(--auria-surface);
+  border: 1px solid var(--auria-border);
+  box-shadow: var(--auria-card-shadow);
+}
+
+/* Dashboard cards */
+body.theme-auria .dashboard-card {
+  background: var(--auria-surface-2);
+  border-color: var(--auria-border);
+  background-image: linear-gradient(135deg, rgba(108,92,231,0.08), rgba(155,125,255,0.08));
+}
+body.theme-auria .dashboard-card:hover {
+  border-color: var(--auria-accent);
+  background-image: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(155,125,255,0.15));
+}
+
+/* Form inputs */
+body.theme-auria .form-group input[type="text"],
+body.theme-auria .form-group input[type="url"],
+body.theme-auria .form-group input[type="color"],
+body.theme-auria .form-group input[type="number"],
+body.theme-auria .form-group input[type="range"],
+body.theme-auria .form-group input[type="file"],
+body.theme-auria .form-group input[type="date"],
+body.theme-auria .form-group textarea,
+body.theme-auria .form-group select {
+  background: var(--auria-input-bg);
+  border-color: var(--auria-input-border);
+  color: var(--auria-text);
+}
+body.theme-auria .form-group input:focus,
+body.theme-auria .form-group textarea:focus,
+body.theme-auria .form-group select:focus {
+  border-color: var(--auria-accent);
+  box-shadow: 0 0 10px rgba(108,92,231,0.3);
+}
+
+/* Buttons */
+body.theme-auria .pill,
+body.theme-auria #btn-new,
+body.theme-auria #btn-view,
+body.theme-auria #btn-save,
+body.theme-auria .button-primary,
+body.theme-auria .submit-button {
+  background-color: var(--auria-btn-bg) !important;
+  color: var(--auria-btn-text) !important;
+  border-color: var(--auria-accent-2) !important;
+}
+body.theme-auria .button-primary:hover,
+body.theme-auria .submit-button:hover {
+  background-color: var(--auria-btn-hover) !important;
+}
+
+/* Panel header */
+body.theme-auria .panel_header_h1 {
+  color: var(--auria-accent) !important;
+  background: var(--auria-surface) !important;
+}
+
+/* Admin rail */
+body.theme-auria .admin-aside {
+  background: var(--auria-bg) !important;
+  border-right: 1px solid var(--auria-border);
+}
+
+/* Messages */
+body.theme-auria .form-group label {
+  color: var(--auria-text-muted);
+}
+body.theme-auria .form-group small {
+  color: var(--auria-text-muted);
+}
+
+/* Override background layers when auria is active */
+body.theme-auria #admin-bg-layer {
+  background: var(--auria-bg) !important;
+  filter: none !important;
+}
+body.theme-auria #admin-bg-overlay {
+  background: transparent !important;
+}

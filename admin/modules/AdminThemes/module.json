@@ -1,0 +1,33 @@
+{
+    "name": "AdminThemes",
+    "version": "1.5.1",
+    "description": "Per-user admin panel theming. Full desktop-environment skins (macOS, Windows, Ubuntu/GNOME) plus the default Luminal look. Applies via a guarded head hook on every admin page; preference stored per user.",
+    "author": "Luminal CMS",
+    "entry_point": "AdminThemes.php",
+    "api_endpoint": "api.php",
+    "requires_data_dirs": [
+        "AdminThemes"
+    ],
+    "menu_entry": {
+        "key": "AdminThemes",
+        "title": "Admin Theme",
+        "href": "AdminThemes.php",
+        "role": "admin",
+        "order": 60,
+        "icon": "🎨"
+    },
+    "dependencies": [],
+    "permissions": {
+        "admin": ["read", "write"],
+        "staff": ["read", "write"]
+    },
+    "features": [
+        "Per-user theme preference (server-side, keyed by user_id)",
+        "Full OS chrome skins: macOS, Windows, Ubuntu/GNOME Yaru",
+        "Default Luminal theme = current look, untouched (safe default)",
+        "Scoped, additive CSS overrides — base admin-styles.css never modified",
+        "FOUC-free: theme set pre-paint via head hook",
+        "Floating quick-switcher + visual gallery picker page",
+        "Site-default fallback for users who have not chosen"
+    ]
+}

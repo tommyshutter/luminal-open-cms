@@ -1,0 +1,13 @@
+{
+  "name": "Tools",
+  "version": "1.0.0",
+  "description": "Admin utilities — diagnostics, OG image generation, screenshot upload, gallery self-test",
+  "author": "Luminal CMS",
+  "entry_point": "debug_diagnostics.php",
+  "requires_data_dirs": [],
+  "menu_group": "system",
+  "dependencies": [],
+  "permissions": {
+    "superadmin": ["read", "write", "create", "delete"]
+  }
+}

@@ -1,0 +1,83 @@
+/* Luminal CMS — dark admin sign-in: dark theme, softer corners,
+   the site's own logo. Loaded after login.php's own <style>, so it overrides the light card. */
+body.lum-dark{
+  --bg:#0a0f1c; --card:#111827; --card2:#0d1422; --line:rgba(255,255,255,.10); --ink:#eef1f6;
+  --mute:#9aa6b8; --acc:#f4b942; --acc2:#e8722e; --err:#ff8a7a; --ok:#5fd0a0;
+  min-height:100vh; margin:0; padding:24px; display:flex; align-items:center; justify-content:center;
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; color:var(--ink);
+  background:radial-gradient(1200px 600px at 20% -10%,rgba(244,185,66,.10),transparent 60%),
+             radial-gradient(900px 500px at 110% 110%,rgba(232,114,46,.10),transparent 60%),var(--bg);
+}
+body.lum-dark *{box-sizing:border-box}
+body.lum-dark .login-container{
+  width:100%; max-width:440px; padding:40px 36px 32px; border-radius:24px; color:var(--ink);
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),var(--card);
+  border:1px solid var(--line); box-shadow:0 24px 70px rgba(0,0,0,.55),0 2px 0 rgba(255,255,255,.03) inset;
+}
+body.lum-dark .login-header{text-align:center; margin-bottom:26px}
+body.lum-dark .site-logo{
+  width:64px; height:64px; margin:0 auto 18px; border-radius:20px; display:flex; align-items:center; justify-content:center;
+  font-size:28px; font-weight:700; color:#0a0f1c; background:linear-gradient(135deg,var(--acc),var(--acc2));
+  box-shadow:0 10px 30px rgba(232,114,46,.25);
+}
+body.lum-dark .site-logo--img{width:auto; height:auto; max-width:220px; padding:0; background:none; box-shadow:none; border-radius:0}
+body.lum-dark .site-logo--img img{display:block; max-width:220px; max-height:84px; width:auto; height:auto; object-fit:contain}
+body.lum-dark .login-header h1{font-size:24px; font-weight:650; margin:0 0 6px; color:var(--ink); letter-spacing:-.01em}
+body.lum-dark .login-header p{color:var(--mute); font-size:14px; margin:0}
+body.lum-dark .form-group{margin-bottom:18px}
+body.lum-dark .form-group label, body.lum-dark label{color:var(--mute); font-size:13px; font-weight:500}
+body.lum-dark .form-group label{display:block; margin-bottom:7px}
+body.lum-dark input[type=text], body.lum-dark input[type=email], body.lum-dark input[type=password],
+body.lum-dark input:not([type]), body.lum-dark input[inputmode]{
+  width:100%; padding:13px 14px; border-radius:14px; border:1px solid var(--line); background:var(--card2);
+  color:var(--ink); font-size:15px; outline:none; transition:border-color .15s,box-shadow .15s;
+}
+body.lum-dark input:focus{border-color:var(--acc); box-shadow:0 0 0 3px rgba(244,185,66,.18)}
+body.lum-dark input::placeholder{color:#64708a}
+body.lum-dark .input-wrapper{position:relative}
+body.lum-dark .password-toggle{position:absolute; right:8px; top:50%; transform:translateY(-50%); background:transparent; border:0;
+  color:var(--mute); cursor:pointer; padding:6px; border-radius:10px}
+body.lum-dark .password-toggle:hover{color:var(--ink); background:rgba(255,255,255,.05)}
+body.lum-dark .eye-icon{fill:currentColor; stroke:currentColor}
+body.lum-dark .login-button{
+  width:100%; margin-top:6px; padding:13px 18px; border:0; border-radius:14px; cursor:pointer;
+  font-size:15px; font-weight:650; color:#1a1206; background:linear-gradient(100deg,var(--acc),var(--acc2));
+  box-shadow:0 10px 26px rgba(232,114,46,.25); transition:transform .12s,filter .12s;
+}
+body.lum-dark .login-button:hover{filter:brightness(1.05); transform:translateY(-1px)}
+body.lum-dark .login-button:disabled{opacity:.6; cursor:not-allowed; transform:none}
+body.lum-dark .form-options{display:flex; justify-content:space-between; align-items:center; gap:10px; margin:4px 0 18px; flex-wrap:wrap}
+body.lum-dark .remember-me{display:flex; align-items:center; gap:8px; margin:2px 0 16px; color:var(--mute); font-size:13px}
+body.lum-dark .remember-me input{accent-color:var(--acc); width:16px; height:16px}
+body.lum-dark a, body.lum-dark .forgot-link, body.lum-dark .back-link a{color:var(--acc); text-decoration:none}
+body.lum-dark a:hover{text-decoration:underline}
+body.lum-dark .back-link{text-align:center; margin:20px 0 0; font-size:13px}
+body.lum-dark .message{border-radius:14px; padding:12px 14px; margin-bottom:18px; font-size:14px; border:1px solid transparent}
+body.lum-dark .message.error{background:rgba(255,138,122,.10); color:var(--err); border-color:rgba(255,138,122,.25)}
+body.lum-dark .message.success{background:rgba(95,208,160,.10); color:var(--ok); border-color:rgba(95,208,160,.25)}
+body.lum-dark .password-requirements{background:var(--card2); border:1px solid var(--line); border-radius:14px; color:var(--mute)}
+body.lum-dark .password-requirements li.valid{color:var(--ok)}
+body.lum-dark .setup-step{color:var(--mute)}
+body.lum-dark .google-divider{color:var(--mute)}
+body.lum-dark .google-divider::before{background:var(--line)}
+body.lum-dark .google-divider span{background:var(--card); color:var(--mute)}
+body.lum-dark .google-signin-btn{background:#fff; color:#1f2430; border-radius:14px; border:1px solid var(--line)}
+body.lum-dark [style*="color:#5f6368"]{color:var(--mute)!important}
+/* second step (admin/mfa.php) */
+body.lum-dark .mfa-steps{margin:0 0 14px; padding-left:20px; color:var(--mute); font-size:14px; line-height:1.55}
+body.lum-dark .mfa-qr{width:220px; height:220px; margin:6px auto 12px; padding:10px; background:#fff; border-radius:18px}
+body.lum-dark .mfa-qr svg{display:block; width:100%; height:100%}
+body.lum-dark .mfa-key{text-align:center; color:var(--mute); font-size:13px; margin:0 0 20px}
+body.lum-dark .mfa-key code, body.lum-dark .mfa-codes code{font-family:ui-monospace,Menlo,Consolas,monospace; color:var(--ink); letter-spacing:.06em}
+body.lum-dark .mfa-codes{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin:0 0 14px; padding:16px 16px 16px 34px;
+  background:var(--card2); border:1px solid var(--line); border-radius:16px}
+body.lum-dark .mfa-row{display:flex; gap:10px; margin:0 0 14px}
+body.lum-dark .mfa-ghost{flex:1; padding:10px; border-radius:12px; border:1px solid var(--line); background:transparent; color:var(--ink); cursor:pointer}
+body.lum-dark .mfa-ghost:hover{border-color:var(--acc)}
+@media (max-width:480px){ body.lum-dark{padding:14px} body.lum-dark .login-container{padding:30px 22px 24px; border-radius:20px} }
+@media print{ body.lum-dark{background:#fff; color:#000} body.lum-dark .login-container{box-shadow:none; border:0; background:#fff; color:#000}
+  body.lum-dark .mfa-row, body.lum-dark form, body.lum-dark .back-link{display:none} body.lum-dark .mfa-codes code{color:#000} }
+/* The logo on the sign-in card goes to the front of the site. */
+body.lum-dark .site-logo-link{display:block; width:fit-content; margin:0 auto; text-decoration:none; border-radius:20px; transition:transform .15s,opacity .15s}
+body.lum-dark .site-logo-link:hover{transform:translateY(-1px); opacity:.92}
+body.lum-dark .site-logo-link:focus-visible{outline:2px solid var(--acc); outline-offset:6px}

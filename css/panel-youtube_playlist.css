@@ -1,0 +1,185 @@
+/* ===== YouTube Playlist Grid â€“ FINAL, scoped to #playlist-grid ===== */
+
+/* The grid itself */
+#playlist-grid{
+  display: grid !important;
+  gap: var(--ri-gap, 10px) !important;
+
+  grid -template-columns: repeat(var(--cols-desktop, 6), minmax(0, 1fr)) !important;
+  grid-template-columns: 6fr 0fr;
+  align-items: start;
+}
+
+/* Ensure grid children can actually shrink/grow */
+#playlist-grid > *{ min-width: 0; }
+
+/* Each item is the link */
+#playlist-grid .playlist-item-link{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Card shell */
+#playlist-grid .playlist-item{
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+#playlist-grid .playlist-item:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+
+/* Poster image sizing */
+#playlist-grid .thumbnail-container{ position: relative; width: 100%; }
+#playlist-grid .thumbnail{
+  display: block;
+  width: 100%;
+  height: var(--thumb-rowh, 110px);   /* fixed row height (cropped) */
+  object-fit: cover;
+}
+
+/* If row height is 0px, use a natural 16:9 instead */
+#playlist-grid[style*="--thumb-rowh: 0px"] .thumbnail,
+#playlist-grid[style*="--thumb-rowh:0px"] .thumbnail{
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* Simple play badge (optional; remove if you donâ€™t render it) */
+#playlist-grid .ri-play{
+  position: absolute;
+  right: 8px; bottom: 8px;
+  background: rgba(0,0,0,.6);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Title block */
+#playlist-grid .video-info{
+  padding: 8px 10px 10px;
+  font-size: .9rem;
+}
+#playlist-grid .video-title{
+  margin: 0;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;  /* clamp to 2 lines */
+  overflow: hidden;
+}
+
+/* RESPONSIVE COLUMNS */
+@media (max-width: 1024px){
+  #playlist-grid{
+    grid-template-columns: repeat(var(--cols-tablet, 4), minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  #playlist-grid{
+    grid-template-columns: repeat(var(--cols-mobile, 2), minmax(0, 1fr)) !important;
+  }
+}
+
+/* Hard resets to stop stray site styles from shrinking items */
+#playlist-grid img{ max-width: 100%; height: auto; }
+#playlist-grid .playlist-item-link, 
+#playlist-grid .playlist-item, 
+#playlist-grid .thumbnail-container{ width: 100%; }
+
+IFRAME#youtube-main-player{width:100%;aspect-ratio:16/9}
+
+/* PLAYLIST GRID — replace the previous grid-template rule(s) */
+#playlist-grid{
+  display: grid !important;
+  gap: var(--ri-gap, 10px) !important;
+
+  /* ← magic: fills the row with as many 180px+ columns as will fit */
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min, 180px), 1fr)) !important;
+
+  width: 100% !important;
+  max-width: none !important;
+  align-items: start;
+}
+
+/* thumbnails: use fixed row height OR natural 16:9 */
+#playlist-grid .thumbnail{
+  width: 100%;
+  height: var(--thumb-rowh, auto);    /* set 0px to use aspect-ratio instead */
+  object-fit: cover;
+}
+#playlist-grid[style*="--thumb-rowh: 0px"] .thumbnail,
+#playlist-grid[style*="--thumb-rowh:0px"] .thumbnail{
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* keep these so site styles can’t squash the cards */
+#playlist-grid > * { min-width: 0; }
+#playlist-grid .playlist-item-link,
+#playlist-grid .playlist-item,
+#playlist-grid .thumbnail-container { width: 100%; }
+
+
+/* Player */
+iframe#youtube-main-player{
+  width:100%;
+  aspect-ratio:16/9;
+  display:block;
+}
+
+/* Grid */
+#playlist-grid{
+  display:grid !important;
+  gap: var(--ri-gap, 12px) !important;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min, 190px), 1fr)) !important;
+  width:100% !important;
+  max-width:none !important;
+  align-items:start;
+}
+#playlist-grid > *{ min-width:0; }
+
+/* Card & link reset */
+#playlist-grid .playlist-item-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+#playlist-grid .playlist-item{
+  width:100%;
+  border-radius:10px;
+  overflow:hidden;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+/* Thumb — your fix kept, no squish */
+#playlist-grid .thumbnail{
+  width:100%;
+  height: var(--thumb-rowh, auto); /* 0 or unset = natural aspect */
+  aspect-ratio: 16/9;              /* gives height when auto */
+  object-fit: cover;
+  display:block;
+}
+
+/* Title line */
+#playlist-grid .video-title{
+  font-size:.82rem;
+  line-height:1.2;
+  margin:.5rem .55rem .65rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Responsive hints (optional) */
+@media (max-width:1024px){ #playlist-grid{ --card-min:180px; } }
+@media (max-width:640px){  #playlist-grid{ --card-min:160px; } }

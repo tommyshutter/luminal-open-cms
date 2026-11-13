@@ -1,0 +1,29 @@
+/* Age Verification Gate — site-wide blocking overlay (SiteSettings → age-gate.js). */
+.ab-age-gate {
+    position: fixed; inset: 0; z-index: 2147483646;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(8, 10, 14, 0.82);
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    padding: 24px; animation: ab-age-in .2s ease-out;
+}
+.ab-age-gate-out { opacity: 0; transition: opacity .25s ease; }
+@keyframes ab-age-in { from { opacity: 0; } to { opacity: 1; } }
+.ab-age-gate-box {
+    max-width: 560px; width: 100%; text-align: center;
+    background: rgba(20, 22, 30, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px; padding: 48px 40px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+    color: #e8eaed;
+}
+.ab-age-gate-title { margin: 0 0 18px; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; line-height: 1.15; }
+.ab-age-gate-prompt { margin: 0 0 30px; font-size: clamp(1.2rem, 3vw, 1.5rem); color: rgba(255, 255, 255, 0.78); line-height: 1.5; }
+.ab-age-gate-actions { display: flex; flex-direction: column; gap: 14px; }
+.ab-age-gate-actions .ab-submit { width: 100%; font-size: clamp(1.1rem, 2.6vw, 1.35rem); font-weight: 700; padding: 16px 20px; }
+.ab-age-deny {
+    background: transparent; color: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 10px;
+    padding: 14px 20px; font-size: clamp(1rem, 2.2vw, 1.15rem); cursor: pointer; transition: color .15s, border-color .15s;
+}
+.ab-age-deny:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); }

@@ -1,0 +1,26 @@
+{
+  "name": "MailgunManager",
+  "version": "1.1.0",
+  "description": "Mailgun email service configuration and testing",
+  "author": "Luminal CMS",
+  "entry_point": "MailgunManager.php",
+  "api_endpoint": "api.php",
+  "requires_data_dirs": [],
+  "menu_entry": {
+    "key": "MailgunManager",
+    "title": "Mailgun",
+    "href": "MailgunManager.php",
+    "role": "admin",
+    "order": 23,
+    "icon": "📧"
+  },
+  "dependencies": [],
+  "permissions": {
+    "admin": [
+      "read",
+      "write",
+      "test"
+    ],
+    "staff": []
+  }
+}

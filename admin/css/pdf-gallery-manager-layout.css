@@ -1,0 +1,49 @@
+/**
+ * @file         SITE-ROOT/admin/css/pdf-gallery-manager-layout.css
+ * @version      2.0.0 (2025-09-05)
+ * @author       Gemini
+ * @license      Apache-2.0 — see LICENSE and NOTICE
+ * @description  Main two-column layout for the PDF Gallery Manager.
+ */
+
+.pdf-gallery-layout {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.left-panel {
+    flex: 0 0 320px; /* Fixed width for the left panel */
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh; /* Adjust as needed */
+    overflow: hidden;
+}
+
+#available-pdfs-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px; /* For scrollbar spacing */
+}
+
+.right-column-stack {
+    flex: 1 1 auto; /* Allow the right column to grow */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0; /* Prevents flexbox overflow issues */
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .pdf-gallery-layout {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        flex: 0 0 auto; /* Reset flex-basis on smaller screens */
+        max-height: 40vh; /* Adjust height for vertical stacking */
+    }
+}

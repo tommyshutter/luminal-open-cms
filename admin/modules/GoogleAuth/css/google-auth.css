@@ -1,0 +1,212 @@
+/* GoogleAuth — Settings Panel Styles */
+
+.ga-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.ga-header h2 {
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+    color: #e0e0e0;
+}
+.ga-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0 0 20px;
+}
+
+/* Status bar */
+.ga-status {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+.ga-status-success { background: #1b3a2a; color: #6ee7a0; border: 1px solid #2d6b47; }
+.ga-status-error   { background: #3a1b1b; color: #f87171; border: 1px solid #6b2d2d; }
+.ga-status-info    { background: #1b2a3a; color: #60a5fa; border: 1px solid #2d4a6b; }
+
+/* Cards */
+.ga-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+}
+.ga-card-guide {
+    background: rgba(66,133,244,0.06);
+    border-color: rgba(66,133,244,0.15);
+}
+.ga-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.ga-card-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #d0d0d0;
+}
+
+/* Toggle switch */
+.ga-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.ga-toggle input { opacity: 0; width: 0; height: 0; }
+.ga-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #444;
+    border-radius: 24px;
+    transition: background 0.2s;
+}
+.ga-toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #ccc;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+.ga-toggle input:checked + .ga-toggle-slider { background: #4285f4; }
+.ga-toggle input:checked + .ga-toggle-slider::before { transform: translateX(20px); background: #fff; }
+
+/* Fields */
+.ga-field {
+    margin-bottom: 14px;
+}
+.ga-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    color: #bbb;
+    font-weight: 500;
+}
+.ga-field input[type="text"],
+.ga-field input[type="password"] {
+    width: 100%;
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 5px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    font-family: monospace;
+}
+.ga-field input:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 2px rgba(66,133,244,0.2);
+}
+.ga-field select {
+    padding: 9px 12px;
+    background: #2a2a3a;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 5px;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.ga-secret-wrap {
+    display: flex;
+    gap: 8px;
+}
+.ga-secret-wrap input { flex: 1; }
+.ga-eye-btn {
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 5px;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+.ga-eye-btn:hover { background: rgba(255,255,255,0.12); color: #ddd; }
+
+.ga-readonly-field {
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 5px;
+    color: #8ab4f8;
+    font-family: monospace;
+    font-size: 0.85rem;
+    user-select: all;
+    cursor: text;
+}
+
+.ga-hint {
+    font-size: 0.8rem;
+    color: #777;
+    margin: 4px 0 0;
+    line-height: 1.4;
+}
+.ga-hint a { color: #8ab4f8; }
+
+.ga-optional {
+    font-weight: normal;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.ga-checkbox-label {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.ga-checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #4285f4;
+}
+
+/* Action buttons */
+.ga-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.ga-btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.ga-btn-primary {
+    background: #4285f4;
+    color: #fff;
+}
+.ga-btn-primary:hover { background: #3367d6; }
+.ga-btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: #bbb;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.ga-btn-secondary:hover { background: rgba(255,255,255,0.12); color: #ddd; }
+
+/* Setup guide */
+.ga-guide-steps {
+    margin: 0;
+    padding: 0 0 0 24px;
+    color: #aaa;
+    font-size: 0.88rem;
+    line-height: 1.8;
+}
+.ga-guide-steps a { color: #8ab4f8; }
+.ga-guide-steps strong { color: #d0d0d0; }
